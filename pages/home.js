@@ -44,7 +44,7 @@ export default function home({ posts }) {
       <div>hello world</div>
       {postsState
         ? postsState.map((post) => {
-            return <div>{post.title}</div>;
+            return <div key={post._id}>{post.title}</div>;
           })
         : null}
       <div>
