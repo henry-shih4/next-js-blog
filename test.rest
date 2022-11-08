@@ -6,7 +6,7 @@ Content-Type: application/json
     "content":"Easy Warm up workout",
     "category":"Weight Training ",
     "duration":"45 min",
-    "exercises":[{"Name":"Bench Press","sets":"3", "reps":"10","weight":"135"}, {"Name":"Squat","sets":"2", "reps":"15","weight":"100"} ]
+    "exercises":[{"name":"Bench Press","sets":"3", "reps":"10","weight":"135"}, {"name":"Squat","sets":"2", "reps":"15","weight":"100"} ]
     
 }
 

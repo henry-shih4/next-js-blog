@@ -28,7 +28,6 @@ export default function post({ post }) {
     if (response.status < 300) {
       router.push("/posts");
     }
-    console.log(result);
   }
 
   return (
@@ -40,14 +39,16 @@ export default function post({ post }) {
           <div>{post.category}</div>
           <div>{post.duration}</div>
           <div>
-            {post.exercises.map((exercise) => {
-              return (
-                <div>
-                  {exercise.Name}, {exercise.weight}, {exercise.sets}x
-                  {exercise.reps} reps
-                </div>
-              );
-            })}
+            {post.exercises
+              ? post.exercises.map((exercise) => {
+                  return (
+                    <div>
+                      {exercise.name}, {exercise.weight}, {exercise.sets}x
+                      {exercise.reps} reps
+                    </div>
+                  );
+                })
+              : null}
           </div>
         </>
       ) : null}
