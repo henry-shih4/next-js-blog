@@ -2,10 +2,10 @@ POST http://localhost:3000/api/posts
 Content-Type: application/json
 
 {
-    "title":"1111",
-    "content":"22222",
-    "category":"cardio ",
-    "duration":"20 min",
+    "title":"Chest Workout",
+    "content":"Focused on dumbbells this session",
+    "category":"Weight Training ",
+    "duration":"45 min",
     "exercises":"treadmill"
     
 }

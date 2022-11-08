@@ -26,14 +26,13 @@ export default function post({ post }) {
     const response = await fetch(endpoint, options);
     const result = await response.json();
     if (response.status < 300) {
-      //route to home
+      router.push("/posts");
     }
     console.log(result);
   }
 
   return (
     <>
-      <div>hello</div>
       {post ? (
         <>
           <div>{post.title}</div>
