@@ -1,0 +1,21 @@
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+    "title":"1111",
+    "content":"22222",
+    "category":"cardio ",
+    "duration":"20 min",
+    "exercises":"treadmill"
+    
+}
+
+###
+
+
+DELETE http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+    "id":"636a9130f4c964f6781a7daa"
+}

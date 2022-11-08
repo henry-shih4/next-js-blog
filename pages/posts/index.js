@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function home({ posts }) {
   const [postsState, setPostsState] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
 
   useEffect(() => {
     setPostsState(posts);
@@ -11,13 +17,12 @@ export default function home({ posts }) {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-
     const data = {
       title: title,
       content: content,
     };
     const JSONdata = JSON.stringify(data);
-    const endpoint = "/api/add-post";
+    const endpoint = "/api/posts";
 
     const options = {
       // The method is POST because we are sending data.
@@ -32,6 +37,9 @@ export default function home({ posts }) {
 
     const response = await fetch(endpoint, options);
     const result = await response.json();
+    if (response.status < 300) {
+      refreshData();
+    }
     console.log(result);
 
     setPostsState([...postsState, result]);
@@ -41,26 +49,37 @@ export default function home({ posts }) {
 
   return (
     <>
-      <div>hello world</div>
       {postsState
         ? postsState.map((post) => {
-            return <div key={post._id}>{post.title}</div>;
+            return (
+              <div
+                onClick={() => {
+                  router.push(`/posts/${post._id}`);
+                }}
+                className="bg-red-300 h-8 w-15 p-2 m-2"
+                key={post._id}
+              >
+                {post.title}
+              </div>
+            );
           })
         : null}
       <div>
-        <form onSubmit={handleFormSubmit}>
+        <form className="flex flex-col" onSubmit={handleFormSubmit}>
           <div>
             <label for="title">Title</label>
             <input
               id="title"
               type="text"
               value={title}
+              required
               onChange={(e) => setTitle(e.target.value)}
             />
             <label for="content">Content</label>
             <textarea
               id="content"
               type="text"
+              required
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
