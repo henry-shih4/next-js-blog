@@ -2,11 +2,11 @@ POST http://localhost:3000/api/posts
 Content-Type: application/json
 
 {
-    "title":"Chest Workout",
-    "content":"Focused on dumbbells this session",
+    "title":"Chest and Leg Workout",
+    "content":"Easy Warm up workout",
     "category":"Weight Training ",
     "duration":"45 min",
-    "exercises":"treadmill"
+    "exercises":[{"Name":"Bench Press","sets":"3", "reps":"10","weight":"135"}, {"Name":"Squat","sets":"2", "reps":"15","weight":"100"} ]
     
 }
 

@@ -37,6 +37,18 @@ export default function post({ post }) {
         <>
           <div>{post.title}</div>
           <div>{post.content}</div>
+          <div>{post.category}</div>
+          <div>{post.duration}</div>
+          <div>
+            {post.exercises.map((exercise) => {
+              return (
+                <div>
+                  {exercise.Name}, {exercise.weight}, {exercise.sets}x
+                  {exercise.reps} reps
+                </div>
+              );
+            })}
+          </div>
         </>
       ) : null}
       <button className="p-4" onClick={handlePostDelete}>
