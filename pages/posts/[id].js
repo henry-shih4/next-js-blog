@@ -37,14 +37,21 @@ export default function post({ post }) {
           <div>{post.title}</div>
           <div>{post.content}</div>
           <div>{post.category}</div>
-          <div>{post.duration}</div>
+          <div>{post.duration} min</div>
           <div>
             {post.exercises
-              ? post.exercises.map((exercise) => {
+              ? post.exercises.map((exercise, index) => {
                   return (
                     <div>
-                      {exercise.name}, {exercise.weight}, {exercise.sets}x
-                      {exercise.reps} reps
+                      <div className="border border-black w-[200px]">
+                        <div>Exercise {index + 1}</div>
+                        <div>{exercise.name}</div>
+                        {exercise.weight ? (
+                          <div>{exercise.weight} lbs</div>
+                        ) : null}
+                        {exercise.sets ? <div>{exercise.sets} sets</div> : null}
+                        {exercise.reps ? <div>{exercise.reps} reps</div> : null}
+                      </div>
                     </div>
                   );
                 })
