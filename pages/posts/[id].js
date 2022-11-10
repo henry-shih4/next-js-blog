@@ -1,8 +1,31 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function post({ post }) {
+  const [time, setTime] = useState();
   const router = useRouter();
   const { id } = router.query;
+
+  useEffect(() => {
+    const d = new Date(post.createdAt);
+    let hours;
+    let meridian;
+    if (d.getHours() > 12) {
+      hours = d.getHours() - 12;
+    } else {
+      hours = d.getHours();
+    }
+    if (d.getHours() > 12) {
+      meridian = "PM";
+    } else {
+      meridian = "AM";
+    }
+    setTime(
+      `${
+        d.getMonth() + 1
+      }/${d.getDate()}/${d.getFullYear()} at ${hours}:${d.getMinutes()} ${meridian}`
+    );
+  }, []);
 
   async function handlePostDelete() {
     console.log(id);
@@ -34,6 +57,7 @@ export default function post({ post }) {
     <>
       {post ? (
         <>
+          <div>{time}</div>
           <div>{post.title}</div>
           <div>{post.content}</div>
           <div>{post.category}</div>
