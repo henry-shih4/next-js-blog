@@ -84,7 +84,7 @@ export default function home({ posts }) {
     <>
       <Header />
       <div className="flex flex-wrap justify-around items-center ">
-        <div className="flex flex-col flex-col-reverse h-[600px] w-1/2 bg-slate-100 overflow-scroll">
+        <div className="flex flex-col-reverse h-[600px] w-1/2 bg-slate-100 overflow-scroll">
           {postsState
             ? postsState.map((post) => {
                 return (

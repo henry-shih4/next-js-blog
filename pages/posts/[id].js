@@ -28,7 +28,6 @@ export default function post({ post }) {
   }, []);
 
   async function handlePostDelete() {
-    console.log(id);
     const data = {
       id: id,
     };
