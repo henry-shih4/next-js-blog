@@ -23,9 +23,7 @@ export default async function handler(req, res) {
         );
         return res.send({
           message: "Login Successful",
-          username: user.username,
-          userId: user._id,
-          token,
+          data: { username: user.username, userId: user._id, token },
         });
       } else if (!(await bcrypt.compare(password, user.password))) {
         return res.send({ message: "username or password incorrect" });

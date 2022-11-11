@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 export default function login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const token = cookies.get("TOKEN");
+
+  useEffect(() => {
+    console.log(token);
+  });
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -26,6 +33,12 @@ export default function login() {
       const response = await fetch(endpoint, options);
       const result = await response.json();
       console.log(result);
+      if (result.message === "Login Successful") {
+        cookies.set("TOKEN", result.data.token, {
+          maxAge: 600,
+        });
+        console.log("set cookies");
+      }
     } catch (e) {
       console.log(e);
     }
