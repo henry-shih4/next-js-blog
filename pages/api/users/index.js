@@ -1,10 +1,22 @@
 import { connectToDatabase } from "../../../lib/mongodb";
 // import { ObjectId } from "mongodb";
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+import { getToken } from "next-auth/jwt";
+const secret = process.env.JWT_SECRET_KEY;
 
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
   const { method } = req;
+  const token = await getToken({
+    req: req,
+    secret: secret,
+    raw: true,
+  });
+  const payload = jwt.verify(token, secret);
+  console.log(payload);
+
+  // const decodedToken = jwt.verify(token)
 
   if (method === "POST") {
     try {

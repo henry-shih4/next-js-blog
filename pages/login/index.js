@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
+import { useRouter } from "next/router";
 
 export default function login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const token = cookies.get("TOKEN");
+  const router = useRouter();
 
   useEffect(() => {
     console.log(token);
-  });
+  }, [token]);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -37,7 +39,7 @@ export default function login() {
         cookies.set("TOKEN", result.data.token, {
           maxAge: 600,
         });
-        console.log("set cookies");
+        router.push("/posts");
       }
     } catch (e) {
       console.log(e);

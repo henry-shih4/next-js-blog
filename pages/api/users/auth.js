@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 
 export default async function handler(req, res) {
   const { method } = req;
+  const secret = process.env.JWT_SECRET_KEY;
+
   if (method === "POST") {
     const { db } = await connectToDatabase();
     const { username, password } = req.body;
@@ -18,7 +20,7 @@ export default async function handler(req, res) {
             username: user.username,
             userId: user._id,
           },
-          "RANDOM-TOKEN",
+          secret,
           { expiresIn: "24h" }
         );
         return res.send({

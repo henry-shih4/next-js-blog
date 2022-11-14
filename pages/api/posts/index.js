@@ -1,5 +1,6 @@
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
+const jwt = require("jsonwebtoken");
 
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
@@ -23,7 +24,7 @@ export default async function handler(req, res) {
     });
   }
 
-  // Send all the posts
+  // GET all the posts
   if (method === "GET") {
     const posts = await db.collection("posts").find({}).toArray();
     res.status(200).json(posts);

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../../components/Header";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 export default function home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -14,6 +16,7 @@ export default function home({ posts }) {
   const [sets, setSets] = useState();
   const [reps, setReps] = useState();
   const [weight, setWeight] = useState();
+  const token = cookies.get("TOKEN");
 
   const router = useRouter();
 
@@ -25,9 +28,9 @@ export default function home({ posts }) {
     setPostsState(posts);
   }, [posts]);
 
-  // useEffect(() => {
-  //   console.log(exercise);
-  // }, [exercise]);
+  useEffect(() => {
+    console.log(token);
+  }, [token]);
 
   // useEffect(() => {
   //   console.log(exerciseList);
