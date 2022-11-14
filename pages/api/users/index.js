@@ -8,15 +8,13 @@ const secret = process.env.JWT_SECRET_KEY;
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
   const { method } = req;
-  const token = await getToken({
-    req: req,
-    secret: secret,
-    raw: true,
-  });
-  const payload = jwt.verify(token, secret);
-  console.log(payload);
-
-  // const decodedToken = jwt.verify(token)
+  // const token = await getToken({
+  //   req: req,
+  //   secret: secret,
+  //   raw: true,
+  // });
+  // const payload = jwt.verify(token, secret);
+  // console.log(payload);
 
   if (method === "POST") {
     try {
