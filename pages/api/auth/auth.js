@@ -23,6 +23,7 @@ export default async function handler(req, res) {
           secret,
           { expiresIn: "24h" }
         );
+        
         return res.send({
           message: "Login Successful",
           data: { username: user.username, userId: user._id, token },

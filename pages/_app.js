@@ -6,10 +6,6 @@ const cookies = new Cookies();
 function MyApp({ Component, pageProps }) {
   const token = cookies.get("TOKEN");
 
-  // useEffect(() => {
-  //   console.log(token);
-  // });
-
   return <Component {...pageProps} />;
 }
 

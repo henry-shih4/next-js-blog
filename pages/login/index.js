@@ -21,7 +21,7 @@ export default function login() {
         password: password,
       };
       const JSONdata = JSON.stringify(data);
-      const endpoint = "/api/users/auth";
+      const endpoint = "/api/auth/auth";
       const options = {
         // The method is POST because we are sending data.
         method: "POST",
