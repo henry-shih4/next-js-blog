@@ -5,3 +5,7 @@
 input{
     border-radius: 4px;
 }
+
+.buttons{
+@apply bg-black text-white rounded-md p-2 mt-4 w-[100px]
+}

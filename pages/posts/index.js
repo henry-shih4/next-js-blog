@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
+import LoginRedirect from "../../components/LoginRedirect";
 
 export default function home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -284,7 +285,7 @@ export default function home({ posts }) {
           </div>
         </>
       ) : (
-        <div>Please log in</div>
+        <LoginRedirect />
       )}
     </>
   );

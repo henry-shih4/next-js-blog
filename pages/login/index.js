@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { LoginContext } from "../../context/LoginContext";
 
 export default function login() {
@@ -14,7 +15,7 @@ export default function login() {
   useEffect(() => {
     console.log(isLoggedIn);
   });
-  
+
   useEffect(() => {
     console.log(token);
   }, [token]);
@@ -80,7 +81,17 @@ export default function login() {
                 setPassword(e.target.value);
               }}
             />
-            <button onClick={handleFormSubmit}>Login</button>
+            <div className="flex justify-center items-center flex-col space-y-2">
+              <button className="buttons" onClick={handleFormSubmit}>
+                Login
+              </button>
+              <Link
+                className="text-center w-[80px] hover:underline"
+                href="/register"
+              >
+                Register
+              </Link>
+            </div>
           </form>
         </div>
       </div>

@@ -34,7 +34,6 @@ export default function register() {
       setPassword("");
       setUsername("");
     }
-    console.log(result);
   }
 
   return (
@@ -73,7 +72,11 @@ export default function register() {
                 setEmail(e.target.value);
               }}
             />
-            <button onClick={handleFormSubmit}>register</button>
+            <div className="flex justify-center">
+              <button className="buttons" onClick={handleFormSubmit}>
+                register
+              </button>
+            </div>
           </form>
         </div>
       </div>
