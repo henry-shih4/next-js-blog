@@ -9,7 +9,7 @@ function LoginProvider(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(token ? true : false);
   const [activeUser, setActiveUser] = useState("guest");
 
-  function setCurrentUser([user]) {
+  function setCurrentUser(user) {
     if (user) {
       setActiveUser(user);
     }

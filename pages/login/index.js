@@ -15,6 +15,7 @@ export default function login() {
 
   useEffect(() => {
     console.log(isLoggedIn);
+    console.log(activeUser);
   });
 
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function login() {
         });
         changeLoggedIn(true);
         console.log(result.data.username, result.data.userId);
+        // setCurrentUser(result.data.username);
         router.push("/posts");
       }
     } catch (e) {
