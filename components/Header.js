@@ -8,7 +8,7 @@ import { LoginContext } from "../context/LoginContext";
 export default function Header() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, ,] = useContext(LoginContext);
 
   return (
     <>

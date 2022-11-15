@@ -10,12 +10,10 @@ export default function login() {
   const [password, setPassword] = useState();
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
-    useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
 
   useEffect(() => {
     console.log(isLoggedIn);
-    console.log(activeUser);
   });
 
   useEffect(() => {
