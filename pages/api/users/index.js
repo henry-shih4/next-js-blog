@@ -7,12 +7,6 @@ export default async function handler(req, res) {
 
   const secret = process.env.JWT_SECRET_KEY;
   const token = req.headers.authorization;
-  jwt.verify(token, secret, async function (err, decoded) {
-    if (!err && decoded) {
-      return;
-    }
-    res.status(500).json({ message: "not authenticated" });
-  });
 
   if (method === "POST") {
     try {
@@ -46,6 +40,12 @@ export default async function handler(req, res) {
       res.status(500).send();
     }
   }
+  jwt.verify(token, secret, async function (err, decoded) {
+    if (!err && decoded) {
+      return;
+    }
+    res.status(500).json({ message: "not authenticated" });
+  });
 
   // get all users
   if (method === "GET") {
