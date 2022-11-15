@@ -1,14 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { useRouter } from "next/router";
+import { LoginContext } from "../../context/LoginContext";
 
 export default function login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const token = cookies.get("TOKEN");
   const router = useRouter();
+  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
 
+  useEffect(() => {
+    console.log(isLoggedIn);
+  });
+  
   useEffect(() => {
     console.log(token);
   }, [token]);
@@ -40,6 +46,7 @@ export default function login() {
         cookies.set("TOKEN", result.data.token, {
           maxAge: 600,
         });
+        changeLoggedIn(true);
         router.push("/posts");
       }
     } catch (e) {
@@ -80,17 +87,3 @@ export default function login() {
     </>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   let res = await fetch("http://localhost:3000/api/users", {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   let posts = await res.json();
-
-//   return {
-//     props: { users },
-//   };
-// }

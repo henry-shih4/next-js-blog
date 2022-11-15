@@ -1,11 +1,14 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useContext } from "react";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
+import { LoginContext } from "../context/LoginContext";
 
 export default function Header() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
+  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
 
   return (
     <>
@@ -21,6 +24,7 @@ export default function Header() {
             className="p-2 m-2 rounded-md "
             onClick={() => {
               cookies.remove("TOKEN", { path: "/" });
+              changeLoggedIn(false);
               router.push("/login");
             }}
           >

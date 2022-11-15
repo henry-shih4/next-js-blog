@@ -4,12 +4,12 @@ const jwt = require("jsonwebtoken");
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
   const { method } = req;
-  const secret = process.env.JWT_SECRET_KEY;
 
+  const secret = process.env.JWT_SECRET_KEY;
   const token = req.headers.authorization;
   jwt.verify(token, secret, async function (err, decoded) {
     if (!err && decoded) {
-      return await fn(req, res);
+      return;
     }
     res.status(500).json({ message: "not authenticated" });
   });
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // Send all the posts
+  // get all users
   if (method === "GET") {
     const posts = await db.collection("users").find({}).toArray();
     res.status(200).json(posts);
