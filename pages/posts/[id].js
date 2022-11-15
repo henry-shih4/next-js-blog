@@ -1,10 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 export default function post({ post }) {
   const [time, setTime] = useState();
   const router = useRouter();
   const { id } = router.query;
+  const token = cookies.get("TOKEN");
 
   useEffect(() => {
     const d = new Date(post.createdAt);
@@ -40,6 +43,7 @@ export default function post({ post }) {
       // Tell the server we're sending JSON.
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token}`,
       },
       // Body of the request is the JSON data we created above.
       body: JSONdata,

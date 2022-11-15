@@ -1,10 +1,15 @@
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
+const jwt = require("jsonwebtoken");
 
-export default async function handler(request, response) {
+export default async function handler(req, res) {
   const { db } = await connectToDatabase();
-  const { method } = request;
-  const { id } = request.query;
+  const { method } = req;
+  const { id } = req.query;
+  const token = req.headers.authorization;
+  const secret = process.env.JWT_SECRET_KEY;
+
+    
 
   if (method === "GET") {
     const post = await db
@@ -12,8 +17,8 @@ export default async function handler(request, response) {
       .findOne({ _id: new ObjectId(id) });
 
     if (!post) {
-      return response.status(400).json("Post not found");
+      return res.status(400).json("Post not found");
     }
-    return response.status(200).json(post);
+    return res.status(200).json(post);
   }
 }

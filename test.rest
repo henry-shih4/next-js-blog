@@ -1,20 +1,13 @@
 GET http://localhost:3000/api/users
 Content-Type: application/json
-Authorization: 1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiaWF0IjoxNjY4NDg4MjE2LCJleHAiOjE2Njg1NzQ2MTZ9.ZYEqBJM6bFWTy03hDJGvq_35uacsetHjHHcQWIgQ7bI
 
 ###
 
-POST http://localhost:3000/api/posts
+GET http://localhost:3000/api/posts
 Content-Type: application/json
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiaWF0IjoxNjY4NDg4MjE2LCJleHAiOjE2Njg1NzQ2MTZ9.ZYEqBJM6bFWTy03hDJGvq_35uacsetHjHHcQWIgQ7bI
 
-{
-    "title":"Chest and Leg Workout",
-    "content":"Easy Warm up workout",
-    "category":"Weight Training ",
-    "duration":"45 min",
-    "exercises":[{"name":"Bench Press","sets":"3", "reps":"10","weight":"135"}, {"name":"Squat","sets":"2", "reps":"15","weight":"100"} ]
-    
-}
 
 ###
 

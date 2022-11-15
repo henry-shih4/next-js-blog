@@ -32,10 +32,6 @@ export default function home({ posts }) {
     console.log(token);
   }, [token]);
 
-  // useEffect(() => {
-  //   console.log(exerciseList);
-  // }, [exerciseList]);
-
   async function handleFormSubmit(e) {
     e.preventDefault();
     const data = {
@@ -54,6 +50,7 @@ export default function home({ posts }) {
       // Tell the server we're sending JSON.
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token}`,
       },
       // Body of the request is the JSON data we created above.
       body: JSONdata,
@@ -271,6 +268,8 @@ export default function home({ posts }) {
 }
 
 export async function getServerSideProps(context) {
+  const token = context.cookies.get("TOKEN");
+  console.log(token);
   let res = await fetch("http://localhost:3000/api/posts", {
     method: "GET",
     headers: {

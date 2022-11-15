@@ -28,6 +28,7 @@ export default function login() {
         // Tell the server we're sending JSON.
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         // Body of the request is the JSON data we created above.
         body: JSONdata,
