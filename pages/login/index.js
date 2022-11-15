@@ -10,7 +10,8 @@ export default function login() {
   const [password, setPassword] = useState();
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
+    useContext(LoginContext);
 
   useEffect(() => {
     console.log(isLoggedIn);
@@ -48,6 +49,7 @@ export default function login() {
           maxAge: 600,
         });
         changeLoggedIn(true);
+        console.log(result.data.username, result.data.userId);
         router.push("/posts");
       }
     } catch (e) {
