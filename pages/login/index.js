@@ -4,6 +4,7 @@ const cookies = new Cookies();
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { LoginContext } from "../../context/LoginContext";
+import Loading from "../../components/Loading";
 
 export default function login() {
   const [username, setUsername] = useState();
@@ -11,14 +12,6 @@ export default function login() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
   const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
-
-  useEffect(() => {
-    console.log(isLoggedIn);
-  });
-
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -59,6 +52,7 @@ export default function login() {
 
   return (
     <>
+      <Loading></Loading>
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="my-2">Login</div>
         <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">

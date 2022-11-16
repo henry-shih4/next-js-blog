@@ -4,7 +4,8 @@ import Header from "../../components/Header";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
-import LoginRedirect from "../../components/LoginRedirect";
+import Loading from "../../components/Loading";
+// import LoginRedirect from "../../components/LoginRedirect";
 
 export default function home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -27,12 +28,27 @@ export default function home({ posts }) {
   };
 
   useEffect(() => {
+    if (token) {
+      changeLoggedIn(true);
+    } else if (!token) {
+      changeLoggedIn(false);
+    }
+  }, [token, changeLoggedIn]);
+
+  useEffect(() => {
     setPostsState(posts);
   }, [posts]);
 
   useEffect(() => {
-    console.log(token);
-  }, [token]);
+    console.log(posts.status);
+    if (posts.message === "not authenticated") {
+      router.push("/login");
+    }
+  });
+
+  useEffect(() => {
+    console.log(isLoggedIn);
+  });
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -285,7 +301,7 @@ export default function home({ posts }) {
           </div>
         </>
       ) : (
-        <LoginRedirect />
+        <Loading />
       )}
     </>
   );

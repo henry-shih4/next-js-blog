@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -6,8 +6,20 @@ const LoginContext = createContext();
 
 function LoginProvider(props) {
   const token = cookies.get("TOKEN");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [activeUser, setActiveUser] = useState("guest");
+
+  // useEffect(() => {
+  //   if (token) {
+  //     changeLoggedIn(true);
+  //   } else if (!token) {
+  //     changeLoggedIn(false);
+  //   }
+  // }, [token, changeLoggedIn]);
+
+  useEffect(() => {
+    console.log(token);
+  });
 
   // function setCurrentUser(user) {
   //   if (user) {
@@ -16,11 +28,10 @@ function LoginProvider(props) {
   // }
 
   function changeLoggedIn(value) {
-    setIsLoggedIn(value);
     if (value === false) {
       cookies.remove("TOKEN", { path: "/login" });
     } else {
-      return;
+      setIsLoggedIn(value);
     }
   }
 

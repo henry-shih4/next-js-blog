@@ -12,7 +12,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="p-2 flex justify-between items-center">
+      <div className="p-2 flex justify-between items-center">
         <div>ExerciseBlog</div>
         <div className="flex">
           <MagnifyingGlassIcon className="h-6 m-1" />
@@ -31,7 +31,7 @@ export default function Header() {
             Logout
           </button>
         </div>
-      </header>
+      </div>
     </>
   );
 }
