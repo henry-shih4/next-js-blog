@@ -12,6 +12,7 @@ export default function login() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
   const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
+  const [loading, setLoading] = useState(false);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -33,6 +34,7 @@ export default function login() {
         // Body of the request is the JSON data we created above.
         body: JSONdata,
       };
+      setLoading(true);
       const response = await fetch(endpoint, options);
       const result = await response.json();
       console.log(result);
@@ -41,7 +43,7 @@ export default function login() {
           maxAge: 600,
         });
         changeLoggedIn(true);
-        console.log(result.data.username, result.data.userId);
+        // console.log(result.data.username, result.data.userId);
         // setCurrentUser(result.data.username);
         router.push("/posts");
       }
@@ -52,45 +54,48 @@ export default function login() {
 
   return (
     <>
-      <Loading></Loading>
-      <div className="flex flex-col justify-center items-center h-screen">
-        <div className="my-2">Login</div>
-        <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
-          <form className="flex flex-col space-y-2">
-            <label for="username">Username:</label>
-            <input
-              id="username"
-              className="border border-black"
-              type="text"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-            />
-            <label for="password">Password:</label>
-            <input
-              id="password"
-              className="border border-black"
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <div className="flex justify-center items-center flex-col space-y-2">
-              <button className="buttons" onClick={handleFormSubmit}>
-                Login
-              </button>
-              <Link
-                className="text-center w-[80px] hover:underline"
-                href="/register"
-              >
-                Register
-              </Link>
-            </div>
-          </form>
+      {loading ? (
+        <Loading></Loading>
+      ) : (
+        <div className="flex flex-col justify-center items-center h-screen">
+          <div className="my-2">Login</div>
+          <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
+            <form className="flex flex-col space-y-2">
+              <label for="username">Username:</label>
+              <input
+                id="username"
+                className="border border-black"
+                type="text"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+              />
+              <label for="password">Password:</label>
+              <input
+                id="password"
+                className="border border-black"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <div className="flex justify-center items-center flex-col space-y-2">
+                <button className="buttons" onClick={handleFormSubmit}>
+                  Login
+                </button>
+                <Link
+                  className="text-center w-[80px] hover:underline"
+                  href="/register"
+                >
+                  Register
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

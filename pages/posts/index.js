@@ -40,15 +40,14 @@ export default function home({ posts }) {
   }, [posts]);
 
   useEffect(() => {
-    console.log(posts.status);
     if (posts.message === "not authenticated") {
       router.push("/login");
     }
   });
 
-  useEffect(() => {
-    console.log(isLoggedIn);
-  });
+  // useEffect(() => {
+  //   console.log(isLoggedIn);
+  // });
 
   async function handleFormSubmit(e) {
     e.preventDefault();

@@ -17,9 +17,9 @@ function LoginProvider(props) {
   //   }
   // }, [token, changeLoggedIn]);
 
-  useEffect(() => {
-    console.log(token);
-  });
+  // useEffect(() => {
+  //   console.log(token);
+  // });
 
   // function setCurrentUser(user) {
   //   if (user) {
