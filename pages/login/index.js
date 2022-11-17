@@ -11,8 +11,13 @@ export default function login() {
   const [password, setPassword] = useState();
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
+    useContext(LoginContext);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    console.log(activeUser);
+  });
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -39,12 +44,16 @@ export default function login() {
       const result = await response.json();
       console.log(result);
       if (result.message === "Login Successful") {
-        cookies.set("TOKEN", result.data.token, {
-          maxAge: 600,
-        });
+        cookies.set(
+          "TOKEN",
+          result.data.token,
+          {
+            maxAge: 600,
+          },
+          { path: "/" }
+        );
         changeLoggedIn(true);
-        // console.log(result.data.username, result.data.userId);
-        // setCurrentUser(result.data.username);
+        setCurrentUser({ user: result.data.username, id: result.data.userId });
         router.push("/posts");
       }
     } catch (e) {

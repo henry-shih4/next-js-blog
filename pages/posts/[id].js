@@ -1,13 +1,23 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
+import { LoginContext } from "../../context/LoginContext";
+import Header from "../../components/Header";
+import Loading from "../../components/Loading";
 
 export default function post({ post }) {
   const [time, setTime] = useState();
   const router = useRouter();
   const { id } = router.query;
   const token = cookies.get("TOKEN");
+  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
+
+  useEffect(() => {
+    if (post.status === 401) {
+      router.push("/login");
+    }
+  }, [post]);
 
   useEffect(() => {
     const d = new Date(post.createdAt);
@@ -58,56 +68,73 @@ export default function post({ post }) {
 
   return (
     <>
-      {post ? (
-        <>
-          <div>{time}</div>
-          <div>{post.title}</div>
-          <div>{post.content}</div>
-          <div>{post.category}</div>
-          <div>{post.duration} min</div>
-          <div>
-            {post.exercises
-              ? post.exercises.map((exercise, index) => {
-                  return (
-                    <div>
-                      <div className="border border-black w-[200px]">
-                        <div>Exercise {index + 1}</div>
-                        <div>{exercise.name}</div>
-                        {exercise.weight ? (
-                          <div>{exercise.weight} lbs</div>
-                        ) : null}
-                        {exercise.sets ? <div>{exercise.sets} sets</div> : null}
-                        {exercise.reps ? <div>{exercise.reps} reps</div> : null}
-                      </div>
-                    </div>
-                  );
-                })
-              : null}
+      <Header />
+      {isLoggedIn ? (
+        <div className="h-screen flex flex-col justify-center items-center">
+          {post ? (
+            <>
+              <div className="flex flex-col justify-center items-center ">
+                <div>{time}</div>
+                <div>Workout: {post.title}</div>
+                <div>Type: {post.category}</div>
+                <div>Duration: {post.duration} min</div>
+                <div>Notes: {post.content}</div>
+              </div>
+              <div className="flex justify-center items-center flex-wrap">
+                {post.exercises
+                  ? post.exercises.map((exercise, index) => {
+                      return (
+                        <div>
+                          <div className="border border-black w-[200px] flex flex-col justify-center items-center">
+                            <div>Exercise {index + 1}</div>
+                            <div>{exercise.name}</div>
+                            {exercise.weight ? (
+                              <div>{exercise.weight} lbs</div>
+                            ) : null}
+                            {exercise.sets ? (
+                              <div>{exercise.sets} sets</div>
+                            ) : null}
+                            {exercise.reps ? (
+                              <div>{exercise.reps} reps</div>
+                            ) : null}
+                          </div>
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+            </>
+          ) : null}
+          <div className="flex justify-center space-x-4">
+            <button className="p-2 buttons" onClick={handlePostDelete}>
+              Delete
+            </button>
+            <button
+              className="p-2 buttons"
+              onClick={() => {
+                router.push("/posts");
+              }}
+            >
+              Home
+            </button>
           </div>
-        </>
-      ) : null}
-      <button className="p-4" onClick={handlePostDelete}>
-        delete
-      </button>
-      <button
-        className="p-4"
-        onClick={() => {
-          router.push("/posts");
-        }}
-      >
-        back to home
-      </button>
+        </div>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
+  const serverToken = context.req.cookies;
 
   let res = await fetch(`http://localhost:3000/api/posts/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `${serverToken.TOKEN}`,
     },
   });
   let post = await res.json();

@@ -5,7 +5,6 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Loading from "../../components/Loading";
-// import LoginRedirect from "../../components/LoginRedirect";
 
 export default function home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -27,13 +26,6 @@ export default function home({ posts }) {
     router.replace(router.asPath);
   };
 
-  useEffect(() => {
-    if (token) {
-      changeLoggedIn(true);
-    } else if (!token) {
-      changeLoggedIn(false);
-    }
-  }, [token, changeLoggedIn]);
 
   useEffect(() => {
     setPostsState(posts);
@@ -44,10 +36,6 @@ export default function home({ posts }) {
       router.push("/login");
     }
   });
-
-  // useEffect(() => {
-  //   console.log(isLoggedIn);
-  // });
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -307,12 +295,12 @@ export default function home({ posts }) {
 }
 
 export async function getServerSideProps(context) {
-  const token = context.req.cookies;
+  const serverToken = context.req.cookies;
   let res = await fetch("http://localhost:3000/api/posts", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${token.TOKEN}`,
+      Authorization: `${serverToken.TOKEN}`,
     },
   });
   let posts = await res.json();

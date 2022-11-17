@@ -1,6 +1,5 @@
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
-import { resolve } from "styled-jsx/css";
 const jwt = require("jsonwebtoken");
 
 export default async function handler(req, res, next) {

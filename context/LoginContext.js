@@ -7,25 +7,25 @@ const LoginContext = createContext();
 function LoginProvider(props) {
   const token = cookies.get("TOKEN");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [activeUser, setActiveUser] = useState("guest");
+  const [activeUser, setActiveUser] = useState({ user: "guest", id: "none" });
 
-  // useEffect(() => {
-  //   if (token) {
-  //     changeLoggedIn(true);
-  //   } else if (!token) {
-  //     changeLoggedIn(false);
-  //   }
-  // }, [token, changeLoggedIn]);
+  useEffect(() => {
+    if (token) {
+      changeLoggedIn(true);
+    } else if (!token) {
+      changeLoggedIn(false);
+    }
+  }, [token, changeLoggedIn]);
 
   // useEffect(() => {
   //   console.log(token);
   // });
 
-  // function setCurrentUser(user) {
-  //   if (user) {
-  //     setActiveUser(user);
-  //   } else return;
-  // }
+  function setCurrentUser(user) {
+    if (user) {
+      setActiveUser(user);
+    } else return;
+  }
 
   function changeLoggedIn(value) {
     if (value === false) {
@@ -36,7 +36,9 @@ function LoginProvider(props) {
   }
 
   return (
-    <LoginContext.Provider value={[isLoggedIn, changeLoggedIn]}>
+    <LoginContext.Provider
+      value={[isLoggedIn, changeLoggedIn, activeUser, setCurrentUser]}
+    >
       {props.children}
     </LoginContext.Provider>
   );

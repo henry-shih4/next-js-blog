@@ -23,9 +23,13 @@ export default function Header() {
           <button
             className="p-2 m-2 rounded-md "
             onClick={() => {
-              cookies.remove("TOKEN", { path: "/" });
-              changeLoggedIn(false);
-              router.push("/login");
+              if (token) {
+                cookies.remove("TOKEN", { path: "/" });
+                changeLoggedIn(false);
+                router.push("/login");
+              } else {
+                router.push("/login");
+              }
             }}
           >
             Logout
