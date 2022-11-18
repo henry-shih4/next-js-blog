@@ -17,15 +17,19 @@ function LoginProvider(props) {
     }
   }, [token, changeLoggedIn]);
 
-  // useEffect(() => {
-  //   console.log(token);
-  // });
+  useEffect(() => {
+    setActiveUser(parseJwt(token));
+  }, [token]);
 
-  function setCurrentUser(user) {
-    if (user) {
-      setActiveUser(user);
-    } else return;
-  }
+  useEffect(() => {
+    console.log(activeUser);
+  });
+
+  // function setCurrentUser(user) {
+  //   if (user) {
+  //     setActiveUser(user);
+  //   }
+  // }
 
   function changeLoggedIn(value) {
     if (value === false) {
@@ -35,10 +39,17 @@ function LoginProvider(props) {
     }
   }
 
+  function parseJwt(token) {
+    if (!token) {
+      return;
+    }
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+  }
+
   return (
-    <LoginContext.Provider
-      value={[isLoggedIn, changeLoggedIn, activeUser, setCurrentUser]}
-    >
+    <LoginContext.Provider value={[isLoggedIn, changeLoggedIn, activeUser]}>
       {props.children}
     </LoginContext.Provider>
   );

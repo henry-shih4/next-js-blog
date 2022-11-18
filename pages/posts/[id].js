@@ -14,6 +14,10 @@ export default function post({ post }) {
   const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
 
   useEffect(() => {
+    console.log(post);
+  });
+
+  useEffect(() => {
     if (post.status === 401) {
       router.push("/login");
     }
@@ -74,6 +78,7 @@ export default function post({ post }) {
           {post ? (
             <>
               <div className="flex flex-col justify-center items-center ">
+                <div>{post.author}</div>
                 <div>{time}</div>
                 <div>Workout: {post.title}</div>
                 <div>Type: {post.category}</div>

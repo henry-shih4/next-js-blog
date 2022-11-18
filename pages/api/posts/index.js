@@ -17,9 +17,11 @@ export default async function handler(req, res, next) {
       }
 
       if (method === "POST") {
-        const { title, content, category, duration, exercises } = req.body;
+        const { title, content, category, duration, exercises, author } =
+          req.body;
         // Insert a post into DB
         const response = await db.collection("posts").insertOne({
+          author,
           title,
           content,
           category,

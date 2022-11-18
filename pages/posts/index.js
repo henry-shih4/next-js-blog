@@ -19,13 +19,12 @@ export default function home({ posts }) {
   const [reps, setReps] = useState();
   const [weight, setWeight] = useState();
   const token = cookies.get("TOKEN");
-  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
   const router = useRouter();
 
   const refreshData = () => {
     router.replace(router.asPath);
   };
-
 
   useEffect(() => {
     setPostsState(posts);
@@ -45,6 +44,7 @@ export default function home({ posts }) {
       category: category,
       duration: duration,
       exercises: exerciseList,
+      author: activeUser.username,
     };
     const JSONdata = JSON.stringify(data);
     const endpoint = "/api/posts";
@@ -67,7 +67,7 @@ export default function home({ posts }) {
       refreshData();
     }
     console.log(result);
-
+    console.log(response)
     setPostsState([...postsState, result]);
     setTitle("");
     setContent("");

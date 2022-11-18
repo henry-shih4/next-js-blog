@@ -15,9 +15,9 @@ export default function login() {
     useContext(LoginContext);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(activeUser);
-  });
+  // useEffect(() => {
+  //   console.log(activeUser);
+  // });
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -53,9 +53,10 @@ export default function login() {
           { path: "/" }
         );
         changeLoggedIn(true);
-        setCurrentUser({ user: result.data.username, id: result.data.userId });
         router.push("/posts");
+        return;
       }
+      setLoading(false);
     } catch (e) {
       console.log(e);
     }

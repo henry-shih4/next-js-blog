@@ -8,7 +8,7 @@ import { LoginContext } from "../context/LoginContext";
 export default function Header() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [isLoggedIn, changeLoggedIn, ,] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, activeUser] = useContext(LoginContext);
 
   return (
     <>
@@ -18,8 +18,8 @@ export default function Header() {
           <MagnifyingGlassIcon className="h-6 m-1" />
           <input type="text" className="border border-gray-300" />
         </div>
-        <div>
-          {" "}
+        <div className="flex items-center">
+          <div>{activeUser ? activeUser.username : null}</div>
           <button
             className="p-2 m-2 rounded-md "
             onClick={() => {
