@@ -22,6 +22,7 @@ export default async function handler(req, res) {
         return res.status(200).json(post);
       }
     }
+    console.log("unauthorized");
     return res.status(401).json({ status: 401, message: "unauthorized" });
   });
 }
