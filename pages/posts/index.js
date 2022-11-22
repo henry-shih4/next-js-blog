@@ -31,7 +31,7 @@ export default function home({ posts }) {
   }, [posts]);
 
   useEffect(() => {
-    if (posts.message === "not authenticated") {
+    if (posts.message === "not authenticated" || !posts) {
       router.push("/login");
     }
   });
@@ -67,7 +67,7 @@ export default function home({ posts }) {
       refreshData();
     }
     console.log(result);
-    console.log(response)
+    console.log(response);
     setPostsState([...postsState, result]);
     setTitle("");
     setContent("");
@@ -296,6 +296,7 @@ export default function home({ posts }) {
 
 export async function getServerSideProps(context) {
   const serverToken = context.req.cookies;
+
   let res = await fetch("http://localhost:3000/api/posts", {
     method: "GET",
     headers: {
@@ -303,9 +304,11 @@ export async function getServerSideProps(context) {
       Authorization: `${serverToken.TOKEN}`,
     },
   });
+
   let posts = await res.json();
 
   return {
     props: { posts },
   };
 }
+
