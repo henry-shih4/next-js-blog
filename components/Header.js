@@ -11,15 +11,31 @@ export default function Header() {
   const router = useRouter();
   const [isLoggedIn, changeLoggedIn, activeUser] = useContext(LoginContext);
   const [usersState, setUsersState] = useState();
+  const [search, setSearch] = useState();
+  const [selectedUser, setSelectedUser] = useState();
 
   useEffect(() => {
     getUsers();
   }, []);
 
-  useEffect(()=>{
-        console.log(usersState);
-  })
+  useEffect(() => {
+    console.log(usersState);
+  }, [usersState]);
 
+  useEffect(() => {
+    console.log(search);
+    if (search && search.length > 2) {
+      let user = usersState.filter((user) => user.username.includes(search));
+      console.log(user);
+      setSelectedUser(user);
+    } else {
+      setSelectedUser("");
+    }
+  }, [search]);
+
+  useEffect(() => {
+    console.log(selectedUser);
+  });
   async function getUsers() {
     let res = await fetch("http://localhost:3000/api/users", {
       method: "GET",
@@ -40,7 +56,21 @@ export default function Header() {
         </div>
         <div className="flex">
           <MagnifyingGlassIcon className="h-6 m-1" />
-          <input type="text" className="border border-gray-300" />
+          <div className="flex flex-col relative">
+            <input
+              type="text"
+              className="border border-gray-300"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+            <div className="absolute -bottom-5 bg-slate-200 w-full">
+              {selectedUser
+                ? selectedUser.map((user) => <div>{user.username}</div>)
+                : null}
+                {/* onClick={()=>{router.push(`/profile/${selectedUser}`);}} */}
+            </div>
+          </div>
         </div>
         <div className="flex items-center">
           <div>

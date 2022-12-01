@@ -43,6 +43,11 @@ export default function user() {
           <div>{profile.username}</div>
           <div>{profile.email}</div>
           <div>{profile._id}</div>
+          <div>
+            {`${new Date(activeUser.createdAt).getMonth() + 1}/${new Date(
+              activeUser.createdAt
+            ).getDate()}/${new Date(activeUser.createdAt).getFullYear()}`}
+          </div>
         </>
       ) : null}
     </>

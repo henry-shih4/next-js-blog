@@ -20,6 +20,7 @@ export default async function handler(req, res) {
             username: user.username,
             userId: user._id,
             email: user.email,
+            createdAt: user.createdAt,
           },
           secret,
           { expiresIn: "24h" }
