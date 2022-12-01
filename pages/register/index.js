@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 export default function register() {
   const [username, setUsername] = useState();
@@ -72,10 +73,17 @@ export default function register() {
                 setEmail(e.target.value);
               }}
             />
-            <div className="flex justify-center">
+            <div className="flex justify-center flex-col items-center space-y-2">
               <button className="buttons" onClick={handleFormSubmit}>
-                register
+                Register
               </button>
+
+              <Link
+                className="text-center w-[80px] hover:underline"
+                href="/login"
+              >
+                Login
+              </Link>
             </div>
           </form>
         </div>

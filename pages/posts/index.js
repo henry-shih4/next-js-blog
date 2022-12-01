@@ -122,6 +122,7 @@ export default function home({ posts }) {
                               : "AM"
                           }`}
                         </div>
+                        <div>{post.author}</div>
                       </div>
                     );
                   })
