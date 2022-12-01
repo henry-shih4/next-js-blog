@@ -5,9 +5,6 @@ export default function profile() {
   const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
     useContext(LoginContext);
 
-  useEffect(() => {
-    console.log(activeUser);
-  });
   return (
     <>
       {activeUser ? (

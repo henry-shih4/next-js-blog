@@ -12,30 +12,27 @@ export default function Header() {
   const [isLoggedIn, changeLoggedIn, activeUser] = useContext(LoginContext);
   const [usersState, setUsersState] = useState();
   const [search, setSearch] = useState();
-  const [selectedUser, setSelectedUser] = useState();
+  const [userSuggestions, setUserSuggestions] = useState();
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     getUsers();
   }, []);
 
-  useEffect(() => {
-    console.log(usersState);
-  }, [usersState]);
+  // useEffect(() => {
+  //   console.log(usersState);
+  // }, [usersState]);
 
   useEffect(() => {
-    console.log(search);
     if (search && search.length > 2) {
       let user = usersState.filter((user) => user.username.includes(search));
       console.log(user);
-      setSelectedUser(user);
+      setUserSuggestions(user);
     } else {
-      setSelectedUser("");
+      setUserSuggestions("");
     }
   }, [search]);
 
-  useEffect(() => {
-    console.log(selectedUser);
-  });
   async function getUsers() {
     let res = await fetch("http://localhost:3000/api/users", {
       method: "GET",
@@ -56,26 +53,35 @@ export default function Header() {
         </div>
         <div className="flex">
           <MagnifyingGlassIcon className="h-6 m-1" />
-          <div className="flex flex-col relative">
-            <input
-              type="text"
-              className="border border-gray-300"
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-            />
-            <div className="absolute -bottom-5 bg-slate-200 w-full">
-              {selectedUser
-                ? selectedUser.map((user) => (
-                    <div
-                      onClick={() => {
-                        router.push(`/profile/${user._id}`);
-                      }}
-                    >
-                      {user.username}
-                    </div>
-                  ))
-                : null}
+          <div className="flex flex-col">
+            <div className="relative w-[200px]">
+              <input
+                type="text"
+                className="border border-gray-300 w-full"
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
+              <div
+                className={
+                  userSuggestions
+                    ? "absolute top-7 bg-slate-200 w-full"
+                    : "hidden" + "absolute top-7 bg-slate-200 w-full"
+                }
+              >
+                {userSuggestions
+                  ? userSuggestions.map((user) => (
+                      <div
+                        className=""
+                        onClick={() => {
+                          router.push(`/profile/${user._id}`);
+                        }}
+                      >
+                        {user.username}
+                      </div>
+                    ))
+                  : null}
+              </div>
             </div>
           </div>
         </div>

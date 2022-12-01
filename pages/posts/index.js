@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Loading from "../../components/Loading";
+import Link from "next/link";
 
 export default function home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -14,7 +15,6 @@ export default function home({ posts }) {
   const [duration, setDuration] = useState();
   const [exercise, setExercise] = useState({});
   const [exerciseList, setExerciseList] = useState([]);
-  const [time, setTime] = useState();
   const [sets, setSets] = useState();
   const [reps, setReps] = useState();
   const [weight, setWeight] = useState();
@@ -288,7 +288,9 @@ export default function home({ posts }) {
           </div>
         </>
       ) : (
-        <Loading />
+        <div>
+          <Link href="/login">Please Log in</Link>
+        </div>
       )}
     </>
   );
@@ -311,4 +313,3 @@ export async function getServerSideProps(context) {
     props: { posts },
   };
 }
-
