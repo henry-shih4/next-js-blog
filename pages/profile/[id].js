@@ -10,10 +10,6 @@ export default function user() {
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
-    console.log(profile);
-  });
-
-  useEffect(() => {
     getUser();
   }, [id]);
 
@@ -29,8 +25,6 @@ export default function user() {
     };
     const response = await fetch(endpoint, options);
     const result = await response.json();
-    // console.log(result);
-    // console.log(response);
 
     const selectedUser = id ? result.filter((user) => user._id === id) : null;
     selectedUser ? setProfile(selectedUser[0]) : null;
@@ -40,13 +34,13 @@ export default function user() {
     <>
       {profile ? (
         <>
-          <div>{profile.username}</div>
-          <div>{profile.email}</div>
-          <div>{profile._id}</div>
+          <div>user: {profile.username}</div>
+          <div>email: {profile.email}</div>
           <div>
-            {`${new Date(activeUser.createdAt).getMonth() + 1}/${new Date(
-              activeUser.createdAt
-            ).getDate()}/${new Date(activeUser.createdAt).getFullYear()}`}
+            joined on:
+            {` ${new Date(profile.createdAt).getMonth() + 1}/${new Date(
+              profile.createdAt
+            ).getDate()}/${new Date(profile.createdAt).getFullYear()}`}
           </div>
         </>
       ) : null}

@@ -21,16 +21,6 @@ function LoginProvider(props) {
     setActiveUser(parseJwt(token));
   }, [token]);
 
-  useEffect(() => {
-    console.log(activeUser);
-  });
-
-  // function setCurrentUser(user) {
-  //   if (user) {
-  //     setActiveUser(user);
-  //   }
-  // }
-
   function changeLoggedIn(value) {
     if (value === false) {
       cookies.remove("TOKEN", { path: "/login" });

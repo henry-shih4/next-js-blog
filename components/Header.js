@@ -66,9 +66,16 @@ export default function Header() {
             />
             <div className="absolute -bottom-5 bg-slate-200 w-full">
               {selectedUser
-                ? selectedUser.map((user) => <div>{user.username}</div>)
+                ? selectedUser.map((user) => (
+                    <div
+                      onClick={() => {
+                        router.push(`/profile/${user._id}`);
+                      }}
+                    >
+                      {user.username}
+                    </div>
+                  ))
                 : null}
-                {/* onClick={()=>{router.push(`/profile/${selectedUser}`);}} */}
             </div>
           </div>
         </div>
