@@ -19,6 +19,7 @@ export default function home({ posts }) {
   const [reps, setReps] = useState();
   const [weight, setWeight] = useState();
   const [hoveredPost, setHoveredPost] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const token = cookies.get("TOKEN");
   const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
   const router = useRouter();
@@ -66,6 +67,7 @@ export default function home({ posts }) {
     const result = await response.json();
     if (response.status < 300) {
       refreshData();
+      setShowAdd(false);
     }
     console.log(result);
     console.log(response);
@@ -95,10 +97,16 @@ export default function home({ posts }) {
             <div className="">
               <div className="flex justify-between items-center">
                 <div>Workout Feed</div>
-                <button>Add Workout</button>
+                <button
+                  onClick={() => {
+                    setShowAdd(true);
+                  }}
+                >
+                  Add Workout
+                </button>
               </div>
-              <div className="bg-slate-200 w-[400px] h-[600px] overflow-visible">
-                <div className="pb-14 h-full flex flex-col-reverse justify-center items-center overflow-x-hidden overflow-y-scroll bg-red-100">
+              <div className="bg-slate-200 w-[400px] h-[600px] flex justify-center items-center overflow-scroll">
+                <div className="w-max flex flex-col-reverse justify-center items-center bg-red-100 h-full ">
                   {postsState
                     ? postsState.map((post) => {
                         return (
@@ -172,7 +180,20 @@ export default function home({ posts }) {
                 </div>
               </div>
             </div>
-            <div className="absolute bg-red-200 top-50 w-screen h-screen">
+            <div
+              className={
+                showAdd
+                  ? "absolute bg-slate-200 opacity-100 z-10 top-50 w-screen h-[calc(100vh-48px)]"
+                  : "hidden"
+              }
+            >
+              <button
+                onClick={() => {
+                  setShowAdd(false);
+                }}
+              >
+                x
+              </button>
               <form
                 className="flex justify-center items-center flex-col h-full"
                 onSubmit={handleFormSubmit}
