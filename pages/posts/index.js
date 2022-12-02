@@ -105,13 +105,13 @@ export default function home({ posts }) {
                   Add Workout
                 </button>
               </div>
-              <div className="bg-slate-200 w-[400px] h-[600px] flex justify-center items-center overflow-scroll">
-                <div className="w-max flex flex-col-reverse justify-center items-center bg-red-100 h-full ">
+              <div className="bg-slate-200 w-[400px] h-[600px] overflow-auto">
+                <div className="flex flex-col-reverse justify-center items-center">
                   {postsState
                     ? postsState.map((post) => {
                         return (
                           <div
-                            className="bg-red-300 min-h-[100px] w-[240px] flex my-2 justify-center items-center relative"
+                            className="bg-red-300 flex min-h-[100px] w-[240px] my-2 justify-center items-center relative"
                             key={post._id}
                             onMouseEnter={() => {
                               setHoveredPost(post._id);
@@ -152,7 +152,7 @@ export default function home({ posts }) {
                               className={
                                 post._id === hoveredPost
                                   ? "flex items-center justify-center cursor-pointer absolute right-2"
-                                  : "collapse "
+                                  : "collapse"
                               }
                             >
                               <svg
@@ -183,17 +183,29 @@ export default function home({ posts }) {
             <div
               className={
                 showAdd
-                  ? "absolute bg-slate-200 opacity-100 z-10 top-50 w-screen h-[calc(100vh-48px)]"
+                  ? "absolute bg-slate-200 z-10  min-w-[460px] h-[500px] flex flex-col justify-center items-center"
                   : "hidden"
               }
             >
-              <button
-                onClick={() => {
-                  setShowAdd(false);
-                }}
-              >
-                x
-              </button>
+              <div className="w-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="flex w-6 h-6 m-1 float-right hover:cursor-pointer"
+                  onClick={() => {
+                    setShowAdd(false);
+                  }}
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
               <form
                 className="flex justify-center items-center flex-col h-full"
                 onSubmit={handleFormSubmit}

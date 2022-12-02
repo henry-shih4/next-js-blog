@@ -65,7 +65,7 @@ export default function Header() {
               <div
                 className={
                   userSuggestions
-                    ? "absolute top-7 bg-slate-200 w-full"
+                    ? "absolute top-7 bg-slate-200 w-full z-10"
                     : "hidden" + "absolute top-7 bg-slate-200 w-full"
                 }
               >
