@@ -91,81 +91,92 @@ export default function home({ posts }) {
       {isLoggedIn ? (
         <>
           <Header />
-          <div className="flex flex-wrap justify-center items-center bg-blue-200 h-screen ">
+          <div className="flex flex-wrap justify-center items-center h-[calc(100vh-48px)] w-screen relative">
             <div className="">
-              <div>Workout Feed</div>
-              <div className="flex flex-col-reverse h-[600px] w-[400px] bg-slate-100 overflow-scroll overflow-x-hidden justify-center items-center space-y-3">
-                {postsState
-                  ? postsState.map((post) => {
-                      return (
-                        <div
-                          className="bg-red-300 min-h-[100px] w-[240px] flex space-x-8 justify-center relative"
-                          key={post._id}
-                          onMouseEnter={() => {
-                            setHoveredPost(post._id);
-                          }}
-                          onMouseLeave={() => {
-                            setHoveredPost("");
-                          }}
-                        >
-                          <div className="flex flex-col justify-center items-center">
-                            <div>{post.title}</div>
-                            <div>
-                              {`${
-                                new Date(post.createdAt).getMonth() + 1
-                              }/${new Date(
-                                post.createdAt
-                              ).getDate()}/${new Date(
-                                post.createdAt
-                              ).getFullYear()}, ${
-                                new Date(post.createdAt).getHours() > 12
-                                  ? new Date(post.createdAt).getHours() - 12
-                                  : new Date(post.createdAt).getHours()
-                              }:${
-                                (new Date(post.createdAt).getMinutes() > 10
-                                  ? ""
-                                  : "0") + new Date(post.createdAt).getMinutes()
-                              } ${
-                                new Date(post.createdAt).getHours() > 12
-                                  ? "PM"
-                                  : "AM"
-                              }`}
+              <div className="flex justify-between items-center">
+                <div>Workout Feed</div>
+                <button>Add Workout</button>
+              </div>
+              <div className="bg-slate-200 w-[400px] h-[600px] overflow-visible">
+                <div className="pb-14 h-full flex flex-col-reverse justify-center items-center overflow-x-hidden overflow-y-scroll bg-red-100">
+                  {postsState
+                    ? postsState.map((post) => {
+                        return (
+                          <div
+                            className="bg-red-300 min-h-[100px] w-[240px] flex my-2 justify-center items-center relative"
+                            key={post._id}
+                            onMouseEnter={() => {
+                              setHoveredPost(post._id);
+                            }}
+                            onMouseLeave={() => {
+                              setHoveredPost("");
+                            }}
+                          >
+                            <div className="flex flex-col justify-center items-center bg-white">
+                              <div>{post.title}</div>
+                              <div>
+                                {`${
+                                  new Date(post.createdAt).getMonth() + 1
+                                }/${new Date(
+                                  post.createdAt
+                                ).getDate()}/${new Date(
+                                  post.createdAt
+                                ).getFullYear()}, ${
+                                  new Date(post.createdAt).getHours() > 12
+                                    ? new Date(post.createdAt).getHours() - 12
+                                    : new Date(post.createdAt).getHours()
+                                }:${
+                                  (new Date(post.createdAt).getMinutes() > 10
+                                    ? ""
+                                    : "0") +
+                                  new Date(post.createdAt).getMinutes()
+                                } ${
+                                  new Date(post.createdAt).getHours() > 12
+                                    ? "PM"
+                                    : "AM"
+                                }`}
+                              </div>
+                              <div>
+                                {post.author ? `by ${post.author}` : null}
+                              </div>
                             </div>
-                            <div>
-                              {post.author ? `by ${post.author}` : null}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-center">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class={
+                            <div
+                              className={
                                 post._id === hoveredPost
-                                  ? "w-6 h-6 cursor-pointer absolute"
-                                  : "hidden"
+                                  ? "flex items-center justify-center cursor-pointer absolute right-2"
+                                  : "collapse "
                               }
-                              onClick={() => {
-                                router.push(`/posts/${post._id}`);
-                              }}
                             >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class={"w-6 h-6"}
+                                onClick={() => {
+                                  router.push(`/posts/${post._id}`);
+                                }}
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })
-                  : null}
+                        );
+                      })
+                    : null}
+                </div>
               </div>
             </div>
-            <div>
-              <form className="flex flex-col " onSubmit={handleFormSubmit}>
+            <div className="absolute bg-red-200 top-50 w-screen h-screen">
+              <form
+                className="flex justify-center items-center flex-col h-full"
+                onSubmit={handleFormSubmit}
+              >
                 <div className="flex flex-col bg-blue-300 justify-center items-center">
                   <div className="m-2 space-y-4 w-[400px]">
                     <div className="flex">

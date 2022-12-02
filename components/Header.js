@@ -47,7 +47,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="p-2 flex justify-between items-center">
+      <div className="h-12 p-2 flex justify-between items-center">
         <div>
           <Link href="/posts">ExerBlog</Link>
         </div>
