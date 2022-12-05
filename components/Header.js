@@ -13,15 +13,12 @@ export default function Header() {
   const [usersState, setUsersState] = useState();
   const [search, setSearch] = useState();
   const [userSuggestions, setUserSuggestions] = useState();
-  const [showSuggestions, setShowSuggestions] = useState(false);
+
 
   useEffect(() => {
     getUsers();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(usersState);
-  // }, [usersState]);
 
   useEffect(() => {
     if (search && search.length > 2) {

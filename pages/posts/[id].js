@@ -13,9 +13,6 @@ export default function post({ post }) {
   const token = cookies.get("TOKEN");
   const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
 
-  useEffect(() => {
-    console.log(post);
-  });
 
   useEffect(() => {
     if (post.status === 401) {
