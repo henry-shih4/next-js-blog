@@ -97,13 +97,28 @@ export default function home({ posts }) {
             <div className="">
               <div className="flex justify-between items-center">
                 <div>Workout Feed</div>
-                <button
-                  onClick={() => {
-                    setShowAdd(true);
-                  }}
-                >
+                <div className="flex justify-center items-center">
                   Add Workout
-                </button>
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      onClick={() => {
+                        setShowAdd(true);
+                      }}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div className="bg-slate-200 w-[400px] h-[600px] overflow-auto">
                 <div className="flex flex-col-reverse justify-center items-center">
