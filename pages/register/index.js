@@ -12,6 +12,7 @@ export default function register() {
       username: username,
       password: password,
       email: email,
+      numPosts: 0,
     };
     const JSONdata = JSON.stringify(data);
     const endpoint = "/api/users";

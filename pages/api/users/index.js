@@ -52,4 +52,10 @@ export default async function handler(req, res) {
     const posts = await db.collection("users").find({}).toArray();
     res.status(200).json(posts);
   }
+
+  // update number of posts
+  if(method==='PUT'){
+    const user = await db.collection("users".find({})).toArray();
+    res.status(200).json(user)
+  }
 }
