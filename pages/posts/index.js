@@ -6,6 +6,7 @@ const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Loading from "../../components/Loading";
 import Link from "next/link";
+import Leaderboard from "../../components/Leaderboard";
 
 export default function home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -69,8 +70,6 @@ export default function home({ posts }) {
       refreshData();
       setShowAdd(false);
     }
-    console.log(result);
-    console.log(response);
     setPostsState([...postsState, result]);
     setTitle("");
     setContent("");
@@ -93,7 +92,10 @@ export default function home({ posts }) {
       {isLoggedIn ? (
         <>
           <Header />
-          <div className="flex flex-wrap justify-center items-center h-[calc(100vh-48px)] w-screen relative">
+          <div className="flex flex-wrap justify-center items-center min-h-[calc(100vh-48px)] w-screen relative bg-slate-100 space-x-10">
+            <div className="flex justify-center items-start bg-red-300 mr-10 ">
+              <Leaderboard />
+            </div>
             <div className="">
               <div className="flex justify-between items-center">
                 <div>Workout Feed</div>
@@ -106,7 +108,7 @@ export default function home({ posts }) {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="w-6 h-6"
+                      className="ml-1 w-6 h-6 hover:scale-110"
                       onClick={() => {
                         setShowAdd(true);
                       }}
@@ -120,13 +122,13 @@ export default function home({ posts }) {
                   </button>
                 </div>
               </div>
-              <div className="bg-slate-200 w-[400px] h-[600px] overflow-auto">
+              <div className="bg-slate-200 w-[600px] h-[600px] overflow-auto">
                 <div className="flex flex-col-reverse justify-center items-center">
                   {postsState
                     ? postsState.map((post) => {
                         return (
                           <div
-                            className="bg-red-300 flex min-h-[100px] w-[240px] my-2 justify-center items-center relative"
+                            className="bg-red-300 flex min-h-[100px] w-3/4 my-2 justify-center items-center relative rounded-lg"
                             key={post._id}
                             onMouseEnter={() => {
                               setHoveredPost(post._id);
@@ -135,7 +137,7 @@ export default function home({ posts }) {
                               setHoveredPost("");
                             }}
                           >
-                            <div className="flex flex-col justify-center items-center bg-white">
+                            <div className="flex flex-col justify-center items-center bg-white p-3">
                               <div>{post.title}</div>
                               <div>
                                 {`${
@@ -166,8 +168,8 @@ export default function home({ posts }) {
                             <div
                               className={
                                 post._id === hoveredPost
-                                  ? "flex items-center justify-center cursor-pointer absolute right-2"
-                                  : "collapse"
+                                  ? "flex items-center justify-center cursor-pointer absolute right-3 flex-end"
+                                  : "hidden"
                               }
                             >
                               <svg

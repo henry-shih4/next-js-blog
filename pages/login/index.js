@@ -48,7 +48,7 @@ export default function login() {
           "TOKEN",
           result.data.token,
           {
-            maxAge: 300,
+            maxAge: 1200,
           },
           { path: "/" }
         );
