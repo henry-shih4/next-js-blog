@@ -23,6 +23,8 @@ export default function home({ posts }) {
   const [showAdd, setShowAdd] = useState(false);
   const token = cookies.get("TOKEN");
   const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
+  const [rankings, setRankings] = useState();
+
   const router = useRouter();
 
   const refreshData = () => {
@@ -32,7 +34,12 @@ export default function home({ posts }) {
   useEffect(() => {
     setPostsState(posts);
     updatePostCount();
+    generateLeaderboard();
   }, [posts]);
+
+  useEffect(() => {
+    generateLeaderboard();
+  }, []);
 
   useEffect(() => {
     if (posts.message === "not authenticated" || !posts) {
@@ -117,10 +124,21 @@ export default function home({ posts }) {
 
       const response2 = await fetch(endpoint2, options2);
       const result2 = await response2.json();
-      console.log(result2);
     }
   }
 
+  function generateLeaderboard() {
+    let map = {};
+    for (let i = 0; i < posts.length; i++) {
+      if (map[posts[i].author] == undefined) {
+        map[posts[i].author] = 1;
+      } else {
+        map[posts[i].author] += 1;
+      }
+    }
+    let sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
+    setRankings(sorted);
+  }
   return (
     <>
       {isLoggedIn ? (
@@ -128,7 +146,7 @@ export default function home({ posts }) {
           <Header />
           <div className="flex flex-wrap justify-center items-center min-h-[calc(100vh-48px)] w-screen relative bg-slate-100 space-x-10">
             <div className="flex justify-center items-start bg-red-300 mr-10 ">
-              <Leaderboard />
+              <Leaderboard rankings={rankings ? rankings : null} />
             </div>
             <div className="">
               <div className="flex justify-between items-center">

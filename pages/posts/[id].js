@@ -5,6 +5,7 @@ const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
+import postcss from "postcss";
 export default function post({ post }) {
   const [time, setTime] = useState();
   const router = useRouter();
@@ -12,12 +13,11 @@ export default function post({ post }) {
   const token = cookies.get("TOKEN");
   const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
 
-
   useEffect(() => {
-    if (post.status === 401) {
+    if (post.status === 401 || !post) {
       router.push("/login");
     }
-  }, [post]);
+  });
 
   useEffect(() => {
     const d = new Date(post.createdAt);
@@ -65,6 +65,8 @@ export default function post({ post }) {
       router.push("/posts");
     }
   }
+
+ 
 
   return (
     <>
