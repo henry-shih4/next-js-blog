@@ -49,34 +49,38 @@ export default function home({ posts }) {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-    const data = {
-      title: title,
-      content: content,
-      category: category,
-      duration: duration,
-      exercises: exerciseList,
-      author: activeUser.username,
-    };
-    const JSONdata = JSON.stringify(data);
-    const endpoint = "/api/posts";
+    try {
+      const data = {
+        title: title,
+        content: content,
+        category: category,
+        duration: duration,
+        exercises: exerciseList,
+        author: activeUser.username,
+      };
+      const JSONdata = JSON.stringify(data);
+      const endpoint = "/api/posts";
 
-    const options = {
-      // The method is POST because we are sending data.
-      method: "POST",
-      // Tell the server we're sending JSON.
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${token}`,
-      },
-      // Body of the request is the JSON data we created above.
-      body: JSONdata,
-    };
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        // Body of the request is the JSON data we created above.
+        body: JSONdata,
+      };
 
-    const response = await fetch(endpoint, options);
-    const result = await response.json();
-    if (response.status < 300) {
-      refreshData();
-      setShowAdd(false);
+      const response = await fetch(endpoint, options);
+      const result = await response.json();
+      if (response.status < 300) {
+        refreshData();
+        setShowAdd(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
     setPostsState([...postsState, result]);
     setTitle("");
@@ -98,31 +102,35 @@ export default function home({ posts }) {
 
   async function updatePostCount() {
     // update post count on user
-    if (posts && activeUser) {
-      let authorPosts =
-        [] || posts.filter((post) => post.author === activeUser.username);
+    try {
+      if (posts && activeUser) {
+        let authorPosts =
+          [] || posts.filter((post) => post.author === activeUser.username);
 
-      const data2 = {
-        username: activeUser.username,
-        numPosts: authorPosts.length,
-      };
-      const JSONdata2 = JSON.stringify(data2);
-      const endpoint2 = "/api/users";
+        const data2 = {
+          username: activeUser.username,
+          numPosts: authorPosts.length,
+        };
+        const JSONdata2 = JSON.stringify(data2);
+        const endpoint2 = "/api/users";
 
-      const options2 = {
-        // The method is POST because we are sending data.
-        method: "PUT",
-        // Tell the server we're sending JSON.
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        // Body of the request is the JSON data we created above.
-        body: JSONdata2,
-      };
+        const options2 = {
+          // The method is POST because we are sending data.
+          method: "PUT",
+          // Tell the server we're sending JSON.
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+          },
+          // Body of the request is the JSON data we created above.
+          body: JSONdata2,
+        };
 
-      const response2 = await fetch(endpoint2, options2);
-      const result2 = await response2.json();
+        const response2 = await fetch(endpoint2, options2);
+        const result2 = await response2.json();
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -175,76 +183,74 @@ export default function home({ posts }) {
               </div>
               <div className="bg-slate-200 h-[600px] overflow-auto">
                 <div className="flex flex-col-reverse justify-center items-center">
-                  {postsState && posts
-                    ? postsState.map((post) => {
-                        return (
-                          <div
-                            className="bg-red-300 flex min-h-[100px] w-3/4 my-2 justify-center items-center relative rounded-lg"
-                            key={post._id}
-                            onMouseEnter={() => {
-                              setHoveredPost(post._id);
-                            }}
-                            onMouseLeave={() => {
-                              setHoveredPost("");
-                            }}
-                          >
-                            <div className="flex flex-col justify-center items-center bg-white p-3">
-                              <div>{post.title}</div>
-                              <div>
-                                {`${
-                                  new Date(post.createdAt).getMonth() + 1
-                                }/${new Date(
-                                  post.createdAt
-                                ).getDate()}/${new Date(
-                                  post.createdAt
-                                ).getFullYear()}, ${
-                                  new Date(post.createdAt).getHours() > 12
-                                    ? new Date(post.createdAt).getHours() - 12
-                                    : new Date(post.createdAt).getHours()
-                                }:${
-                                  (new Date(post.createdAt).getMinutes() > 10
-                                    ? ""
-                                    : "0") +
-                                  new Date(post.createdAt).getMinutes()
-                                } ${
-                                  new Date(post.createdAt).getHours() > 12
-                                    ? "PM"
-                                    : "AM"
-                                }`}
-                              </div>
-                              <div>
-                                {post.author ? `by ${post.author}` : null}
-                              </div>
+                  {postsState &&
+                    postsState.map((post) => {
+                      return (
+                        <div
+                          className="bg-red-300 flex min-h-[100px] w-3/4 my-2 justify-center items-center relative rounded-lg"
+                          key={post._id}
+                          onMouseEnter={() => {
+                            setHoveredPost(post._id);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveredPost("");
+                          }}
+                        >
+                          <div className="flex flex-col justify-center items-center bg-white p-3">
+                            <div>{post.title}</div>
+                            <div>
+                              {`${
+                                new Date(post.createdAt).getMonth() + 1
+                              }/${new Date(
+                                post.createdAt
+                              ).getDate()}/${new Date(
+                                post.createdAt
+                              ).getFullYear()}, ${
+                                new Date(post.createdAt).getHours() > 12
+                                  ? new Date(post.createdAt).getHours() - 12
+                                  : new Date(post.createdAt).getHours()
+                              }:${
+                                (new Date(post.createdAt).getMinutes() > 10
+                                  ? ""
+                                  : "0") + new Date(post.createdAt).getMinutes()
+                              } ${
+                                new Date(post.createdAt).getHours() > 12
+                                  ? "PM"
+                                  : "AM"
+                              }`}
                             </div>
-                            <div
-                              className={
-                                post._id === hoveredPost
-                                  ? "flex items-center justify-center cursor-pointer absolute right-3 flex-end"
-                                  : "hidden"
-                              }
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class={"w-6 h-6"}
-                                onClick={() => {
-                                  router.push(`/posts/${post._id}`);
-                                }}
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
+                            <div>
+                              {post.author ? `by ${post.author}` : null}
                             </div>
                           </div>
-                        );
-                      })
-                    : null}
+                          <div
+                            className={
+                              post._id === hoveredPost
+                                ? "flex items-center justify-center cursor-pointer absolute right-3 flex-end"
+                                : "hidden"
+                            }
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class={"w-6 h-6"}
+                              onClick={() => {
+                                router.push(`/posts/${post._id}`);
+                              }}
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>

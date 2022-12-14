@@ -5,7 +5,6 @@ const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
-import postcss from "postcss";
 export default function post({ post }) {
   const [time, setTime] = useState();
   const router = useRouter();
