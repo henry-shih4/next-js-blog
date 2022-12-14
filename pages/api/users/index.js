@@ -59,11 +59,7 @@ export default async function handler(req, res) {
     const { username, numPosts } = req.body;
     const user = await db
       .collection("users")
-      .update(
-        { username: username },
-        { $set: { numPosts: numPosts } },
-        { upsert: true }
-      );
+      .update({ username: username }, { $set: { numPosts: numPosts } });
     res.status(200).json(user);
   }
 }

@@ -31,6 +31,7 @@ export default function home({ posts }) {
 
   useEffect(() => {
     setPostsState(posts);
+    updatePostCount();
   }, [posts]);
 
   useEffect(() => {
@@ -77,34 +78,6 @@ export default function home({ posts }) {
     setDuration("");
     setExercise({ name: "" });
     setExerciseList([]);
-
-    // update post count on user
-    let authorPosts = posts.filter(
-      (post) => post.author === activeUser.username
-    );
-
-    const data2 = {
-      username: activeUser.username,
-      numPosts: authorPosts.length,
-    };
-    const JSONdata2 = JSON.stringify(data2);
-    const endpoint2 = "/api/users";
-
-    const options2 = {
-      // The method is POST because we are sending data.
-      method: "PUT",
-      // Tell the server we're sending JSON.
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${token}`,
-      },
-      // Body of the request is the JSON data we created above.
-      body: JSONdata2,
-    };
-
-    const response2 = await fetch(endpoint2, options2);
-    const result2 = await response2.json();
-    console.log(result2);
   }
 
   function handleAddExercise(e) {
@@ -115,6 +88,39 @@ export default function home({ posts }) {
     setWeight("");
     setExercise({ name: "" });
   }
+
+  async function updatePostCount() {
+    // update post count on user
+    if (posts && activeUser) {
+      let authorPosts = posts.filter(
+        (post) => post.author === activeUser.username
+      );
+
+      const data2 = {
+        username: activeUser.username,
+        numPosts: authorPosts.length,
+      };
+      const JSONdata2 = JSON.stringify(data2);
+      const endpoint2 = "/api/users";
+
+      const options2 = {
+        // The method is POST because we are sending data.
+        method: "PUT",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        // Body of the request is the JSON data we created above.
+        body: JSONdata2,
+      };
+
+      const response2 = await fetch(endpoint2, options2);
+      const result2 = await response2.json();
+      console.log(result2);
+    }
+  }
+
   return (
     <>
       {isLoggedIn ? (
