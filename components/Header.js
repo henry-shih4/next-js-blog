@@ -44,7 +44,7 @@ export default function Header() {
     <>
       <div className="h-12 p-2 flex justify-between items-center">
         <div>
-          <Link href="/posts">ExerBlog</Link>
+          <Link href={token ? "/posts" : "/login"}>ExerBlog</Link>
         </div>
         <div className="flex">
           <MagnifyingGlassIcon className="h-6 m-1" />

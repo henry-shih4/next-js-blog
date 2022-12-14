@@ -15,10 +15,6 @@ export default function login() {
     useContext(LoginContext);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   console.log(activeUser);
-  // });
-
   async function handleFormSubmit(e) {
     e.preventDefault();
     try {
@@ -48,7 +44,7 @@ export default function login() {
           "TOKEN",
           result.data.token,
           {
-            maxAge: 1200,
+            maxAge: 20,
           },
           { path: "/" }
         );

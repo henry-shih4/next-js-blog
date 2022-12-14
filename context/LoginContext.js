@@ -1,13 +1,14 @@
 import { createContext, useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-
+import { useRouter } from "next/router";
 const LoginContext = createContext();
 
 function LoginProvider(props) {
   const token = cookies.get("TOKEN");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeUser, setActiveUser] = useState({ user: "guest", id: "none" });
+  const router = useRouter();
 
   useEffect(() => {
     if (token) {

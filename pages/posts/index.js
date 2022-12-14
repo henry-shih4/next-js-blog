@@ -42,7 +42,7 @@ export default function home({ posts }) {
   }, []);
 
   useEffect(() => {
-    if (posts.message === "not authenticated" || !posts) {
+    if (posts.message === "not authenticated" || !postsState) {
       router.push("/login");
     }
   });
@@ -175,7 +175,7 @@ export default function home({ posts }) {
               </div>
               <div className="bg-slate-200 h-[600px] overflow-auto">
                 <div className="flex flex-col-reverse justify-center items-center">
-                  {postsState
+                  {postsState && posts
                     ? postsState.map((post) => {
                         return (
                           <div
