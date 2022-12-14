@@ -143,11 +143,11 @@ export default function home({ posts }) {
       {isLoggedIn ? (
         <>
           <Header />
-          <div className="flex flex-wrap justify-center items-center min-h-[calc(100vh-48px)] w-screen relative bg-slate-100 space-x-10 lg:overflow-hidden">
+          <div className="flex flex-wrap justify-center items-center w-screen relative bg-slate-500 space-x-10 min-h-[calc(100vh-48px)]">
             <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
-            <div className="">
+            <div className="bg-blue-300 w-[500px]">
               <div className="flex justify-between items-center">
                 <div>Workout Feed</div>
                 <div className="flex justify-center items-center">
@@ -173,8 +173,8 @@ export default function home({ posts }) {
                   </button>
                 </div>
               </div>
-              <div className="bg-slate-200 w-[500px] h-[600px] overflow-auto">
-                <div className="flex flex-col-reverse justify-center items-center h-max">
+              <div className="bg-slate-200 h-[600px] overflow-auto">
+                <div className="flex flex-col-reverse justify-center items-center">
                   {postsState
                     ? postsState.map((post) => {
                         return (
@@ -254,7 +254,7 @@ export default function home({ posts }) {
               className={
                 showAdd
                   ? "absolute bg-slate-200 z-10  min-w-[460px] h-[500px] flex flex-col justify-center items-center visible opacity-100 duration-300"
-                  : "absolute bg-slate-200 min-w-[460px] h-[500px] flex flex-col justify-center items-center collapse opacity-0 duration-300"
+                  : "absolute bg-slate-200 min-w-[460px] h-[500px] flex flex-col justify-center items-center invisible opacity-0 duration-300"
               }
             >
               <div className="w-full">
