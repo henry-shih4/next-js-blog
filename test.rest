@@ -1,20 +1,33 @@
 GET http://localhost:3000/api/users
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiaWF0IjoxNjY4NDg4MjE2LCJleHAiOjE2Njg1NzQ2MTZ9.ZYEqBJM6bFWTy03hDJGvq_35uacsetHjHHcQWIgQ7bI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiZW1haWwiOiJuYWxhbWFsYUBob3RtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMTEtMTFUMjA6Mzc6NTcuNzAzWiIsImlhdCI6MTY3MTAzMDYxMCwiZXhwIjoxNjcxMTE3MDEwfQ.S0-yGdG4RaMTTuoksJ4D33MZq3DPycC36oOb-dmZJTU
 
 ###
 
 GET http://localhost:3000/api/posts
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiaWF0IjoxNjY4NDg4MjE2LCJleHAiOjE2Njg1NzQ2MTZ9.ZYEqBJM6bFWTy03hDJGvq_35uacsetHjHHcQWIgQ7bI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiZW1haWwiOiJuYWxhbWFsYUBob3RtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMTEtMTFUMjA6Mzc6NTcuNzAzWiIsImlhdCI6MTY3MTAzMDYxMCwiZXhwIjoxNjcxMTE3MDEwfQ.S0-yGdG4RaMTTuoksJ4D33MZq3DPycC36oOb-dmZJTU
 
 
 ###
 
 
-DELETE http://localhost:3000/api/posts
+POST http://localhost:3000/api/auth/auth
 Content-Type: application/json
 
 {
-    "id":"636a9130f4c964f6781a7daa"
+    "username":"nalamala",
+    "password":"nalamala"
+}
+
+
+###
+
+PUT http://localhost:3000/api/users
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiZW1haWwiOiJuYWxhbWFsYUBob3RtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMTEtMTFUMjA6Mzc6NTcuNzAzWiIsImlhdCI6MTY3MTAzMDYxMCwiZXhwIjoxNjcxMTE3MDEwfQ.S0-yGdG4RaMTTuoksJ4D33MZq3DPycC36oOb-dmZJTU
+
+{
+    "username":"nalamala",
+    "numPosts":"5"
 }

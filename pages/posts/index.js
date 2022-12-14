@@ -78,12 +78,17 @@ export default function home({ posts }) {
     setExercise({ name: "" });
     setExerciseList([]);
 
+    // update post count on user
+    let authorPosts = posts.filter(
+      (post) => post.author === activeUser.username
+    );
 
     const data2 = {
-        //update post count for specific user
+      username: activeUser.username,
+      numPosts: authorPosts.length,
     };
     const JSONdata2 = JSON.stringify(data2);
-    const endpoint2 = "/api/posts";
+    const endpoint2 = "/api/users";
 
     const options2 = {
       // The method is POST because we are sending data.
@@ -99,10 +104,8 @@ export default function home({ posts }) {
 
     const response2 = await fetch(endpoint2, options2);
     const result2 = await response2.json();
-    console.log(result2)
-
+    console.log(result2);
   }
-
 
   function handleAddExercise(e) {
     e.preventDefault();

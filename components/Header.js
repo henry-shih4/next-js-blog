@@ -14,11 +14,9 @@ export default function Header() {
   const [search, setSearch] = useState();
   const [userSuggestions, setUserSuggestions] = useState();
 
-
   useEffect(() => {
     getUsers();
   }, []);
-
 
   useEffect(() => {
     if (search && search.length > 2) {

@@ -56,6 +56,7 @@ export default function user() {
                     profile.createdAt
                   ).getDate()}/${new Date(profile.createdAt).getFullYear()}`}
                 </div>
+                <div>posts: {profile.numPosts ? profile.numPosts : null}</div>
               </div>
             </>
           ) : null}

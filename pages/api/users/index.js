@@ -53,9 +53,17 @@ export default async function handler(req, res) {
     res.status(200).json(posts);
   }
 
-  // update number of posts
-  if(method==='PUT'){
-    const user = await db.collection("users".find({})).toArray();
-    res.status(200).json(user)
+  // update number of posts on user
+
+  if (method === "PUT") {
+    const { username, numPosts } = req.body;
+    const user = await db
+      .collection("users")
+      .update(
+        { username: username },
+        { $set: { numPosts: numPosts } },
+        { upsert: true }
+      );
+    res.status(200).json(user);
   }
 }
