@@ -99,9 +99,8 @@ export default function home({ posts }) {
   async function updatePostCount() {
     // update post count on user
     if (posts && activeUser) {
-      let authorPosts = posts.filter(
-        (post) => post.author === activeUser.username
-      );
+      let authorPosts =
+        [] || posts.filter((post) => post.author === activeUser.username);
 
       const data2 = {
         username: activeUser.username,
@@ -144,12 +143,12 @@ export default function home({ posts }) {
       {isLoggedIn ? (
         <>
           <Header />
-          <div className="flex flex-wrap justify-center items-center min-h-[calc(100vh-48px)] w-screen relative bg-slate-100 space-x-10">
-            <div className="flex justify-center items-start bg-red-300 mr-10 ">
+          <div className="flex justify-center items-center min-h-[calc(100vh-48px)] w-screen relative bg-slate-100 space-x-10">
+            <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
-            <div className="">
-              <div className="flex justify-between items-center">
+            <div className="w-full flex flex-col  justify-center items-center">
+              <div className="flex justify-around items-center w-[500px]">
                 <div>Workout Feed</div>
                 <div className="flex justify-center items-center">
                   Add Workout
@@ -174,7 +173,7 @@ export default function home({ posts }) {
                   </button>
                 </div>
               </div>
-              <div className="bg-slate-200 w-[600px] h-[600px] overflow-auto">
+              <div className="bg-slate-200 w-[500px] h-[600px] overflow-auto">
                 <div className="flex flex-col-reverse justify-center items-center">
                   {postsState
                     ? postsState.map((post) => {
@@ -249,11 +248,13 @@ export default function home({ posts }) {
                 </div>
               </div>
             </div>
+            {/* modal start*/}
+
             <div
               className={
                 showAdd
-                  ? "absolute bg-slate-200 z-10  min-w-[460px] h-[500px] flex flex-col justify-center items-center"
-                  : "hidden"
+                  ? "absolute bg-slate-200 z-10  min-w-[460px] h-[500px] flex flex-col justify-center items-center visible opacity-100 duration-300"
+                  : "absolute bg-slate-200 min-w-[460px] h-[500px] flex flex-col justify-center items-center collapse opacity-0 duration-300"
               }
             >
               <div className="w-full">
@@ -263,7 +264,7 @@ export default function home({ posts }) {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="flex w-6 h-6 m-1 float-right hover:cursor-pointer"
+                  class="flex w-6 h-6 m-1 float-right hover:cursor-pointer hover:scale-110"
                   onClick={() => {
                     setShowAdd(false);
                   }}
@@ -275,6 +276,7 @@ export default function home({ posts }) {
                   />
                 </svg>
               </div>
+
               <form
                 className="flex justify-center items-center flex-col h-full"
                 onSubmit={handleFormSubmit}
