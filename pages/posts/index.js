@@ -32,6 +32,9 @@ export default function home({ posts }) {
   };
 
   useEffect(() => {
+    console.log(posts);
+  });
+  useEffect(() => {
     setPostsState(posts);
     updatePostCount();
     generateLeaderboard();
@@ -42,7 +45,7 @@ export default function home({ posts }) {
   }, []);
 
   useEffect(() => {
-    if (posts.message === "not authenticated" || !postsState) {
+    if (posts.status === 401 || !postsState) {
       router.push("/login");
     }
   });
@@ -75,6 +78,7 @@ export default function home({ posts }) {
 
       const response = await fetch(endpoint, options);
       const result = await response.json();
+      console.log(result);
       if (response.status < 300) {
         refreshData();
         setShowAdd(false);
@@ -458,6 +462,7 @@ export default function home({ posts }) {
 
 export async function getServerSideProps(context) {
   const serverToken = context.req.cookies;
+
 
   let res = await fetch("http://localhost:3000/api/posts", {
     method: "GET",

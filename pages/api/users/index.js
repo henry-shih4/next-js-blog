@@ -41,31 +41,31 @@ export default async function handler(req, res) {
     }
   }
 
-  // get all users
-  if (method === "GET") {
-    if (!token) {
-      return res.status(500).json({ message: "not authenticated" });
-    }
-    const users = await db.collection("users").find({}).toArray();
-    return res.status(200).json(users);
-  }
+  if (token) {
+    jwt.verify(token, secret, async function (err, decoded) {
+      if (err) {
+        return res.status(401).json({ message: "not authenticated" });
+      } else {
+        // get all users
+        if (method === "GET") {
+          const users = await db.collection("users").find({}).toArray();
+          return res.status(200).json(users);
+        }
 
-  // update number of posts on user
-  if (method === "PUT") {
-    if (!token) {
-      return res.status(500).json({ message: "not authenticated" });
-    }
-    const { username, numPosts } = req.body;
-    const user = await db
-      .collection("users")
-      .update({ username: username }, { $set: { numPosts: numPosts } });
-    return res.status(200).json(user);
+        // update number of posts on user
+        if (method === "PUT") {
+          if (!token) {
+            return res.status(500).json({ message: "not authenticated" });
+          }
+          const { username, numPosts } = req.body;
+          const user = await db
+            .collection("users")
+            .update({ username: username }, { $set: { numPosts: numPosts } });
+          return res.status(200).json(user);
+        }
+      }
+    });
+  } else {
+    return res.status(403).json({ message: "forbidden" });
   }
-
-  // jwt.verify(token, secret, async function (err, decoded) {
-  //   if (!err && decoded) {
-  //   } else {
-  //     return res.status(500).json({ message: "not authenticated" });
-  //   }
-  // });
 }
