@@ -31,12 +31,48 @@ export default async function handler(req, res) {
   }
 }
 
-try {
-  var decoded = jwt.verify(token, secret);
-  
-} catch (error) {
-  console.log(error);
-}
+// try {
+//   var decoded = jwt.verify(token, secret);
+//   if (decoded) {
+//     if (method === "POST") {
+//       try {
+//         const { title, content, category, duration, exercises, author } =
+//           req.body;
+//         // Insert a post into DB
+//         const response = await db.collection("posts").insertOne({
+//           author,
+//           title,
+//           content,
+//           category,
+//           duration,
+//           exercises,
+//           createdAt: new Date(),
+//         });
+//         // Send a response
+//         return res.status(200).json({
+//           data: req.body,
+//           message: "Post added successfully",
+//           post: response.title,
+//         });
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     }
+//     if (method === "DELETE") {
+//       const { id } = req.body;
+//       const response = await db
+//         .collection("posts")
+//         .deleteOne({ _id: new ObjectId(id) });
+//       return res.status(200).json({
+//         data: req.body,
+//         message: "Post deleted",
+//         id: response,
+//       });
+//     }
+//   }
+// } catch (error) {
+//   console.log(error);
+// }
 
 // jwt.verify(token, secret, async function (err, decoded) {
 //   if (!err && decoded) {
