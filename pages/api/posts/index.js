@@ -13,8 +13,11 @@ export default async function handler(req, res) {
     try {
       var decoded = jwt.verify(token, secret);
     } catch (error) {
-      console.log(error.message);
-      res.status(403).json({ message: "forbidden", status: 403 });
+      res.status(401).json({
+        error: error.message,
+        message: "not authenticated",
+        status: 401,
+      });
     }
     if (decoded) {
       try {
@@ -25,9 +28,14 @@ export default async function handler(req, res) {
         return res.status(500).send();
       }
     }
-  } else {
-    return res.status(401).json({ message: "not authenticated", status: 401 });
   }
+}
+
+try {
+  var decoded = jwt.verify(token, secret);
+  
+} catch (error) {
+  console.log(error);
 }
 
 // jwt.verify(token, secret, async function (err, decoded) {
@@ -76,3 +84,5 @@ export default async function handler(req, res) {
 //     }
 //   });
 // }
+
+//   return res.status(401).json({ message: "not authenticated", status: 401 });
