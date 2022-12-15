@@ -38,13 +38,12 @@ export default function login() {
       setLoading(true);
       const response = await fetch(endpoint, options);
       const result = await response.json();
-      console.log(result);
       if (result.message === "Login Successful") {
         cookies.set(
           "TOKEN",
           result.data.token,
           {
-            maxAge: 20,
+            maxAge: 300,
           },
           { path: "/" }
         );

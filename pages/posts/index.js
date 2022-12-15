@@ -78,11 +78,11 @@ export default function home({ posts }) {
       if (response.status < 300) {
         refreshData();
         setShowAdd(false);
+        setPostsState([...postsState, result]);
       }
     } catch (error) {
       console.log(error);
     }
-    setPostsState([...postsState, result]);
     setTitle("");
     setContent("");
     setCategory("");
@@ -183,74 +183,76 @@ export default function home({ posts }) {
               </div>
               <div className="bg-slate-200 h-[600px] overflow-auto">
                 <div className="flex flex-col-reverse justify-center items-center">
-                  {postsState &&
-                    postsState.map((post) => {
-                      return (
-                        <div
-                          className="bg-red-300 flex min-h-[100px] w-3/4 my-2 justify-center items-center relative rounded-lg"
-                          key={post._id}
-                          onMouseEnter={() => {
-                            setHoveredPost(post._id);
-                          }}
-                          onMouseLeave={() => {
-                            setHoveredPost("");
-                          }}
-                        >
-                          <div className="flex flex-col justify-center items-center bg-white p-3">
-                            <div>{post.title}</div>
-                            <div>
-                              {`${
-                                new Date(post.createdAt).getMonth() + 1
-                              }/${new Date(
-                                post.createdAt
-                              ).getDate()}/${new Date(
-                                post.createdAt
-                              ).getFullYear()}, ${
-                                new Date(post.createdAt).getHours() > 12
-                                  ? new Date(post.createdAt).getHours() - 12
-                                  : new Date(post.createdAt).getHours()
-                              }:${
-                                (new Date(post.createdAt).getMinutes() > 10
-                                  ? ""
-                                  : "0") + new Date(post.createdAt).getMinutes()
-                              } ${
-                                new Date(post.createdAt).getHours() > 12
-                                  ? "PM"
-                                  : "AM"
-                              }`}
-                            </div>
-                            <div>
-                              {post.author ? `by ${post.author}` : null}
-                            </div>
-                          </div>
+                  {Array.isArray(postsState)
+                    ? postsState.map((post) => {
+                        return (
                           <div
-                            className={
-                              post._id === hoveredPost
-                                ? "flex items-center justify-center cursor-pointer absolute right-3 flex-end"
-                                : "hidden"
-                            }
+                            className="bg-red-300 flex min-h-[100px] w-3/4 my-2 justify-center items-center relative rounded-lg"
+                            key={post._id}
+                            onMouseEnter={() => {
+                              setHoveredPost(post._id);
+                            }}
+                            onMouseLeave={() => {
+                              setHoveredPost("");
+                            }}
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class={"w-6 h-6"}
-                              onClick={() => {
-                                router.push(`/posts/${post._id}`);
-                              }}
+                            <div className="flex flex-col justify-center items-center bg-white p-3">
+                              <div>{post.title}</div>
+                              <div>
+                                {`${
+                                  new Date(post.createdAt).getMonth() + 1
+                                }/${new Date(
+                                  post.createdAt
+                                ).getDate()}/${new Date(
+                                  post.createdAt
+                                ).getFullYear()}, ${
+                                  new Date(post.createdAt).getHours() > 12
+                                    ? new Date(post.createdAt).getHours() - 12
+                                    : new Date(post.createdAt).getHours()
+                                }:${
+                                  (new Date(post.createdAt).getMinutes() > 10
+                                    ? ""
+                                    : "0") +
+                                  new Date(post.createdAt).getMinutes()
+                                } ${
+                                  new Date(post.createdAt).getHours() > 12
+                                    ? "PM"
+                                    : "AM"
+                                }`}
+                              </div>
+                              <div>
+                                {post.author ? `by ${post.author}` : null}
+                              </div>
+                            </div>
+                            <div
+                              className={
+                                post._id === hoveredPost
+                                  ? "flex items-center justify-center cursor-pointer absolute right-3 flex-end"
+                                  : "hidden"
+                              }
                             >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class={"w-6 h-6"}
+                                onClick={() => {
+                                  router.push(`/posts/${post._id}`);
+                                }}
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                    : null}
                 </div>
               </div>
             </div>
