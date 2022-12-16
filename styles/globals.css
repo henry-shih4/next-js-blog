@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 input{
-    border-radius: 4px;
+    @apply rounded-md pl-2
     
 }
 

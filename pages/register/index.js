@@ -9,6 +9,7 @@ export default function register() {
   const [pwStrength, setPwStrength] = useState();
   const [validUsername, setValidUsername] = useState(false);
   const [usernameHint, setUsernameHint] = useState(false);
+  const [passwordHint, setPasswordHint] = useState(false);
 
   let alphaNum = new RegExp("[a-zA-Z0-9]");
   let alphaNumCombined = new RegExp("(?=.*[a-zA-Z])(?=.*[0-9])");
@@ -126,11 +127,6 @@ export default function register() {
                   setUsername(e.target.value);
                 }}
               />
-              <div className="absolute bottom-0 text-[10px] bg-red-300">
-                {usernameHint
-                  ? "At least 3 characters, letters and numbers only"
-                  : null}
-              </div>
             </div>
             <div className="flex flex-col justify-center items-start">
               <label for="password">Password</label>
@@ -143,11 +139,17 @@ export default function register() {
                 required
                 maxlength="16"
                 id="password"
-                className="border border-black w-[200px]"
+                className="w-[200px]"
                 type="password"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
+                }}
+                onFocus={() => {
+                  setPasswordHint(true);
+                }}
+                onBlur={() => {
+                  setPasswordHint(false);
                 }}
               />
             </div>
@@ -206,6 +208,13 @@ export default function register() {
                   Login Here
                 </Link>
               </div>
+            </div>
+            <div className="absolute bottom-0 text-xs text-center">
+              {usernameHint
+                ? "At least 3 characters, letters and numbers only"
+                : passwordHint
+                ? "at least 6 characters, one special character and one number recommended"
+                : null}
             </div>
           </form>
         </div>
