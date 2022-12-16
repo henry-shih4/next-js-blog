@@ -16,7 +16,7 @@ export default function Leaderboard(props) {
               <div className="w-1/2 text-center">Workouts</div>
             </div>
             {rankings
-              ? rankings.map((person) => {
+              ? rankings.slice(0, 5).map((person) => {
                   return (
                     <>
                       <div className="w-full flex">

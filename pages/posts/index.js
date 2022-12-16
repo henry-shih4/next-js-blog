@@ -31,9 +31,9 @@ export default function home({ posts }) {
     router.replace(router.asPath);
   };
 
-  useEffect(() => {
-    console.log(posts);
-  });
+  // useEffect(() => {
+  //   console.log(posts);
+  // });
   useEffect(() => {
     setPostsState(posts);
     updatePostCount();
@@ -462,7 +462,6 @@ export default function home({ posts }) {
 
 export async function getServerSideProps(context) {
   const serverToken = context.req.cookies;
-
 
   let res = await fetch("http://localhost:3000/api/posts", {
     method: "GET",
