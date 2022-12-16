@@ -65,9 +65,13 @@ export default function login() {
         <div className="flex flex-col justify-center items-center h-screen">
           <div className="my-2">Login</div>
           <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
-            <form className="flex flex-col space-y-2">
+            <form
+              className="flex flex-col space-y-2"
+              onSubmit={handleFormSubmit}
+            >
               <label for="username">Username:</label>
               <input
+                required
                 id="username"
                 className="border border-black"
                 type="text"
@@ -78,6 +82,7 @@ export default function login() {
               />
               <label for="password">Password:</label>
               <input
+                required
                 id="password"
                 className="border border-black"
                 type="password"
@@ -87,7 +92,7 @@ export default function login() {
                 }}
               />
               <div className="flex justify-center items-center flex-col space-y-2">
-                <button className="buttons" onClick={handleFormSubmit}>
+                <button className="buttons" type="submit">
                   Login
                 </button>
                 <Link

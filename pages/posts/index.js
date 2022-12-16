@@ -75,7 +75,6 @@ export default function home({ posts }) {
 
       const response = await fetch(endpoint, options);
       const result = await response.json();
-      console.log(result);
       if (response.status < 300) {
         refreshData();
         setShowAdd(false);
@@ -129,9 +128,6 @@ export default function home({ posts }) {
         };
 
         const response2 = await fetch(endpoint2, options2);
-        console.log(response2);
-        const result2 = await response2.json();
-        console.log(result2);
       }
     } catch (error) {
       console.log(error);

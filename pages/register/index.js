@@ -5,6 +5,7 @@ export default function register() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
+  const [error, setError] = useState();
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -36,9 +37,13 @@ export default function register() {
         setEmail("");
         setPassword("");
         setUsername("");
+      } else if (response.status == 409) {
+        console.log(result.conflict);
+        setError(result.conflict);
       }
     } catch (error) {
       console.log(error.message);
+      // setError(error.message);
     }
   }
 
@@ -47,7 +52,7 @@ export default function register() {
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="my-2">Register</div>
         <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
-          <form className="flex flex-col space-y-2">
+          <form onSubmit={handleFormSubmit} className="flex flex-col space-y-2">
             <label for="username">Username</label>
             <input
               required
@@ -83,7 +88,8 @@ export default function register() {
               }}
             />
             <div className="flex justify-center flex-col items-center space-y-2">
-              <button className="buttons" onClick={handleFormSubmit}>
+              <div>{error ? error : null}</div>
+              <button className="buttons" type="submit">
                 Register
               </button>
               <div className="flex space-x-4">
