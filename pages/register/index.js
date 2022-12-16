@@ -1,11 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function register() {
   const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState();
   const [error, setError] = useState();
+  const [pwStrength, setPwStrength] = useState();
+  let weakPW = new RegExp("[a-zA-Z0-9]");
+  let pwRegex = new RegExp("(?=.*[a-zA-Z])(?=.*[0-9])");
+  let pwRegex2 = new RegExp(
+    "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$"
+  );
+
+  useEffect(() => {
+    if (pwRegex2.test(password)) {
+      setPwStrength("strong");
+    } else if (pwRegex.test(password)) {
+      setPwStrength("medium");
+    } else if (weakPW.test(password) && password !== "") {
+      setPwStrength("weak");
+    } else {
+      setPwStrength("");
+    }
+  }, [password]);
+
+  // if (pwRegex2.test(password)) {
+  //   setPwStrength("strong");
+  // } else if (pwRegex.test(password)) {
+  //   setPwStrength("medium");
+  // } else
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -67,6 +91,7 @@ export default function register() {
             <label for="password">Password</label>
             <input
               required
+              maxlength="16"
               id="password"
               className="border border-black"
               type="password"
@@ -75,18 +100,42 @@ export default function register() {
                 setPassword(e.target.value);
               }}
             />
-            <label for="email">Email</label>
-            <input
-              required
-              id="email"
-              className="border border-black"
-              type="email"
-              value={email}
-              placeholder="hendev@yahoo.com"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
+            <div className="w-full bg-white h-[10px] rounded-lg">
+              <div
+                className={
+                  pwStrength == "strong"
+                    ? "bg-green-300 h-[10px] w-full"
+                    : pwStrength == "weak"
+                    ? "bg-red-400 h-[10px] w-1/3"
+                    : pwStrength == "medium"
+                    ? "bg-yellow-400 h-[10px] w-1/2"
+                    : "bg-red-white h-[10px] w-full"
+                }
+              ></div>
+              <div className="flex w-full justify-center items-center text-xs">
+                {pwStrength == "strong"
+                  ? "strong"
+                  : pwStrength == "medium"
+                  ? "medium"
+                  : pwStrength == "weak"
+                  ? "weak"
+                  : null}
+              </div>
+            </div>
+            <div className="mt-2 flex flex-col">
+              <label for="email">Email</label>
+              <input
+                required
+                id="email"
+                className="border border-black"
+                type="email"
+                value={email}
+                placeholder="hendev@yahoo.com"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
             <div className="flex justify-center flex-col items-center space-y-2">
               <div>{error ? error : null}</div>
               <button className="buttons" type="submit">
