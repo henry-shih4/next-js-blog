@@ -31,9 +31,6 @@ export default function home({ posts }) {
     router.replace(router.asPath);
   };
 
-  // useEffect(() => {
-  //   console.log(posts);
-  // });
   useEffect(() => {
     setPostsState(posts);
     updatePostCount();
@@ -105,11 +102,12 @@ export default function home({ posts }) {
   }
 
   async function updatePostCount() {
-    // update post count on user
+    // update post count on user when new post is added
     try {
       if (posts && activeUser) {
-        let authorPosts =
-          [] || posts.filter((post) => post.author === activeUser.username);
+        let authorPosts = posts.filter(
+          (post) => post.author === activeUser.username
+        );
 
         const data2 = {
           username: activeUser.username,
@@ -119,7 +117,7 @@ export default function home({ posts }) {
         const endpoint2 = "/api/users";
 
         const options2 = {
-          // The method is POST because we are sending data.
+          // The method is PUT because we are updating data.
           method: "PUT",
           // Tell the server we're sending JSON.
           headers: {
@@ -131,7 +129,9 @@ export default function home({ posts }) {
         };
 
         const response2 = await fetch(endpoint2, options2);
+        console.log(response2);
         const result2 = await response2.json();
+        console.log(result2);
       }
     } catch (error) {
       console.log(error);
@@ -159,8 +159,8 @@ export default function home({ posts }) {
             <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
-            <div className="bg-blue-300 w-[500px]">
-              <div className="flex justify-between items-center">
+            <div className="bg-white w-[500px]">
+              <div className="flex justify-between items-center p-3">
                 <div>Workout Feed</div>
                 <div className="flex justify-center items-center">
                   Add Workout
@@ -231,8 +231,8 @@ export default function home({ posts }) {
                             <div
                               className={
                                 post._id === hoveredPost
-                                  ? "flex items-center justify-center cursor-pointer absolute right-3 flex-end"
-                                  : "hidden"
+                                  ? "flex items-center justify-center cursor-pointer absolute right-3 flex-end visible opacity-100 duration-300"
+                                  : "flex items-center justify-center cursor-pointer absolute right-3 flex-end invisible opacity-0 duration-300"
                               }
                             >
                               <svg
@@ -241,7 +241,7 @@ export default function home({ posts }) {
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class={"w-6 h-6"}
+                                class={"w-6 h-6 hover:scale-110"}
                                 onClick={() => {
                                   router.push(`/posts/${post._id}`);
                                 }}

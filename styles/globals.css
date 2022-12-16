@@ -7,7 +7,7 @@ input{
 }
 
 .buttons{
-@apply bg-black text-white rounded-md p-2 mt-4 w-[100px]
+@apply bg-black text-white rounded-md p-2 mt-4 w-[100px] hover:bg-white border-black border-2 hover:text-black duration-300
 }
 
 

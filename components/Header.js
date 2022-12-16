@@ -21,7 +21,6 @@ export default function Header() {
   useEffect(() => {
     if (search && search.length > 2) {
       let user = usersState.filter((user) => user.username.includes(search));
-      console.log(user);
       setUserSuggestions(user);
     } else {
       setUserSuggestions("");

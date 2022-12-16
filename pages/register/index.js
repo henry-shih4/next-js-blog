@@ -8,33 +8,37 @@ export default function register() {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-    const data = {
-      username: username,
-      password: password,
-      email: email,
-      numPosts: 0,
-    };
-    const JSONdata = JSON.stringify(data);
-    const endpoint = "/api/users";
+    try {
+      const data = {
+        username: username,
+        password: password,
+        email: email,
+        numPosts: 0,
+      };
+      const JSONdata = JSON.stringify(data);
+      const endpoint = "/api/users";
 
-    const options = {
-      // The method is POST because we are sending data.
-      method: "POST",
-      // Tell the server we're sending JSON.
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // Body of the request is the JSON data we created above.
-      body: JSONdata,
-    };
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // Body of the request is the JSON data we created above.
+        body: JSONdata,
+      };
 
-    const response = await fetch(endpoint, options);
-    const result = await response.json();
-    if (response.status < 300) {
-      console.log("new user added");
-      setEmail("");
-      setPassword("");
-      setUsername("");
+      const response = await fetch(endpoint, options);
+      const result = await response.json();
+      if (response.status < 300) {
+        console.log("new user added");
+        setEmail("");
+        setPassword("");
+        setUsername("");
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
@@ -44,8 +48,9 @@ export default function register() {
         <div className="my-2">Register</div>
         <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
           <form className="flex flex-col space-y-2">
-            <label for="username">Username:</label>
+            <label for="username">Username</label>
             <input
+              required
               id="username"
               className="border border-black"
               type="text"
@@ -54,8 +59,9 @@ export default function register() {
                 setUsername(e.target.value);
               }}
             />
-            <label for="password">Password:</label>
+            <label for="password">Password</label>
             <input
+              required
               id="password"
               className="border border-black"
               type="password"
@@ -64,12 +70,14 @@ export default function register() {
                 setPassword(e.target.value);
               }}
             />
-            <label for="email">Email:</label>
+            <label for="email">Email</label>
             <input
+              required
               id="email"
               className="border border-black"
               type="email"
               value={email}
+              placeholder="hendev@yahoo.com"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -78,13 +86,15 @@ export default function register() {
               <button className="buttons" onClick={handleFormSubmit}>
                 Register
               </button>
-
-              <Link
-                className="text-center w-[80px] hover:underline"
-                href="/login"
-              >
-                Login
-              </Link>
+              <div className="flex space-x-4">
+                <div>Already a user?</div>
+                <Link
+                  className="text-center w-[80px] hover:underline"
+                  href="/login"
+                >
+                  Login Here
+                </Link>
+              </div>
             </div>
           </form>
         </div>

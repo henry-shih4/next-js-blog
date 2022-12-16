@@ -81,7 +81,7 @@ export default async function handler(req, res) {
         const { username, numPosts } = req.body;
         const user = await db
           .collection("users")
-          .update({ username: username }, { $set: { numPosts: numPosts } });
+          .updateOne({ username: username }, { $set: { numPosts: numPosts } });
         return res.status(200).json(user);
       } catch (error) {
         console.log(error);
