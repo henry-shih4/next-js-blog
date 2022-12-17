@@ -38,7 +38,7 @@ export default function login() {
       setLoading(true);
       const response = await fetch(endpoint, options);
       const result = await response.json();
-      if (result.message === "Login Successful") {
+      if (response.status === 201) {
         cookies.set(
           "TOKEN",
           result.data.token,
@@ -50,6 +50,8 @@ export default function login() {
         changeLoggedIn(true);
         router.push("/posts");
         return;
+      } else if (response.status === 401) {
+        console.log(result.message);
       }
       setLoading(false);
     } catch (e) {
@@ -66,41 +68,48 @@ export default function login() {
           <div className="my-2">Login</div>
           <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
             <form
-              className="flex flex-col space-y-2"
+              className="flex flex-col space-y-4 w-full justify-center items-center"
               onSubmit={handleFormSubmit}
             >
-              <label for="username">Username:</label>
-              <input
-                required
-                id="username"
-                className="border border-black"
-                type="text"
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-              <label for="password">Password:</label>
-              <input
-                required
-                id="password"
-                className="border border-black"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
+              <div className="flex flex-col justify-center items-start">
+                <label for="username">Username</label>
+                <input
+                  required
+                  id="username"
+                  className="w-[200px]"
+                  type="text"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="flex flex-col justify-center items-start">
+                <label for="password">Password</label>
+                <input
+                  required
+                  id="password"
+                  className="w-[200px]"
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </div>
               <div className="flex justify-center items-center flex-col space-y-2">
                 <button className="buttons" type="submit">
                   Login
                 </button>
-                <Link
-                  className="text-center w-[80px] hover:underline"
-                  href="/register"
-                >
-                  Register
-                </Link>
+                <div className="flex space-x-4 w-full">
+                  <div>Not a user?</div>
+                  <Link
+                    className="text-center w-[100px] hover:underline"
+                    href="/register"
+                  >
+                    Register Here
+                  </Link>
+                </div>
               </div>
             </form>
           </div>

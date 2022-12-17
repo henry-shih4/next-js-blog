@@ -4,13 +4,15 @@ import Link from "next/link";
 export default function register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
   const [error, setError] = useState();
   const [pwStrength, setPwStrength] = useState();
   const [validUsername, setValidUsername] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
   const [usernameHint, setUsernameHint] = useState(false);
   const [passwordHint, setPasswordHint] = useState(false);
 
+  //regex for validation
   let alphaNum = new RegExp("[a-zA-Z0-9]");
   let alphaNumCombined = new RegExp("(?=.*[a-zA-Z])(?=.*[0-9])");
   let alphaNumCombinedSpecial = new RegExp(
@@ -18,6 +20,7 @@ export default function register() {
   );
 
   let userRegex = new RegExp("[^A-Za-z 0-9]");
+  let emailRegex = /^\S+@\S+\.\S+$/;
 
   useEffect(() => {
     if (alphaNumCombinedSpecial.test(password)) {
@@ -40,17 +43,37 @@ export default function register() {
   }, [username]);
 
   useEffect(() => {
+    if (emailRegex.test(email) && email !== "") {
+      setValidEmail(true);
+    } else {
+      setValidEmail(false);
+    }
+  });
+
+  useEffect(() => {
     console.log(validUsername);
   });
 
-  // if (pwRegex2.test(password)) {
-  //   setPwStrength("strong");
-  // } else if (pwRegex.test(password)) {
-  //   setPwStrength("medium");
-  // } else
-
   async function handleFormSubmit(e) {
     e.preventDefault();
+
+    //validation
+    if (!validUsername) {
+      setError("Please enter a valid username.");
+      return;
+    }
+
+    if (pwStrength == "weak") {
+      setError("Enter a stronger password");
+      return;
+    }
+
+    if (!validEmail) {
+      setError("Enter a valid e-mail address");
+      return;
+    }
+
+    //post user if passes validation.
     try {
       const data = {
         username: username,
@@ -119,10 +142,11 @@ export default function register() {
                 className={
                   validUsername
                     ? "border border-green-300 w-[200px]"
-                    : "border border-black w-[200px]"
+                    : " w-[200px]"
                 }
                 type="text"
                 value={username}
+                placeholder="hen99"
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -139,8 +163,13 @@ export default function register() {
                 required
                 maxlength="16"
                 id="password"
-                className="w-[200px]"
+                className={
+                  pwStrength == "medium" || pwStrength == "strong"
+                    ? "border border-green-300 w-[200px]"
+                    : " w-[200px]"
+                }
                 type="password"
+                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -185,7 +214,11 @@ export default function register() {
                 }}
                 required
                 id="email"
-                className="border border-black w-[200px]"
+                className={
+                  validEmail
+                    ? "border border-green-300 w-[200px]"
+                    : " w-[200px]"
+                }
                 type="email"
                 value={email}
                 placeholder="hendev@yahoo.com"

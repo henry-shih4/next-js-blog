@@ -26,12 +26,14 @@ export default async function handler(req, res) {
           { expiresIn: "24h" }
         );
 
-        return res.send({
+        return res.status(200).send({
           message: "Login Successful",
           data: { username: user.username, userId: user._id, token },
         });
       } else if (!(await bcrypt.compare(password, user.password))) {
-        return res.send({ message: "username or password incorrect" });
+        return res
+          .status(401)
+          .send({ message: "username or password incorrect" });
       }
     } catch (error) {
       console.log(error);
