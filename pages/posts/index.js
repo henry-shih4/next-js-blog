@@ -151,11 +151,11 @@ export default function home({ posts }) {
       {isLoggedIn ? (
         <>
           <Header />
-          <div className="flex flex-wrap justify-center items-center w-screen relative bg-slate-500 space-x-10 min-h-[calc(100vh-48px)]">
+          <div className="flex flex-wrap justify-center items-center w-screen relative bg-slate-500  min-h-[calc(100vh-48px)]">
             <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
-            <div className="bg-white w-[500px]">
+            <div className="bg-white w-[500px] mx-4">
               <div className="flex justify-between items-center p-3">
                 <div>Workout Feed</div>
                 <div className="flex justify-center items-center">

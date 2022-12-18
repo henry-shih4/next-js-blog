@@ -14,6 +14,7 @@ export default function login() {
   const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
     useContext(LoginContext);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState();
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -38,7 +39,7 @@ export default function login() {
       setLoading(true);
       const response = await fetch(endpoint, options);
       const result = await response.json();
-      if (response.status === 201) {
+      if (response.status === 200) {
         cookies.set(
           "TOKEN",
           result.data.token,
@@ -50,12 +51,13 @@ export default function login() {
         changeLoggedIn(true);
         router.push("/posts");
         return;
-      } else if (response.status === 401) {
-        console.log(result.message);
+      } else if (response.status >= 400) {
+        setMessage(result.message);
       }
       setLoading(false);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
+      setMessage(error);
     }
   }
 
@@ -71,31 +73,36 @@ export default function login() {
               className="flex flex-col space-y-4 w-full justify-center items-center"
               onSubmit={handleFormSubmit}
             >
-              <div className="flex flex-col justify-center items-start">
-                <label for="username">Username</label>
-                <input
-                  required
-                  id="username"
-                  className="w-[200px]"
-                  type="text"
-                  value={username}
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="flex flex-col justify-center items-start">
-                <label for="password">Password</label>
-                <input
-                  required
-                  id="password"
-                  className="w-[200px]"
-                  type="password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
+              <div className="relative space-y-2">
+                <div className="flex flex-col justify-center items-start">
+                  <label for="username">Username</label>
+                  <input
+                    required
+                    id="username"
+                    className="w-[200px]"
+                    type="text"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col justify-center items-start">
+                  <label for="password">Password</label>
+                  <input
+                    required
+                    id="password"
+                    className="w-[200px]"
+                    type="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="absolute -bottom-5 text-xs text-center w-full text-red-500">
+                  {message ? message : null}
+                </div>
               </div>
               <div className="flex justify-center items-center flex-col space-y-2">
                 <button className="buttons" type="submit">

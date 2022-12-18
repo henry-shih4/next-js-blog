@@ -11,12 +11,13 @@ export default function register() {
   const [validEmail, setValidEmail] = useState(false);
   const [usernameHint, setUsernameHint] = useState(false);
   const [passwordHint, setPasswordHint] = useState(false);
+  const [message, setMessage] = useState("");
 
   //regex for validation
   let alphaNum = new RegExp("[a-zA-Z0-9]");
   let alphaNumCombined = new RegExp("(?=.*[a-zA-Z])(?=.*[0-9])");
   let alphaNumCombinedSpecial = new RegExp(
-    "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$"
+    "^(?=.*[0-9])(?=.*[!@#$%^&*()+=_-])[a-zA-Z0-9!@#$%^&*()+=_-]{6,16}$"
   );
 
   let userRegex = new RegExp("[^A-Za-z 0-9]");
@@ -48,10 +49,6 @@ export default function register() {
     } else {
       setValidEmail(false);
     }
-  });
-
-  useEffect(() => {
-    console.log(validUsername);
   });
 
   async function handleFormSubmit(e) {
@@ -98,10 +95,11 @@ export default function register() {
       const response = await fetch(endpoint, options);
       const result = await response.json();
       if (response.status < 300) {
-        console.log("new user added");
+        setMessage("New user added successfully!");
         setEmail("");
         setPassword("");
         setUsername("");
+        setError();
       } else if (response.status == 409) {
         console.log(result.conflict);
         setError(result.conflict);
@@ -228,7 +226,13 @@ export default function register() {
               />
             </div>
             <div className="flex justify-center flex-col items-center space-y-2">
-              <div>{error ? error : null}</div>
+              {error ? (
+                <div className="text-red-500 font-bold text-xl">{error}</div>
+              ) : message ? (
+                <div className="text-green-400 font-bold text-xl">
+                  {message ? message : "hello"}
+                </div>
+              ) : null}
               <button className="buttons" type="submit">
                 Register
               </button>
@@ -242,7 +246,7 @@ export default function register() {
                 </Link>
               </div>
             </div>
-            <div className="absolute bottom-0 text-xs text-center">
+            <div className="absolute bottom-1 text-xs">
               {usernameHint
                 ? "At least 3 characters, letters and numbers only"
                 : passwordHint

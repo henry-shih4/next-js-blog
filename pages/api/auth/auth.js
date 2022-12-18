@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const { username, password } = req.body;
     const user = await db.collection("users").findOne({ username: username });
     if (user === null) {
-      return res.send({ message: "username not found" });
+      return res.status(404).send({ message: "username not found" });
     }
     try {
       if (await bcrypt.compare(password, user.password)) {
