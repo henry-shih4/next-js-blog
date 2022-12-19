@@ -4,7 +4,6 @@ import Header from "../../components/Header";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
-import Loading from "../../components/Loading";
 import Link from "next/link";
 import Leaderboard from "../../components/Leaderboard";
 
@@ -124,7 +123,7 @@ export default function home({ posts }) {
             Authorization: `${token}`,
           },
           // Body of the request is the JSON data we created above.
-          body: JSONdata2,
+          body: { JSONdata2, type: "postCounter" },
         };
 
         const response2 = await fetch(endpoint2, options2);

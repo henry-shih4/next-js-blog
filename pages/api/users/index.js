@@ -48,7 +48,7 @@ export default async function handler(req, res) {
       var decoded = jwt.verify(token, secret);
     } catch (error) {
       console.log(error);
-      res.status(401).json({
+      return res.status(401).json({
         error: error.message,
         message: "not authenticated",
         status: 401,
@@ -65,27 +65,46 @@ export default async function handler(req, res) {
     }
   }
 
-  // update number of posts on user
+  // update number of posts on user or image
   if (method === "PUT") {
     try {
       var decoded = jwt.verify(token, secret);
     } catch (error) {
       console.log(error);
-      res.status(401).json({
+      return res.status(401).json({
         error: error.message,
         message: "not authenticated",
         status: 401,
       });
     }
     if (decoded) {
-      try {
-        const { username, numPosts } = req.body;
-        const user = await db
-          .collection("users")
-          .updateOne({ username: username }, { $set: { numPosts: numPosts } });
-        return res.status(200).json(user);
-      } catch (error) {
-        console.log(error);
+      if (req.body.type === "postCounter") {
+        try {
+          const { username, numPosts } = req.body;
+          const user = await db
+            .collection("users")
+            .updateOne(
+              { username: username },
+              { $set: { numPosts: numPosts } }
+            );
+          return res.status(200).json(user);
+        } catch (error) {
+          console.log(error);
+          return res.status(500).send();
+        }
+      }
+      if (req.body.type === "image") {
+        try {
+          const { username, image } = req.body;
+          const user = await db
+            .collection("users")
+            .updateOne({ username: username }, { $set: { image: image } });
+          return res.status(200).json(user);
+        } catch (error) {
+          console.log(error);
+          return res.status(500).send();
+        }
+      } else {
         return res.status(500).send();
       }
     }

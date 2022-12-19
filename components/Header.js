@@ -28,15 +28,23 @@ export default function Header() {
   }, [search]);
 
   async function getUsers() {
-    let res = await fetch("http://localhost:3000/api/users", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${token}`,
-      },
-    });
-    let users = await res.json();
-    setUsersState(users);
+    try {
+      let res = await fetch("http://localhost:3000/api/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+      });
+      let users = await res.json();
+      if (res.status < 300) {
+        setUsersState(users);
+      } else if (res.status > 400) {
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
