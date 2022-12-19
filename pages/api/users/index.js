@@ -65,7 +65,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // update number of posts on user or image
+  // update number of posts user
   if (method === "PUT") {
     try {
       var decoded = jwt.verify(token, secret);
@@ -91,5 +91,3 @@ export default async function handler(req, res) {
     }
   }
 }
-
-

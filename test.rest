@@ -36,10 +36,6 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/users/636eb2a548be5b7cf31eb42d
+GET http://localhost:3000/api/users/636eb2a548be5b7cf31eb42d
 Content-Type: application/json
 
-{
-    "username":"nalamala",
-    "image":"hello"
-}

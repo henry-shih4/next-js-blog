@@ -13,6 +13,11 @@ export default function profile() {
   const CLOUDINARY_UPLOAD_PRESET = "rszs7nw5";
   const [selectedFile, setSelectedFile] = useState();
   const [photoURL, setPhotoURL] = useState();
+  const [profile, setProfile] = useState();
+
+  useEffect(() => {
+    console.log(profile);
+  });
 
   useEffect(() => {
     addPhotoLink();
@@ -20,7 +25,7 @@ export default function profile() {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [activeUser]);
 
   function handleFileChange(e) {
     setSelectedFile(e.target.files[0]);
@@ -88,18 +93,24 @@ export default function profile() {
 
   async function getUser() {
     try {
-      const endpoint = `/api/users/${activeUser.userId}`;
-      const options = {
-        method: "GET",
+      if (activeUser.userId) {
+        const endpoint = `/api/users/${activeUser.userId}`;
+        const options = {
+          method: "GET",
 
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-      };
-      const response = await fetch(endpoint, options);
-      const result = await response.json();
-      console.log(result);
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+          },
+        };
+        const response = await fetch(endpoint, options);
+        const result = await response.json();
+        if (response.status < 300) {
+          setProfile(result);
+        }
+      } else {
+        return;
+      }
     } catch (e) {
       console.log(e);
     }
@@ -114,15 +125,15 @@ export default function profile() {
             <div>Your User Profile</div>
             <div>
               <img
-                src={`https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`}
+                src={
+                  profile
+                    ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`
+                    : null
+                }
                 className="w-[200px] h-[200px] object-cover rounded-full"
               />
             </div>
             <div>
-              <img
-                src="https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671426394/rszs7nw5/pm0fhfovwotwpttklsmu.jpg"
-                className=""
-              />
               <form onSubmit={handleFormSubmit}>
                 <input type="file" name="file" onChange={handleFileChange} />
 
