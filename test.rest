@@ -36,11 +36,10 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/users
+PUT http://localhost:3000/api/users/636eb2a548be5b7cf31eb42d
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5hbGFtYWxhIiwidXNlcklkIjoiNjM2ZWIyYTU0OGJlNWI3Y2YzMWViNDJkIiwiZW1haWwiOiJuYWxhbWFsYUBob3RtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMTEtMTFUMjA6Mzc6NTcuNzAzWiIsImlhdCI6MTY3MTQzMTYxNywiZXhwIjoxNjcxNTE4MDE3fQ.1KorTtMUD12U3fmhQ02eH096NNE5wsQJXeiflMTlBhg
 
 {
     "username":"nalamala",
-    "numPosts":"5"
+    "image":"hello"
 }

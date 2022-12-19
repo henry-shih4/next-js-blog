@@ -18,6 +18,10 @@ export default function Header() {
     getUsers();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(activeUser);
+  // });
+
   useEffect(() => {
     if (search && search.length > 2) {
       let user = usersState.filter((user) => user.username.includes(search));

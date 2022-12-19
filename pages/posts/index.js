@@ -106,7 +106,6 @@ export default function home({ posts }) {
         let authorPosts = posts.filter(
           (post) => post.author === activeUser.username
         );
-
         const data2 = {
           username: activeUser.username,
           numPosts: authorPosts.length,
@@ -127,7 +126,10 @@ export default function home({ posts }) {
         };
 
         const response2 = await fetch(endpoint2, options2);
-        console.log(response2);
+
+        if (response2.status < 300) {
+          // console.log(response2);
+        }
       }
     } catch (error) {
       console.log(error);

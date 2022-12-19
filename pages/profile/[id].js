@@ -13,6 +13,10 @@ export default function user() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log(profile);
+  }, [profile]);
+
+  useEffect(() => {
     getUser();
   }, [id]);
 
@@ -48,6 +52,12 @@ export default function user() {
           {profile ? (
             <>
               <div className="flex justify-center items-center flex-col h-screen">
+                <div>
+                  <img
+                    src={`https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`}
+                    className="w-[200px] h-[200px] object-cover rounded-full"
+                  />
+                </div>
                 <div>user: {profile.username}</div>
                 <div>email: {profile.email}</div>
                 <div>

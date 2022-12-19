@@ -19,8 +19,8 @@ export default function profile() {
   }, [photoURL]);
 
   useEffect(() => {
-    console.log(photoURL);
-  });
+    getUser();
+  }, []);
 
   function handleFileChange(e) {
     setSelectedFile(e.target.files[0]);
@@ -59,10 +59,10 @@ export default function profile() {
       if (photoURL && activeUser) {
         const data = {
           username: activeUser.username,
-          photoLink: photoURL,
+          photoURL: photoURL,
         };
         const JSONdata = JSON.stringify(data);
-        const endpoint = "/api/users";
+        const endpoint = `/api/users/${activeUser.userId}`;
 
         const options = {
           // The method is PUT because we are updating data.
@@ -73,7 +73,7 @@ export default function profile() {
             Authorization: `${token}`,
           },
           // Body of the request is the JSON data we created above.
-          body: { JSONdata, type: "image" },
+          body: JSONdata,
         };
 
         const response = await fetch(endpoint, options);
@@ -86,6 +86,25 @@ export default function profile() {
     }
   }
 
+  async function getUser() {
+    try {
+      const endpoint = `/api/users/${activeUser.userId}`;
+      const options = {
+        method: "GET",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+      };
+      const response = await fetch(endpoint, options);
+      const result = await response.json();
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <>
       {activeUser ? (
@@ -93,6 +112,12 @@ export default function profile() {
           <Header></Header>
           <div className="flex justify-center items-center h-screen flex-col">
             <div>Your User Profile</div>
+            <div>
+              <img
+                src={`https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`}
+                className="w-[200px] h-[200px] object-cover rounded-full"
+              />
+            </div>
             <div>
               <img
                 src="https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671426394/rszs7nw5/pm0fhfovwotwpttklsmu.jpg"

@@ -92,16 +92,4 @@ export default async function handler(req, res) {
   }
 }
 
-//   try {
-//     const { username, image } = req.body;
-//     const user = await db
-//       .collection("users")
-//       .updateOne({ username: username }, { $set: { image: image } });
-//     return res.status(200).json(user);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).send();
-//   }
-// } else {
-//   return res.status(500).send();
-// }
+
