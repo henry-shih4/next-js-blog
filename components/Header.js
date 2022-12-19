@@ -18,9 +18,11 @@ export default function Header() {
     getUsers();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(activeUser);
-  // });
+  useEffect(() => {
+    if (activeUser == undefined) {
+      router.push("/login");
+    }
+  }, [activeUser]);
 
   useEffect(() => {
     if (search && search.length > 2) {

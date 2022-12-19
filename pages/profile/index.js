@@ -2,8 +2,10 @@ import { LoginContext } from "../../context/LoginContext";
 import { useContext, useEffect, useState } from "react";
 import FormData from "form-data";
 import Header from "../../components/Header";
+import Loading from "../../components/Loading";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
+
 export default function profile() {
   const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
     useContext(LoginContext);
@@ -14,10 +16,7 @@ export default function profile() {
   const [selectedFile, setSelectedFile] = useState();
   const [photoURL, setPhotoURL] = useState();
   const [profile, setProfile] = useState();
-
-  useEffect(() => {
-    console.log(profile);
-  });
+  const [upload, setUpload] = useState(false);
 
   useEffect(() => {
     addPhotoLink();
@@ -124,21 +123,55 @@ export default function profile() {
           <div className="flex justify-center items-center h-screen flex-col">
             <div>Your User Profile</div>
             <div>
-              <img
-                src={
-                  profile
-                    ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`
-                    : null
-                }
-                className="w-[200px] h-[200px] object-cover rounded-full"
-              />
+              {profile ? (
+                <img
+                  src={`https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`}
+                  className="w-[200px] h-[200px] object-cover rounded-full"
+                />
+              ) : (
+                <Loading />
+              )}
             </div>
-            <div>
-              <form onSubmit={handleFormSubmit}>
-                <input type="file" name="file" onChange={handleFileChange} />
+            <div className="w-full">
+              <div className="flex justify-center items-center">
+                <button
+                  className="small-button mt-4 text-xs"
+                  onClick={() => setUpload(true)}
+                >
+                  Change Picture
+                </button>
+              </div>
+              <div className={"flex justify-center m-2"}>
+                <form
+                  className={
+                    upload
+                      ? "visible opacity-100 duration-[2000ms] space-x-3 h-max"
+                      : "invisible opacity-0 duration-1000 space-x-3"
+                  }
+                  onSubmit={handleFormSubmit}
+                >
+                  <input
+                    type="file"
+                    name="file"
+                    className=" border-black border-2 p-1"
+                    onChange={handleFileChange}
+                  />
 
-                <button type="submit">upload picture</button>
-              </form>
+                  <button className="small-button text-xs" type="submit">
+                    upload
+                  </button>
+                  <div className="flex justify-center mt-2 cursor-pointer">
+                    <div
+                      className="small-button text-xs text-center"
+                      onClick={() => {
+                        setUpload(false);
+                      }}
+                    >
+                      cancel
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
             <div>username: {activeUser.username}</div>
             <div>email: {activeUser.email}</div>
