@@ -123,10 +123,11 @@ export default function home({ posts }) {
             Authorization: `${token}`,
           },
           // Body of the request is the JSON data we created above.
-          body: { JSONdata2, type: "postCounter" },
+          body: JSONdata2,
         };
 
         const response2 = await fetch(endpoint2, options2);
+        console.log(response2);
       }
     } catch (error) {
       console.log(error);

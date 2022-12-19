@@ -78,35 +78,30 @@ export default async function handler(req, res) {
       });
     }
     if (decoded) {
-      if (req.body.type === "postCounter") {
-        try {
-          const { username, numPosts } = req.body;
-          const user = await db
-            .collection("users")
-            .updateOne(
-              { username: username },
-              { $set: { numPosts: numPosts } }
-            );
-          return res.status(200).json(user);
-        } catch (error) {
-          console.log(error);
-          return res.status(500).send();
-        }
-      }
-      if (req.body.type === "image") {
-        try {
-          const { username, image } = req.body;
-          const user = await db
-            .collection("users")
-            .updateOne({ username: username }, { $set: { image: image } });
-          return res.status(200).json(user);
-        } catch (error) {
-          console.log(error);
-          return res.status(500).send();
-        }
-      } else {
+      try {
+        const { username, numPosts } = req.body;
+        const user = await db
+          .collection("users")
+          .updateOne({ username: username }, { $set: { numPosts: numPosts } });
+        return res.status(200).json(user);
+      } catch (error) {
+        console.log(error);
         return res.status(500).send();
       }
     }
   }
 }
+
+//   try {
+//     const { username, image } = req.body;
+//     const user = await db
+//       .collection("users")
+//       .updateOne({ username: username }, { $set: { image: image } });
+//     return res.status(200).json(user);
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).send();
+//   }
+// } else {
+//   return res.status(500).send();
+// }
