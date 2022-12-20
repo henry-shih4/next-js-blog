@@ -1,5 +1,5 @@
 import { LoginContext } from "../../context/LoginContext";
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import FormData from "form-data";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
@@ -17,23 +17,10 @@ export default function profile() {
   const [photoURL, setPhotoURL] = useState();
   const [profile, setProfile] = useState();
   const [upload, setUpload] = useState(false);
-  // const myRef = useRef(0);
 
   useEffect(() => {
     addPhotoLink();
   }, [photoURL]);
-
-  // useEffect(() => {
-  //   myRef.current.addEventListener("transitionend", (e) => {
-  //     if (e.propertyName === "opacity") {
-  //       if (!myRef.current.classList.contains("hidden")) {
-  //         myRef.current.classList.add("hidden");
-  //       }
-  //       myRef.current.classList.remove("hidden");
-  //       console.log("opacity end");
-  //     }
-  //   });
-  // }, []);
 
   useEffect(() => {
     getUser();
@@ -157,9 +144,14 @@ export default function profile() {
               <div
                 className={
                   upload
-                    ? "flex justify-center m-2 h-[40px] opacity-100 duration-700 space-x-3"
-                    : "flex justify-center m-2 h-0 opacity-0 duration-700 space-x-3"
+                    ? "flex justify-center box m-2"
+                    : "flex justify-center box box-hidden m-2"
                 }
+                // className={
+                //   upload
+                //     ? "flex justify-center m-2 h-[40px] opacity-100 duration-700 space-x-3"
+                //     : "flex justify-center m-2 h-0 opacity-0 duration-700 space-x-3"
+                // }
               >
                 <form onSubmit={handleFormSubmit}>
                   <div className="flex space-x-3">

@@ -23,6 +23,24 @@ input:focus {
 }
 
 
+.box {
+  height:40px;
+  transition: opacity 0.4s linear, height 0.7s step-start;
+}
+
+.box-hidden {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+
+  transition-timing-function: linear, step-end;
+}
+
+
+
+
+
+
 @keyframes spinner {
   0% {
     transform: rotate(0deg);
