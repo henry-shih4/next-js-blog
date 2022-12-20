@@ -13,10 +13,19 @@ export default function Header() {
   const [usersState, setUsersState] = useState();
   const [search, setSearch] = useState();
   const [userSuggestions, setUserSuggestions] = useState();
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
     getUsers();
   }, []);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [usersState]);
+
+  useEffect(() => {
+    console.log(currentUser);
+  });
 
   useEffect(() => {
     if (!token) {
@@ -50,6 +59,15 @@ export default function Header() {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  function getCurrentUser() {
+    if (usersState) {
+      let user = usersState.filter(
+        (user) => user.username == activeUser.username
+      );
+      setCurrentUser(user[0].photoURL);
     }
   }
 
