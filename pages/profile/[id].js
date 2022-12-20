@@ -54,7 +54,11 @@ export default function user() {
               <div className="flex justify-center items-center flex-col h-screen">
                 <div>
                   <img
-                    src={`https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`}
+                    src={
+                      profile.photoURL
+                        ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`
+                        : "/images/default.png"
+                    }
                     className="w-[200px] h-[200px] object-cover rounded-full"
                   />
                 </div>

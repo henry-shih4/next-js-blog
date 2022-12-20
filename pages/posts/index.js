@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Link from "next/link";
+import Loading from "../../components/Loading";
 import Leaderboard from "../../components/Leaderboard";
 
 export default function home({ posts }) {
@@ -451,7 +452,12 @@ export default function home({ posts }) {
         </>
       ) : (
         <div>
-          <Link href="/login">Please Log in</Link>
+          <>
+            <div className="h-screen flex flex-col justify-center items-center">
+              <Link href="/login">Please Log in</Link>
+              <Loading />
+            </div>
+          </>
         </div>
       )}
     </>
