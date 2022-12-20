@@ -17,7 +17,7 @@ export default function profile() {
   const [photoURL, setPhotoURL] = useState();
   const [profile, setProfile] = useState();
   const [upload, setUpload] = useState(false);
-  const myRef = useRef(0);
+  // const myRef = useRef(0);
 
   useEffect(() => {
     addPhotoLink();
@@ -37,7 +37,7 @@ export default function profile() {
 
   useEffect(() => {
     getUser();
-  }, [activeUser]);
+  }, [activeUser, profile]);
 
   function handleFileChange(e) {
     setSelectedFile(e.target.files[0]);
@@ -161,7 +161,7 @@ export default function profile() {
                     : "flex justify-center m-2 h-0 opacity-0 duration-700 space-x-3"
                 }
               >
-                <form ref={myRef} onSubmit={handleFormSubmit}>
+                <form onSubmit={handleFormSubmit}>
                   <div className="flex space-x-3">
                     <input
                       type="file"
