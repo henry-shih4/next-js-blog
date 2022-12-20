@@ -165,15 +165,23 @@ export default function profile() {
                     <button className="small-button text-xs" type="submit">
                       upload
                     </button>
-                    <div className="flex justify-center items-center cursor-pointer">
-                      <div
-                        className="small-button text-xs text-center"
+                    <div className="flex justify-center items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="text-black flex w-6 h-6 m-1 hover:cursor-pointer hover:scale-110"
                         onClick={() => {
                           setUpload(false);
                         }}
-                      >
-                        cancel
-                      </div>
+                      ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
                     </div>
                   </div>
                 </form>
