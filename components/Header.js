@@ -19,10 +19,10 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (activeUser == undefined) {
+    if (!token) {
       router.push("/login");
     }
-  }, [activeUser]);
+  }, [token]);
 
   useEffect(() => {
     if (search && search.length > 2) {
