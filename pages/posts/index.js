@@ -203,51 +203,81 @@ export default function home({ posts }) {
                           >
                             <div className="flex flex-col justify-center items-center bg-white p-3 w-[400px]">
                               <div className="flex justify-around items-center h-[1/2] w-full space-x-3">
-                                <div>
-                                  <img
-                                    src={
-                                      post.authorImage
-                                        ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${post.authorImage}`
-                                        : "/images/default.png"
-                                    }
-                                    className="w-[60px] h-[60px] object-cover rounded-full"
-                                  />
+                                <div className="flex flex-col justify-center items-center bg-red-300 w-1/3 h-full">
+                                  <div>
+                                    <img
+                                      src={
+                                        post.authorImage
+                                          ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${post.authorImage}`
+                                          : "/images/default.png"
+                                      }
+                                      className="w-[60px] h-[60px] object-cover rounded-full"
+                                    />
+                                  </div>
                                   <div>
                                     {post.author ? `by ${post.author}` : null}
                                   </div>
                                 </div>
-                                <div className="flex flex-col justify-center items-center">
-                                  <div className="text-xl">{post.title}</div>
-                                  <div className="text-lg flex space-x-4 items-center">
-                                    <div>{post.category}</div>
-                                    <div>
-                                      <img
-                                        className="h-[24px] "
-                                        src="/images/weight.svg"
-                                      />
+                                <div className="bg-blue-200 w-2/3 ">
+                                  <div className="flex justify-center items-center">
+                                    <div className="text-lg flex flex-col items-center space-y-2">
+                                      <div className="text-xl">
+                                        {post.title}
+                                      </div>
+                                      <div>
+                                        <div className="flex space-x-3 items-center justify-center">
+                                          <div>{post.category}</div>
+                                          <img
+                                            className="h-[24px] "
+                                            src={
+                                              post.category ===
+                                              "Weight Training"
+                                                ? "/images/weight.svg"
+                                                : post.category === "Cardio"
+                                                ? "images/treadmill.svg"
+                                                : post.category === "Sport"
+                                                ? "images/ball.svg"
+                                                : null
+                                            }
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="text-xs">
+                                        {`${
+                                          new Date(post.createdAt).getMonth() +
+                                          1
+                                        }/${new Date(
+                                          post.createdAt
+                                        ).getDate()}/${(
+                                          new Date(
+                                            post.createdAt
+                                          ).getFullYear() + ""
+                                        ).slice(-2)} @ ${
+                                          new Date(post.createdAt).getHours() >
+                                          12
+                                            ? new Date(
+                                                post.createdAt
+                                              ).getHours() - 12
+                                            : new Date(
+                                                post.createdAt
+                                              ).getHours()
+                                        }:${
+                                          (new Date(
+                                            post.createdAt
+                                          ).getMinutes() > 10
+                                            ? ""
+                                            : "0") +
+                                          new Date(post.createdAt).getMinutes()
+                                        } ${
+                                          new Date(post.createdAt).getHours() >
+                                          12
+                                            ? "PM"
+                                            : "AM"
+                                        }`}
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="text-xs">
-                                {`${
-                                  new Date(post.createdAt).getMonth() + 1
-                                }/${new Date(post.createdAt).getDate()}/${(
-                                  new Date(post.createdAt).getFullYear() + ""
-                                ).slice(-2)} @ ${
-                                  new Date(post.createdAt).getHours() > 12
-                                    ? new Date(post.createdAt).getHours() - 12
-                                    : new Date(post.createdAt).getHours()
-                                }:${
-                                  (new Date(post.createdAt).getMinutes() > 10
-                                    ? ""
-                                    : "0") +
-                                  new Date(post.createdAt).getMinutes()
-                                } ${
-                                  new Date(post.createdAt).getHours() > 12
-                                    ? "PM"
-                                    : "AM"
-                                }`}
                               </div>
                             </div>
                             <div
