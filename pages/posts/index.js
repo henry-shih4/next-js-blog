@@ -159,6 +159,7 @@ export default function home({ posts }) {
             <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
+            {/*workout feed start */}
             <div className="bg-white w-[500px] mx-4 lg:w-[800px]">
               <div className="flex justify-between items-center p-3">
                 <div>Workout Feed</div>
@@ -200,25 +201,40 @@ export default function home({ posts }) {
                               setHoveredPost("");
                             }}
                           >
-                            <div className="flex flex-col justify-center items-center bg-white p-3">
-                              <img
-                                src={
-                                  post.authorImage
-                                    ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${post.authorImage}`
-                                    : "/images/default.png"
-                                }
-                                className="w-[60px] h-[60px] object-cover rounded-full"
-                              />
-                              <div>{post.title}</div>
-
-                              <div>
+                            <div className="flex flex-col justify-center items-center bg-white p-3 w-[400px]">
+                              <div className="flex justify-around items-center h-[1/2] w-full space-x-3">
+                                <div>
+                                  <img
+                                    src={
+                                      post.authorImage
+                                        ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${post.authorImage}`
+                                        : "/images/default.png"
+                                    }
+                                    className="w-[60px] h-[60px] object-cover rounded-full"
+                                  />
+                                  <div>
+                                    {post.author ? `by ${post.author}` : null}
+                                  </div>
+                                </div>
+                                <div className="flex flex-col justify-center items-center">
+                                  <div className="text-xl">{post.title}</div>
+                                  <div className="text-lg flex space-x-4 items-center">
+                                    <div>{post.category}</div>
+                                    <div>
+                                      <img
+                                        className="h-[24px] "
+                                        src="/images/weight.svg"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-xs">
                                 {`${
                                   new Date(post.createdAt).getMonth() + 1
-                                }/${new Date(
-                                  post.createdAt
-                                ).getDate()}/${new Date(
-                                  post.createdAt
-                                ).getFullYear()}, ${
+                                }/${new Date(post.createdAt).getDate()}/${(
+                                  new Date(post.createdAt).getFullYear() + ""
+                                ).slice(-2)} @ ${
                                   new Date(post.createdAt).getHours() > 12
                                     ? new Date(post.createdAt).getHours() - 12
                                     : new Date(post.createdAt).getHours()
@@ -232,9 +248,6 @@ export default function home({ posts }) {
                                     ? "PM"
                                     : "AM"
                                 }`}
-                              </div>
-                              <div>
-                                {post.author ? `by ${post.author}` : null}
                               </div>
                             </div>
                             <div
@@ -322,6 +335,7 @@ export default function home({ posts }) {
                         Category
                       </label>
                       <select
+                        required
                         value={category}
                         id="category"
                         className="w-2/3"
@@ -342,6 +356,7 @@ export default function home({ posts }) {
                         Duration
                       </label>
                       <input
+                        required
                         value={duration}
                         className="w-2/3"
                         id="duration"

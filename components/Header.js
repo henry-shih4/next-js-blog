@@ -15,7 +15,7 @@ export default function Header() {
   const [search, setSearch] = useState();
   const [userSuggestions, setUserSuggestions] = useState();
   const [currentUserPhoto, setCurrentUserPhoto] = useState();
-
+  const [showSuggestions, setShowSuggestions] = useState();
 
   useEffect(() => {
     getUsers();
@@ -33,8 +33,8 @@ export default function Header() {
 
   useEffect(() => {
     if (search && search.length > 2) {
-      let user = usersState.filter((user) => user.username.includes(search));
-      setUserSuggestions(user);
+      let users = usersState.filter((user) => user.username.includes(search));
+      setUserSuggestions(users);
     } else {
       setUserSuggestions("");
     }
@@ -89,9 +89,9 @@ export default function Header() {
           <div className="flex flex-col">
             <div
               className=" relative min-w-[180px] h-full "
-              onMouseLeave={() => {
-                setUserSuggestions("");
-              }}
+              // onMouseLeave={() => {
+              //   setShowSuggestions(false);
+              // }}
             >
               <input
                 type="text"
@@ -99,12 +99,18 @@ export default function Header() {
                 onChange={(e) => {
                   setSearch(e.target.value);
                 }}
+                onFocus={() => {
+                  setShowSuggestions(true);
+                }}
+                onBlur={() => {
+                  setShowSuggestions(false);
+                }}
               />
               <div
                 className={
-                  userSuggestions
+                  showSuggestions
                     ? "absolute top-full bg-slate-200 w-full z-10"
-                    : "hidden" + "absolute top-full bg-slate-200 w-full"
+                    : "hidden absolute top-full bg-slate-200 w-full"
                 }
               >
                 {userSuggestions
@@ -112,7 +118,7 @@ export default function Header() {
                       <div>
                         <button
                           className="w-full hover:bg-[#a0af8c]"
-                          onClick={() => {
+                          onMouseDown={() => {
                             router.push(`/profile/${user._id}`);
                           }}
                         >
