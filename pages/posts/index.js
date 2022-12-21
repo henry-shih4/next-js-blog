@@ -155,7 +155,7 @@ export default function home({ posts }) {
       {isLoggedIn ? (
         <>
           <Header />
-          <div className="flex flex-wrap justify-center items-center w-screen relative bg-slate-500  min-h-[calc(100vh-48px)]">
+          <div className="flex flex-wrap justify-center items-center w-screen relative bg-slate-500  min-h-[calc(100vh-64px)]">
             <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
@@ -192,7 +192,7 @@ export default function home({ posts }) {
                     ? postsState.map((post) => {
                         return (
                           <div
-                            className="bg-red-300 flex min-h-[100px] w-3/4 my-2 justify-center items-center relative rounded-lg"
+                            className=" flex min-h-[100px] w-3/4 my-2 justify-center items-center relative rounded-lg"
                             key={post._id}
                             onMouseEnter={() => {
                               setHoveredPost(post._id);
@@ -201,9 +201,9 @@ export default function home({ posts }) {
                               setHoveredPost("");
                             }}
                           >
-                            <div className="flex flex-col justify-center items-center bg-white p-3 w-[400px]">
+                            <div className="flex flex-col justify-center items-center bg-white p-3 w-[400px] rounded-xl">
                               <div className="flex justify-around items-center h-[1/2] w-full space-x-3">
-                                <div className="flex flex-col justify-center items-center bg-red-300 w-1/3 h-full">
+                                <div className="flex flex-col justify-center items-center  w-1/3 h-full">
                                   <div>
                                     <img
                                       src={
@@ -218,7 +218,7 @@ export default function home({ posts }) {
                                     {post.author ? `by ${post.author}` : null}
                                   </div>
                                 </div>
-                                <div className="bg-blue-200 w-2/3 ">
+                                <div className=" w-2/3 ">
                                   <div className="flex justify-center items-center">
                                     <div className="text-lg flex flex-col items-center space-y-2">
                                       <div className="text-xl">
