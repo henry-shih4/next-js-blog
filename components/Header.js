@@ -9,11 +9,13 @@ import { LoginContext } from "../context/LoginContext";
 export default function Header() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [isLoggedIn, changeLoggedIn, activeUser] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, activeUser, setActiveUser] =
+    useContext(LoginContext);
   const [usersState, setUsersState] = useState();
   const [search, setSearch] = useState();
   const [userSuggestions, setUserSuggestions] = useState();
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUserPhoto, setCurrentUserPhoto] = useState();
+
 
   useEffect(() => {
     getUsers();
@@ -22,10 +24,6 @@ export default function Header() {
   useEffect(() => {
     getCurrentUser();
   }, [usersState]);
-
-  useEffect(() => {
-    console.log(currentUser);
-  });
 
   useEffect(() => {
     if (!token) {
@@ -67,20 +65,34 @@ export default function Header() {
       let user = usersState.filter(
         (user) => user.username == activeUser.username
       );
-      setCurrentUser(user[0].photoURL);
+      setCurrentUserPhoto(user[0].photoURL);
+      setActiveUser({ ...activeUser, photoURL: user[0].photoURL });
     }
   }
 
   return (
     <>
-      <div className="h-12 p-2 flex justify-between items-center">
-        <div>
-          <Link href={token ? "/posts" : "/login"}>ExerBlog</Link>
+      <div className="h-16 p-2 flex justify-between items-center bg-[#D9D9D9]">
+        <div className="flex w-[400px] h-full">
+          <Link
+            className="flex shrink-0 w-full"
+            href={token ? "/posts" : "/login"}
+          >
+            <img
+              className="object-cover w-[240px] min-w-[180px]"
+              src="/images/fitforum.jpg"
+            />
+          </Link>
         </div>
-        <div className="flex">
+        <div className="flex  justify-center items-center w-[400px] ">
           <MagnifyingGlassIcon className="h-6 m-1" />
           <div className="flex flex-col">
-            <div className="relative w-[200px]">
+            <div
+              className=" relative min-w-[180px] h-full "
+              onMouseLeave={() => {
+                setUserSuggestions("");
+              }}
+            >
               <input
                 type="text"
                 className="border border-gray-300 w-full"
@@ -91,19 +103,21 @@ export default function Header() {
               <div
                 className={
                   userSuggestions
-                    ? "absolute top-7 bg-slate-200 w-full z-10"
-                    : "hidden" + "absolute top-7 bg-slate-200 w-full"
+                    ? "absolute top-full bg-slate-200 w-full z-10"
+                    : "hidden" + "absolute top-full bg-slate-200 w-full"
                 }
               >
                 {userSuggestions
                   ? userSuggestions.map((user) => (
-                      <div
-                        className=""
-                        onClick={() => {
-                          router.push(`/profile/${user._id}`);
-                        }}
-                      >
-                        {user.username}
+                      <div>
+                        <button
+                          className="w-full hover:bg-[#a0af8c]"
+                          onClick={() => {
+                            router.push(`/profile/${user._id}`);
+                          }}
+                        >
+                          {user.username}
+                        </button>
                       </div>
                     ))
                   : null}
@@ -111,14 +125,26 @@ export default function Header() {
             </div>
           </div>
         </div>
-        <div className="flex items-center">
-          <div>
+        <div className="flex justify-around items-center w-[400px]">
+          <div className="flex items-center space-x-3">
+            <div className="hidden md:block">
+              <img
+                src={
+                  currentUserPhoto
+                    ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${currentUserPhoto}`
+                    : "/images/default.png"
+                }
+                className=" w-[48px] h-[48px] object-cover rounded-full"
+              />
+            </div>
             {activeUser ? (
-              <Link href="/profile">{activeUser.username}</Link>
+              <Link href="/profile" className="font-bold">
+                {activeUser.username}
+              </Link>
             ) : null}
           </div>
           <button
-            className="p-2 m-2 rounded-md "
+            className="hidden md:block p-2 m-2 rounded-md font-bold  hover:underline"
             onClick={() => {
               if (token) {
                 cookies.remove("TOKEN", { path: "/" });
@@ -130,6 +156,33 @@ export default function Header() {
             }}
           >
             Logout
+          </button>
+          <button
+            className="block md:hidden"
+            onClick={() => {
+              if (token) {
+                cookies.remove("TOKEN", { path: "/" });
+                changeLoggedIn(false);
+                router.push("/login");
+              } else {
+                router.push("/login");
+              }
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 hover:text-white duration-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+              />
+            </svg>
           </button>
         </div>
       </div>

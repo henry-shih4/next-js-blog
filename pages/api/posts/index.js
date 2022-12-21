@@ -42,8 +42,15 @@ export default async function handler(req, res) {
     }
     if (decoded) {
       try {
-        const { title, content, category, duration, exercises, author } =
-          req.body;
+        const {
+          title,
+          content,
+          category,
+          duration,
+          exercises,
+          author,
+          authorImage,
+        } = req.body;
         // Insert a post into DB
         const response = await db.collection("posts").insertOne({
           author,
@@ -53,6 +60,7 @@ export default async function handler(req, res) {
           duration,
           exercises,
           createdAt: new Date(),
+          authorImage,
         });
         // Send a response
         return res.status(200).json({

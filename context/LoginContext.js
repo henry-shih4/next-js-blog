@@ -40,7 +40,9 @@ function LoginProvider(props) {
   }
 
   return (
-    <LoginContext.Provider value={[isLoggedIn, changeLoggedIn, activeUser]}>
+    <LoginContext.Provider
+      value={[isLoggedIn, changeLoggedIn, activeUser, setActiveUser]}
+    >
       {props.children}
     </LoginContext.Provider>
   );

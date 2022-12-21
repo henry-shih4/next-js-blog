@@ -57,6 +57,7 @@ export default function home({ posts }) {
         duration: duration,
         exercises: exerciseList,
         author: activeUser.username,
+        authorImage: activeUser.photoURL,
       };
       const JSONdata = JSON.stringify(data);
       const endpoint = "/api/posts";
@@ -158,7 +159,7 @@ export default function home({ posts }) {
             <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
-            <div className="bg-white w-[500px] mx-4">
+            <div className="bg-white w-[500px] mx-4 lg:w-[800px]">
               <div className="flex justify-between items-center p-3">
                 <div>Workout Feed</div>
                 <div className="flex justify-center items-center">
@@ -200,7 +201,16 @@ export default function home({ posts }) {
                             }}
                           >
                             <div className="flex flex-col justify-center items-center bg-white p-3">
+                              <img
+                                src={
+                                  post.authorImage
+                                    ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${post.authorImage}`
+                                    : "/images/default.png"
+                                }
+                                className="w-[60px] h-[60px] object-cover rounded-full"
+                              />
                               <div>{post.title}</div>
+
                               <div>
                                 {`${
                                   new Date(post.createdAt).getMonth() + 1
