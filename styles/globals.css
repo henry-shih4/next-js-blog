@@ -39,11 +39,11 @@ input:focus {
 
     * {
       scrollbar-width: auto;
-      scrollbar-color: #8f54a0 #ffffff;
+      scrollbar-color: #a0af8c #ffffff;
     }
 
             *::-webkit-scrollbar {
-              width: 16px;
+              width: 12px;
             }
       
             *::-webkit-scrollbar-track {

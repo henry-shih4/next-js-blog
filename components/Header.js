@@ -72,12 +72,9 @@ export default function Header() {
 
   return (
     <>
-      <div className="h-16 p-2 flex justify-between items-center bg-[#D9D9D9]">
+      <div className="h-16 p-2 flex justify-between items-center bg-[#D9D9D9] w-full">
         <div className="flex w-[400px] h-full">
-          <Link
-            className="flex shrink-0 w-full"
-            href={token ? "/posts" : "/login"}
-          >
+          <Link className="flex w-full" href={token ? "/posts" : "/login"}>
             <img
               className="object-cover w-[240px] min-w-[180px]"
               src="/images/fitforum.jpg"
@@ -85,7 +82,9 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex  justify-center items-center w-[400px] ">
-          <MagnifyingGlassIcon className="h-6 m-1" />
+          <div>
+            <MagnifyingGlassIcon className="h-6 m-1" />
+          </div>
           <div className="flex flex-col">
             <div
               className=" relative min-w-[180px] h-full "
@@ -132,7 +131,7 @@ export default function Header() {
           </div>
         </div>
         <div className="flex justify-around items-center w-[400px]">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 mr-2 ">
             <div className="hidden md:block">
               <img
                 src={

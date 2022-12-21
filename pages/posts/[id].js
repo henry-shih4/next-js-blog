@@ -10,13 +10,20 @@ export default function post({ post }) {
   const router = useRouter();
   const { id } = router.query;
   const token = cookies.get("TOKEN");
-  const [isLoggedIn, changeLoggedIn] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, activeUser] = useContext(LoginContext);
+  const [message, setMessage] = useState();
 
   useEffect(() => {
     if (post.status === 401 || !post) {
       router.push("/login");
     }
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  }, [message]);
 
   useEffect(() => {
     const d = new Date(post.createdAt);
@@ -40,6 +47,11 @@ export default function post({ post }) {
   }, []);
 
   async function handlePostDelete() {
+    if (activeUser.username !== post.author) {
+      setMessage("You cannot delete someone else's post!");
+      return;
+    }
+
     const data = {
       id: id,
     };
@@ -65,59 +77,79 @@ export default function post({ post }) {
     }
   }
 
- 
-
   return (
     <>
       <Header />
       {isLoggedIn ? (
-        <div className="h-screen flex flex-col justify-center items-center">
-          {post ? (
-            <>
-              <div className="flex flex-col justify-center items-center ">
-                <div>{post.author}</div>
-                <div>{time}</div>
-                <div>Workout: {post.title}</div>
-                <div>Type: {post.category}</div>
-                <div>Duration: {post.duration} min</div>
-                <div>Notes: {post.content}</div>
+        <div className="min-h-[calc(100vh-64px)] flex flex-col justify-center items-center  ">
+          <div className=" relative w-[400px] h-[400px] flex flex-col justify-center items-center">
+            <div>
+              {post ? (
+                <>
+                  <div className="flex flex-col justify-center items-center ">
+                    <div>{post.author}</div>
+                    <div>{time}</div>
+                    <div>Workout: {post.title}</div>
+                    <div>Category: {post.category}</div>
+                    <div>Duration: {post.duration} min</div>
+                    <div>Notes: {post.content}</div>
+                  </div>
+                  <div className="flex justify-center items-center flex-wrap">
+                    {post.exercises
+                      ? post.exercises.map((exercise, index) => {
+                          return (
+                            <div>
+                              <div className="border border-black w-[200px] flex flex-col justify-center items-center">
+                                <div>Exercise {index + 1}</div>
+                                <div>{exercise.name}</div>
+                                {exercise.weight ? (
+                                  <div>{exercise.weight} lbs</div>
+                                ) : null}
+                                {exercise.sets ? (
+                                  <div>{exercise.sets} sets</div>
+                                ) : null}
+                                {exercise.reps ? (
+                                  <div>{exercise.reps} reps</div>
+                                ) : null}
+                              </div>
+                            </div>
+                          );
+                        })
+                      : null}
+                  </div>
+                </>
+              ) : null}
+              <div className="flex justify-center space-x-4">
+                {post.author === activeUser.username ? (
+                  <button className="p-2 buttons" onClick={handlePostDelete}>
+                    Delete
+                  </button>
+                ) : null}
               </div>
-              <div className="flex justify-center items-center flex-wrap">
-                {post.exercises
-                  ? post.exercises.map((exercise, index) => {
-                      return (
-                        <div>
-                          <div className="border border-black w-[200px] flex flex-col justify-center items-center">
-                            <div>Exercise {index + 1}</div>
-                            <div>{exercise.name}</div>
-                            {exercise.weight ? (
-                              <div>{exercise.weight} lbs</div>
-                            ) : null}
-                            {exercise.sets ? (
-                              <div>{exercise.sets} sets</div>
-                            ) : null}
-                            {exercise.reps ? (
-                              <div>{exercise.reps} reps</div>
-                            ) : null}
-                          </div>
-                        </div>
-                      );
-                    })
-                  : null}
-              </div>
-            </>
-          ) : null}
-          <div className="flex justify-center space-x-4">
-            <button className="p-2 buttons" onClick={handlePostDelete}>
-              Delete
-            </button>
+            </div>
+            <div className="m-2 text-red-500 absolute top-full w-full flex justify-center">
+              {message ? message : null}
+            </div>
             <button
-              className="p-2 buttons"
               onClick={() => {
                 router.push("/posts");
               }}
+              className="absolute right-full top-20 mx-3 hover:scale-105"
             >
-              Home
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-8 h-8"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                />
+              </svg>
             </button>
           </div>
         </div>

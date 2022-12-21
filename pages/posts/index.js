@@ -155,7 +155,7 @@ export default function home({ posts }) {
       {isLoggedIn ? (
         <>
           <Header />
-          <div className="flex flex-wrap justify-center items-center w-screen relative bg-slate-500  min-h-[calc(100vh-64px)]">
+          <div className="flex flex-wrap justify-center items-center w-full relative bg-slate-500  min-h-[calc(100vh-64px)]">
             <div>
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
@@ -220,12 +220,12 @@ export default function home({ posts }) {
                                 </div>
                                 <div className=" w-2/3 ">
                                   <div className="flex justify-center items-center">
-                                    <div className="text-lg flex flex-col items-center space-y-2">
+                                    <div className="text-lg flex flex-col items-center space-y-2 ">
                                       <div className="text-xl">
                                         {post.title}
                                       </div>
                                       <div>
-                                        <div className="flex space-x-3 items-center justify-center">
+                                        <div className="flex space-x-3 items-center justify-center ">
                                           <div>{post.category}</div>
                                           <img
                                             className="h-[24px] "
@@ -241,6 +241,9 @@ export default function home({ posts }) {
                                             }
                                           />
                                         </div>
+                                      </div>
+                                      <div className="text-center text-sm">
+                                        {post.duration} min
                                       </div>
                                       <div className="text-xs">
                                         {`${

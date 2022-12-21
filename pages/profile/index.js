@@ -120,7 +120,7 @@ export default function profile() {
       {activeUser ? (
         <>
           <Header></Header>
-          <div className="flex justify-center items-center h-screen flex-col">
+          <div className="flex justify-center items-center  flex-col min-h-[calc(100vh-64px)]">
             <div>Your User Profile</div>
             <div>
               {profile ? (

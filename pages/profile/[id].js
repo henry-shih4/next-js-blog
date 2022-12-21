@@ -51,7 +51,7 @@ export default function user() {
         <>
           {profile ? (
             <>
-              <div className="flex justify-center items-center flex-col h-screen">
+              <div className="flex justify-center items-center flex-col min-h-[calc(100vh-64px)]">
                 <div>
                   <img
                     src={
