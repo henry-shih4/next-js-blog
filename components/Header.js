@@ -74,11 +74,14 @@ export default function Header() {
     <>
       <div className="h-16 p-2 flex justify-between items-center bg-[#D9D9D9] w-full">
         <div className="flex w-[400px] h-full">
-          <Link className="flex w-full" href={token ? "/posts" : "/login"}>
+          <Link className="flex w-full justify-center" href={token ? "/posts" : "/login"}>
             <img
-              className="object-cover w-[240px] min-w-[180px]"
-              src="/images/fitforum.jpg"
+              className="hidden md:block object-cover w-[240px] min-w-[180px]"
+              src={"/images/fitforum.png"}
             />
+            <div className="flex justify-center items-center text-2xl max-w-[240px]  object-cover md:hidden">
+              ff
+            </div>
           </Link>
         </div>
         <div className="flex  justify-center items-center w-[400px] ">
