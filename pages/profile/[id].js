@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import Loading from "../../components/Loading";
 import Header from "../../components/Header";
 
-export default function user() {
+export default function User() {
   const router = useRouter();
   const { id } = router.query;
   const token = cookies.get("TOKEN");
@@ -18,7 +19,7 @@ export default function user() {
 
   useEffect(() => {
     getUser();
-  }, [id]);
+  }, [id, getUser]);
 
   async function getUser() {
     try {
@@ -53,7 +54,8 @@ export default function user() {
             <>
               <div className="flex justify-center items-center flex-col min-h-[calc(100vh-64px)]">
                 <div>
-                  <img
+                  <Image
+                  alt='profile-picture'
                     src={
                       profile.photoURL
                         ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`

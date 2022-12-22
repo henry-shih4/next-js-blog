@@ -2,6 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next-image";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../context/LoginContext";
@@ -9,7 +10,7 @@ import { LoginContext } from "../context/LoginContext";
 export default function Header() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [isLoggedIn, changeLoggedIn, activeUser, setActiveUser] =
+  const [, changeLoggedIn, activeUser, setActiveUser] =
     useContext(LoginContext);
   const [usersState, setUsersState] = useState();
   const [search, setSearch] = useState();
@@ -19,17 +20,17 @@ export default function Header() {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [getUsers]);
 
   useEffect(() => {
     getCurrentUser();
-  }, [usersState]);
+  }, [usersState, getCurrentUser]);
 
   useEffect(() => {
     if (!token) {
       router.push("/login");
     }
-  }, [token]);
+  }, [token, router]);
 
   useEffect(() => {
     if (search && search.length > 2) {
@@ -123,7 +124,7 @@ export default function Header() {
               >
                 {userSuggestions
                   ? userSuggestions.map((user) => (
-                      <div>
+                      <div key={user._id}>
                         <button
                           className="w-full hover:bg-[#a0af8c]"
                           onMouseDown={() => {
@@ -142,7 +143,8 @@ export default function Header() {
         <div className="flex justify-around items-center w-[400px]">
           <div className="flex items-center space-x-3 mr-2 ">
             <div className="hidden md:block">
-              <img
+              <Image
+                alt="profile-picture"
                 src={
                   currentUserPhoto
                     ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${currentUserPhoto}`

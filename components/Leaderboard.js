@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import Image from "next-image";
 
 export default function Leaderboard(props) {
   const { rankings } = props;
@@ -10,7 +10,11 @@ export default function Leaderboard(props) {
           <div className="flex justify-center items-center w-full underline mb-2 space-x-2">
             <div>Leaderboard</div>
             <div>
-              <img className="h-[24px]" src="images/mountain.svg" />
+              <Image
+                alt="mountain-icon"
+                className="h-[24px]"
+                src="images/mountain.svg"
+              />
             </div>
           </div>
           <div className=" w-[200px] flex flex-col justify-center items-center">

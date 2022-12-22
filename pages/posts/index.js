@@ -7,8 +7,9 @@ import { LoginContext } from "../../context/LoginContext";
 import Link from "next/link";
 import Loading from "../../components/Loading";
 import Leaderboard from "../../components/Leaderboard";
+import Image from "next/image";
 
-export default function home({ posts }) {
+export default function Home({ posts }) {
   const [postsState, setPostsState] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -22,7 +23,7 @@ export default function home({ posts }) {
   const [hoveredPost, setHoveredPost] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const token = cookies.get("TOKEN");
-  const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
+  const [isLoggedIn, , activeUser, ,] = useContext(LoginContext);
   const [rankings, setRankings] = useState();
 
   const router = useRouter();
@@ -35,11 +36,11 @@ export default function home({ posts }) {
     setPostsState(posts);
     updatePostCount();
     generateLeaderboard();
-  }, [posts]);
+  }, [posts, generateLeaderboard, updatePostCount]);
 
   useEffect(() => {
     generateLeaderboard();
-  }, []);
+  }, [generateLeaderboard]);
 
   useEffect(() => {
     if (posts.status === 401 || !postsState) {
@@ -205,7 +206,8 @@ export default function home({ posts }) {
                               <div className="flex justify-around items-center h-[1/2] w-full space-x-3">
                                 <div className="flex flex-col justify-center items-center  w-1/3 h-full">
                                   <div>
-                                    <img
+                                    <Image
+                                      alt="profile picture"
                                       src={
                                         post.authorImage
                                           ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${post.authorImage}`
@@ -227,7 +229,8 @@ export default function home({ posts }) {
                                       <div>
                                         <div className="flex space-x-3 items-center justify-center ">
                                           <div>{post.category}</div>
-                                          <img
+                                          <Image
+                                            alt="exercise-category-icon"
                                             className="h-[24px] "
                                             src={
                                               post.category ===
@@ -475,7 +478,11 @@ export default function home({ posts }) {
                       <div>Exercises to add</div>
                       {exerciseList
                         ? exerciseList.map((exercise) => {
-                            return <div className="mx-2">{exercise.name}</div>;
+                            return (
+                              <div key={exercise.name} className="mx-2">
+                                {exercise.name}
+                              </div>
+                            );
                           })
                         : null}
                     </div>
