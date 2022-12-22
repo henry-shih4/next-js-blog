@@ -5,7 +5,8 @@ const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
-export default function post({ post }) {
+
+export default function Post({ post }) {
   const [time, setTime] = useState();
   const router = useRouter();
   const { id } = router.query;

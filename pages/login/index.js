@@ -6,7 +6,7 @@ import Link from "next/link";
 import { LoginContext } from "../../context/LoginContext";
 import Loading from "../../components/Loading";
 
-export default function login() {
+export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const token = cookies.get("TOKEN");

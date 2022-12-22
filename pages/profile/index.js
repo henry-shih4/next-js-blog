@@ -6,7 +6,7 @@ import Loading from "../../components/Loading";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
-export default function profile() {
+export default function Profile() {
   const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
     useContext(LoginContext);
   const token = cookies.get("TOKEN");

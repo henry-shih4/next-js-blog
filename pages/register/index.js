@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function register() {
+export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -19,7 +19,6 @@ export default function register() {
   const alphaNumCombinedSpecial = new RegExp(
     "^(?=.*[0-9])(?=.*[!@#$%^&*()+=_-])[a-zA-Z0-9!@#$%^&*()+=_-]{6,16}$"
   );
-
   const userRegex = new RegExp("[^A-Za-z 0-9]");
   const emailRegex = /^\S+@\S+\.\S+$/;
 

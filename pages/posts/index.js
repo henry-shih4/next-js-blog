@@ -8,7 +8,7 @@ import Link from "next/link";
 import Loading from "../../components/Loading";
 import Leaderboard from "../../components/Leaderboard";
 
-export default function home({ posts }) {
+export default function Home({ posts }) {
   const [postsState, setPostsState] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");

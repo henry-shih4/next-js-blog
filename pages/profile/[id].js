@@ -5,7 +5,7 @@ const cookies = new Cookies();
 import Loading from "../../components/Loading";
 import Header from "../../components/Header";
 
-export default function user() {
+export default function User() {
   const router = useRouter();
   const { id } = router.query;
   const token = cookies.get("TOKEN");
