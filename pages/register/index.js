@@ -14,14 +14,14 @@ export default function register() {
   const [message, setMessage] = useState("");
 
   //regex for validation
-  let alphaNum = new RegExp("[a-zA-Z0-9]");
-  let alphaNumCombined = new RegExp("(?=.*[a-zA-Z])(?=.*[0-9])");
-  let alphaNumCombinedSpecial = new RegExp(
+  const alphaNum = new RegExp("[a-zA-Z0-9]");
+  const alphaNumCombined = new RegExp("(?=.*[a-zA-Z])(?=.*[0-9])");
+  const alphaNumCombinedSpecial = new RegExp(
     "^(?=.*[0-9])(?=.*[!@#$%^&*()+=_-])[a-zA-Z0-9!@#$%^&*()+=_-]{6,16}$"
   );
 
-  let userRegex = new RegExp("[^A-Za-z 0-9]");
-  let emailRegex = /^\S+@\S+\.\S+$/;
+  const userRegex = new RegExp("[^A-Za-z 0-9]");
+  const emailRegex = /^\S+@\S+\.\S+$/;
 
   useEffect(() => {
     if (alphaNumCombinedSpecial.test(password)) {
@@ -49,7 +49,7 @@ export default function register() {
     } else {
       setValidEmail(false);
     }
-  });
+  }, [email]);
 
   async function handleFormSubmit(e) {
     e.preventDefault();

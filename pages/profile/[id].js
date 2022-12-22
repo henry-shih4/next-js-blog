@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import Loading from "../../components/Loading";
@@ -16,11 +16,7 @@ export default function user() {
     console.log(profile);
   }, [profile]);
 
-  useEffect(() => {
-    getUser();
-  }, [id]);
-
-  async function getUser() {
+  const getUser = useCallback(async () => {
     try {
       const endpoint = "/api/users";
       const options = {
@@ -40,7 +36,12 @@ export default function user() {
     } catch (e) {
       console.log(e);
     }
-  }
+  }, [id]);
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
+
 
   return (
     <>

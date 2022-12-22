@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Cookies from "universal-cookie";
@@ -18,14 +18,6 @@ export default function Header() {
   const [showSuggestions, setShowSuggestions] = useState();
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
-  useEffect(() => {
-    getCurrentUser();
-  }, [usersState]);
-
-  useEffect(() => {
     if (!token) {
       router.push("/login");
     }
@@ -38,9 +30,9 @@ export default function Header() {
     } else {
       setUserSuggestions("");
     }
-  }, [search]);
+  }, [search, usersState]);
 
-  async function getUsers() {
+  const getUsers = useCallback(async () => {
     try {
       let res = await fetch("http://localhost:3000/api/users", {
         method: "GET",
@@ -58,9 +50,13 @@ export default function Header() {
     } catch (error) {
       console.log(error);
     }
-  }
+  }, []);
 
-  function getCurrentUser() {
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
+
+  const getCurrentUser = useCallback(() => {
     if (usersState) {
       let user = usersState.filter(
         (user) => user.username == activeUser.username
@@ -68,7 +64,10 @@ export default function Header() {
       setCurrentUserPhoto(user[0].photoURL);
       setActiveUser({ ...activeUser, photoURL: user[0].photoURL });
     }
-  }
+  }, [usersState]);
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
 
   return (
     <>

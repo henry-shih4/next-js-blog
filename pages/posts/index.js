@@ -36,7 +36,6 @@ export default function home({ posts }) {
 
   useEffect(() => {
     setPostsState(posts);
-    updatePostCount();
   }, [posts]);
 
   const rankings = useMemo(() => {
@@ -106,43 +105,6 @@ export default function home({ posts }) {
     setExercise({ name: "" });
   }
 
-  // async function updatePostCount() {
-  //   // update post count on user when new post is added
-  //   try {
-  //     if (posts && activeUser) {
-  //       let authorPosts = posts.filter(
-  //         (post) => post.author === activeUser.username
-  //       );
-  //       const data2 = {
-  //         username: activeUser.username,
-  //         numPosts: authorPosts.length,
-  //       };
-  //       const JSONdata2 = JSON.stringify(data2);
-  //       const endpoint2 = "/api/users";
-
-  //       const options2 = {
-  //         // The method is PUT because we are updating data.
-  //         method: "PUT",
-  //         // Tell the server we're sending JSON.
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `${token}`,
-  //         },
-  //         // Body of the request is the JSON data we created above.
-  //         body: JSONdata2,
-  //       };
-
-  //       const response2 = await fetch(endpoint2, options2);
-
-  //       if (response2.status < 300) {
-  //         // console.log(response2);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   const updatePostCount = useCallback(async () => {
     try {
       if (posts && activeUser) {
@@ -178,6 +140,10 @@ export default function home({ posts }) {
       console.log(error);
     }
   }, [posts]);
+
+  useEffect(() => {
+    updatePostCount();
+  }, [updatePostCount]);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { LoginContext } from "../../context/LoginContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import FormData from "form-data";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
@@ -17,14 +17,6 @@ export default function profile() {
   const [photoURL, setPhotoURL] = useState();
   const [profile, setProfile] = useState();
   const [upload, setUpload] = useState(false);
-
-  useEffect(() => {
-    addPhotoLink();
-  }, [photoURL]);
-
-  useEffect(() => {
-    getUser();
-  }, [activeUser, profile]);
 
   function handleFileChange(e) {
     setSelectedFile(e.target.files[0]);
@@ -57,7 +49,7 @@ export default function profile() {
     console.log(result);
   }
 
-  async function addPhotoLink() {
+  const addPhotoLink = useCallback(async () => {
     // update post count on user when new post is added
     try {
       if (photoURL && activeUser) {
@@ -88,9 +80,12 @@ export default function profile() {
     } catch (error) {
       console.log(error);
     }
-  }
+  }, [photoURL]);
+  useEffect(() => {
+    addPhotoLink();
+  }, [addPhotoLink]);
 
-  async function getUser() {
+  const getUser = useCallback(async () => {
     try {
       if (activeUser.userId) {
         const endpoint = `/api/users/${activeUser.userId}`;
@@ -113,7 +108,11 @@ export default function profile() {
     } catch (e) {
       console.log(e);
     }
-  }
+  }, [activeUser, profile]);
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
 
   return (
     <>
