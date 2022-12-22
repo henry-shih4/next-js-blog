@@ -112,6 +112,12 @@ export default function register() {
   return (
     <>
       <div className="flex flex-col justify-center items-center h-screen">
+        <div>
+          <div className="font-comfortaa text-3xl p-4 bg-white rounded-xl">
+            <span className="text-[#235789] font-bold">fit</span>
+            <span className="text-[#a0af8c]">forum</span>
+          </div>
+        </div>
         <div className="my-2">Register</div>
         <div className="relative py-4 w-[400px] h-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
           <form
@@ -227,10 +233,12 @@ export default function register() {
             </div>
             <div className="flex justify-center flex-col items-center space-y-2">
               {error ? (
-                <div className="text-red-500 font-bold text-xl">{error}</div>
+                <div className="text-red-500 font-bold text-lg p-1 bg-white rounded-md">
+                  {error}
+                </div>
               ) : message ? (
-                <div className="text-green-400 font-bold text-xl">
-                  {message ? message : "hello"}
+                <div className="text-green-400 font-bold text-lg p-1 bg-white rounded-md">
+                  {message ? message : null}
                 </div>
               ) : null}
               <button className="buttons" type="submit">

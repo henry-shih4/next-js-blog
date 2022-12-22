@@ -72,19 +72,21 @@ export default function Header() {
 
   return (
     <>
-      <div className="font-comfortaa h-16 p-2 flex justify-between items-center bg-[#D9D9D9] w-full">
+      <div className="font-comfortaa h-16 p-2 flex justify-between items-center bg-white w-full">
         <div className="flex w-[400px] h-full">
           <Link
-            className="flex w-full justify-center"
+            className="flex w-full justify-center items-center"
             href={token ? "/posts" : "/login"}
           >
-            <img
-              className="hidden md:block object-cover w-[240px] min-w-[180px]"
-              src={"/images/fitforum.png"}
-            />
-            <div className="flex justify-center items-center text-2xl object-cover md:hidden space-x-1">
-              <span className="text-[#5fbbb4]">f</span>
-              <span className="text-[#818d71]">f</span>
+            <div>
+              <div className="font-comfortaa text-3xl hidden md:flex justify-center items-center object-cover w-[240px] min-w-[180px]">
+                <span className="text-[#235789] font-bold">fit</span>
+                <span className="text-[#a0af8c]">forum</span>
+              </div>
+            </div>
+            <div className="flex justify-center items-center text-3xl object-cover md:hidden space-x-1">
+              <span className="text-[#235789] font-bold">f</span>
+              <span className="text-[#a0af8c]">f</span>
             </div>
           </Link>
         </div>

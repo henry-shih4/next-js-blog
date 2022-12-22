@@ -67,6 +67,12 @@ export default function login() {
         <Loading></Loading>
       ) : (
         <div className="flex flex-col justify-center items-center h-screen">
+          <div>
+            <div className="font-comfortaa text-3xl p-4 bg-white rounded-xl">
+              <span className="text-[#235789] font-bold">fit</span>
+              <span className="text-[#a0af8c]">forum</span>
+            </div>
+          </div>
           <div className="my-2">Login</div>
           <div className="py-4 w-[400px] bg-slate-300 rounded-lg flex flex-col justify-center items-center">
             <form
