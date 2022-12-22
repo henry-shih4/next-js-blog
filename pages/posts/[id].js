@@ -5,13 +5,12 @@ const cookies = new Cookies();
 import { LoginContext } from "../../context/LoginContext";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
-
-export default function Post({ post }) {
+export default function post({ post }) {
   const [time, setTime] = useState();
   const router = useRouter();
   const { id } = router.query;
   const token = cookies.get("TOKEN");
-  const [isLoggedIn, , activeUser] = useContext(LoginContext);
+  const [isLoggedIn, changeLoggedIn, activeUser] = useContext(LoginContext);
   const [message, setMessage] = useState();
 
   useEffect(() => {
@@ -45,7 +44,7 @@ export default function Post({ post }) {
         d.getMonth() + 1
       }/${d.getDate()}/${d.getFullYear()} at ${hours}:${d.getMinutes()} ${meridian}`
     );
-  }, [post.createdAt]);
+  }, []);
 
   async function handlePostDelete() {
     if (activeUser.username !== post.author) {

@@ -4,11 +4,11 @@ import FormData from "form-data";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 import Cookies from "universal-cookie";
-import Image from "next/image";
 const cookies = new Cookies();
 
-export default function Profile() {
-  const [, , activeUser] = useContext(LoginContext);
+export default function profile() {
+  const [isLoggedIn, changeLoggedIn, activeUser, setCurrentUser] =
+    useContext(LoginContext);
   const token = cookies.get("TOKEN");
 
   const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dxiv9hzi7/upload";
@@ -20,11 +20,11 @@ export default function Profile() {
 
   useEffect(() => {
     addPhotoLink();
-  }, [photoURL, addPhotoLink]);
+  }, [photoURL]);
 
   useEffect(() => {
     getUser();
-  }, [activeUser, profile, getUser]);
+  }, [activeUser, profile]);
 
   function handleFileChange(e) {
     setSelectedFile(e.target.files[0]);
@@ -124,10 +124,7 @@ export default function Profile() {
             <div>Your User Profile</div>
             <div>
               {profile ? (
-                <Image
-                  width={200}
-                  height={200}
-                  alt="profile-picture"
+                <img
                   src={
                     profile.photoURL
                       ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`

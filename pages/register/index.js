@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function Register() {
+export default function register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -41,7 +41,7 @@ export default function Register() {
     } else {
       setValidUsername(false);
     }
-  }, [username, userRegex]);
+  }, [username]);
 
   useEffect(() => {
     if (emailRegex.test(email) && email !== "") {
@@ -49,7 +49,7 @@ export default function Register() {
     } else {
       setValidEmail(false);
     }
-  }, [emailRegex, email]);
+  });
 
   async function handleFormSubmit(e) {
     e.preventDefault();

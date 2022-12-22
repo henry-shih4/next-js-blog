@@ -2,7 +2,6 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from "next/image";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../context/LoginContext";
@@ -10,7 +9,7 @@ import { LoginContext } from "../context/LoginContext";
 export default function Header() {
   const token = cookies.get("TOKEN");
   const router = useRouter();
-  const [, changeLoggedIn, activeUser, setActiveUser] =
+  const [isLoggedIn, changeLoggedIn, activeUser, setActiveUser] =
     useContext(LoginContext);
   const [usersState, setUsersState] = useState();
   const [search, setSearch] = useState();
@@ -20,17 +19,17 @@ export default function Header() {
 
   useEffect(() => {
     getUsers();
-  }, [getUsers]);
+  }, []);
 
   useEffect(() => {
     getCurrentUser();
-  }, [usersState, getCurrentUser]);
+  }, [usersState]);
 
   useEffect(() => {
     if (!token) {
       router.push("/login");
     }
-  }, [token, router]);
+  }, [token]);
 
   useEffect(() => {
     if (search && search.length > 2) {
@@ -124,7 +123,7 @@ export default function Header() {
               >
                 {userSuggestions
                   ? userSuggestions.map((user) => (
-                      <div key={user._id}>
+                      <div>
                         <button
                           className="w-full hover:bg-[#a0af8c]"
                           onMouseDown={() => {
@@ -144,8 +143,6 @@ export default function Header() {
           <div className="flex items-center space-x-3 mr-2 ">
             <div className="hidden md:block">
               <Image
-                width={48}
-                height={48}
                 alt="profile-picture"
                 src={
                   currentUserPhoto
