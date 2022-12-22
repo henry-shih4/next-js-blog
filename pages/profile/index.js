@@ -4,6 +4,7 @@ import FormData from "form-data";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 import Cookies from "universal-cookie";
+import Image from "next/image";
 const cookies = new Cookies();
 
 export default function Profile() {
@@ -123,7 +124,9 @@ export default function Profile() {
             <div>Your User Profile</div>
             <div>
               {profile ? (
-                <img
+                <Image
+                  height={200}
+                  width={200}
                   src={
                     profile.photoURL
                       ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`

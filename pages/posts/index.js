@@ -7,6 +7,7 @@ import { LoginContext } from "../../context/LoginContext";
 import Link from "next/link";
 import Loading from "../../components/Loading";
 import Leaderboard from "../../components/Leaderboard";
+import Image from 'next/image'
 
 export default function Home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -200,7 +201,9 @@ export default function Home({ posts }) {
                               <div className="flex justify-around items-center h-[1/2] w-full space-x-3">
                                 <div className="flex flex-col justify-center items-center  w-1/3 h-full">
                                   <div>
-                                    <img
+                                    <Image
+                                      height={60}
+                                      width={60}
                                       src={
                                         post.authorImage
                                           ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${post.authorImage}`
@@ -222,7 +225,9 @@ export default function Home({ posts }) {
                                       <div>
                                         <div className="flex space-x-3 items-center justify-center ">
                                           <div>{post.category}</div>
-                                          <img
+                                          <Image
+                                            height={24}
+                                            width={24}
                                             alt="exercise-category-icon"
                                             className="h-[24px] "
                                             src={

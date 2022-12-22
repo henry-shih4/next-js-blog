@@ -11,10 +11,12 @@ export default function Leaderboard(props) {
           <div className="flex justify-center items-center w-full underline mb-2 space-x-2">
             <div>Leaderboard</div>
             <div>
-              <img
+              <Image
+                height={24}
+                width={24}
                 alt="mountain-icon"
                 className="h-[24px]"
-                src="images/mountain.svg"
+                src="/images/mountain.svg"
               />
             </div>
           </div>

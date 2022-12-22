@@ -5,6 +5,7 @@ import Link from "next/link";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../context/LoginContext";
+import Image from "next/image";
 
 export default function Header() {
   const token = cookies.get("TOKEN");
@@ -141,7 +142,9 @@ export default function Header() {
         <div className="flex justify-around items-center w-[400px]">
           <div className="flex items-center space-x-3 mr-2 ">
             <div className="hidden md:block">
-              <img
+              <Image
+                height={48}
+                width={48}
                 alt="profile-picture"
                 src={
                   currentUserPhoto

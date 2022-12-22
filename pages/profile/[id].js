@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import Loading from "../../components/Loading";
 import Header from "../../components/Header";
+import Image from "next/image";
 
 export default function User() {
   const router = useRouter();
@@ -42,7 +43,6 @@ export default function User() {
     getUser();
   }, [getUser]);
 
-
   return (
     <>
       <Header></Header>
@@ -54,7 +54,9 @@ export default function User() {
             <>
               <div className="flex justify-center items-center flex-col min-h-[calc(100vh-64px)]">
                 <div>
-                  <img
+                  <Image
+                    height={200}
+                    width={200}
                     src={
                       profile.photoURL
                         ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`
