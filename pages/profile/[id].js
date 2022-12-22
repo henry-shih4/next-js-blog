@@ -55,7 +55,9 @@ export default function User() {
               <div className="flex justify-center items-center flex-col min-h-[calc(100vh-64px)]">
                 <div>
                   <Image
-                  alt='profile-picture'
+                    alt="profile-picture"
+                    width={200}
+                    height={200}
                     src={
                       profile.photoURL
                         ? `https://res.cloudinary.com/dxiv9hzi7/image/upload/v1671467288/${profile.photoURL}`

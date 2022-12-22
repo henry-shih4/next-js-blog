@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from "next-image";
+import Image from "next/image";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 import { LoginContext } from "../context/LoginContext";
@@ -144,6 +144,8 @@ export default function Header() {
           <div className="flex items-center space-x-3 mr-2 ">
             <div className="hidden md:block">
               <Image
+                width={48}
+                height={48}
                 alt="profile-picture"
                 src={
                   currentUserPhoto

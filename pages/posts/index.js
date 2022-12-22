@@ -207,6 +207,8 @@ export default function Home({ posts }) {
                                 <div className="flex flex-col justify-center items-center  w-1/3 h-full">
                                   <div>
                                     <Image
+                                      width={60}
+                                      height={60}
                                       alt="profile picture"
                                       src={
                                         post.authorImage
@@ -230,6 +232,8 @@ export default function Home({ posts }) {
                                         <div className="flex space-x-3 items-center justify-center ">
                                           <div>{post.category}</div>
                                           <Image
+                                            width={24}
+                                            height={24}
                                             alt="exercise-category-icon"
                                             className="h-[24px] "
                                             src={
@@ -237,9 +241,9 @@ export default function Home({ posts }) {
                                               "Weight Training"
                                                 ? "/images/weight.svg"
                                                 : post.category === "Cardio"
-                                                ? "images/treadmill.svg"
+                                                ? "/images/treadmill.svg"
                                                 : post.category === "Sport"
-                                                ? "images/ball.svg"
+                                                ? "/images/ball.svg"
                                                 : null
                                             }
                                           />

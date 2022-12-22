@@ -125,6 +125,8 @@ export default function Profile() {
             <div>
               {profile ? (
                 <Image
+                  width={200}
+                  height={200}
                   alt="profile-picture"
                   src={
                     profile.photoURL

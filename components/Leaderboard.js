@@ -1,4 +1,4 @@
-import Image from "next-image";
+import Image from "next/image";
 
 export default function Leaderboard(props) {
   const { rankings } = props;
@@ -11,9 +11,11 @@ export default function Leaderboard(props) {
             <div>Leaderboard</div>
             <div>
               <Image
+                width={24}
+                height={24}
                 alt="mountain-icon"
                 className="h-[24px]"
-                src="images/mountain.svg"
+                src="/images/mountain.svg"
               />
             </div>
           </div>

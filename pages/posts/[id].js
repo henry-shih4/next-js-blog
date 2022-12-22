@@ -99,7 +99,7 @@ export default function Post({ post }) {
                     {post.exercises
                       ? post.exercises.map((exercise, index) => {
                           return (
-                            <div>
+                            <div key={index}>
                               <div className="border border-black w-[200px] flex flex-col justify-center items-center">
                                 <div>Exercise {index + 1}</div>
                                 <div>{exercise.name}</div>
