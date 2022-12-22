@@ -227,7 +227,7 @@ export default function home({ posts }) {
                                       <div>
                                         <div className="flex space-x-3 items-center justify-center ">
                                           <div>{post.category}</div>
-                                          <Image
+                                          <img
                                             alt="exercise-category-icon"
                                             className="h-[24px] "
                                             src={

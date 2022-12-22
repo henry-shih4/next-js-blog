@@ -142,7 +142,7 @@ export default function Header() {
         <div className="flex justify-around items-center w-[400px]">
           <div className="flex items-center space-x-3 mr-2 ">
             <div className="hidden md:block">
-              <Image
+              <img
                 alt="profile-picture"
                 src={
                   currentUserPhoto

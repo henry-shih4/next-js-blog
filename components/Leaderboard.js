@@ -11,7 +11,7 @@ export default function Leaderboard(props) {
           <div className="flex justify-center items-center w-full underline mb-2 space-x-2">
             <div>Leaderboard</div>
             <div>
-              <Image
+              <img
                 alt="mountain-icon"
                 className="h-[24px]"
                 src="images/mountain.svg"
