@@ -7,8 +7,11 @@ export default function Leaderboard(props) {
     <>
       <div className="h-[200px] w-[300px] bg-slate-300 flex flex-col justify-center items-center rounded-xl">
         <div classname="flex justify-center items-center w-full">
-          <div className="flex justify-center items-center w-full underline mb-2">
-            Leaderboard
+          <div className="flex justify-center items-center w-full underline mb-2 space-x-2">
+            <div>Leaderboard</div>
+            <div>
+              <img className="h-[24px]" src="images/mountain.svg" />
+            </div>
           </div>
           <div className=" w-[200px] flex flex-col justify-center items-center">
             <div className="w-full flex">

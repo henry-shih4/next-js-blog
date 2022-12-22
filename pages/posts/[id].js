@@ -121,7 +121,10 @@ export default function post({ post }) {
               ) : null}
               <div className="flex justify-center space-x-4">
                 {post.author === activeUser.username ? (
-                  <button className="p-2 buttons" onClick={handlePostDelete}>
+                  <button
+                    className="p-2 small-button mt-2"
+                    onClick={handlePostDelete}
+                  >
                     Delete
                   </button>
                 ) : null}
@@ -142,12 +145,12 @@ export default function post({ post }) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-8 h-8"
+                className="w-6 h-6"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
                 />
               </svg>
             </button>
