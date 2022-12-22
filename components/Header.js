@@ -72,15 +72,19 @@ export default function Header() {
 
   return (
     <>
-      <div className="h-16 p-2 flex justify-between items-center bg-[#D9D9D9] w-full">
+      <div className="font-comfortaa h-16 p-2 flex justify-between items-center bg-[#D9D9D9] w-full">
         <div className="flex w-[400px] h-full">
-          <Link className="flex w-full justify-center" href={token ? "/posts" : "/login"}>
+          <Link
+            className="flex w-full justify-center"
+            href={token ? "/posts" : "/login"}
+          >
             <img
               className="hidden md:block object-cover w-[240px] min-w-[180px]"
               src={"/images/fitforum.png"}
             />
-            <div className="flex justify-center items-center text-2xl max-w-[240px]  object-cover md:hidden">
-              ff
+            <div className="flex justify-center items-center text-2xl object-cover md:hidden space-x-1">
+              <span className="text-[#5fbbb4]">f</span>
+              <span className="text-[#818d71]">f</span>
             </div>
           </Link>
         </div>
@@ -146,7 +150,10 @@ export default function Header() {
               />
             </div>
             {activeUser ? (
-              <Link href="/profile" className="font-bold">
+              <Link
+                href="/profile"
+                className="flex justify-center items-center font-bold hover:text-white duration-300"
+              >
                 {activeUser.username}
               </Link>
             ) : null}
@@ -183,7 +190,7 @@ export default function Header() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6 hover:text-white duration-500"
+              className="w-6 h-6 hover:text-white duration-300"
             >
               <path
                 strokeLinecap="round"
