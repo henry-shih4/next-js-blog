@@ -6,7 +6,6 @@ import { LoginContext } from "../../context/LoginContext";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 
-
 export default function Post({ post }) {
   const [time, setTime] = useState();
   const router = useRouter();
@@ -46,7 +45,7 @@ export default function Post({ post }) {
         d.getMonth() + 1
       }/${d.getDate()}/${d.getFullYear()} at ${hours}:${d.getMinutes()} ${meridian}`
     );
-  }, []);
+  }, [post.createdAt]);
 
   async function handlePostDelete() {
     if (activeUser.username !== post.author) {

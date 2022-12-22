@@ -81,7 +81,8 @@ export default function Profile() {
     } catch (error) {
       console.log(error);
     }
-  }, [photoURL]);
+  }, [photoURL, token, activeUser]);
+
   useEffect(() => {
     addPhotoLink();
   }, [addPhotoLink]);
@@ -109,7 +110,7 @@ export default function Profile() {
     } catch (e) {
       console.log(e);
     }
-  }, [activeUser, profile]);
+  }, [activeUser, profile, token]);
 
   useEffect(() => {
     getUser();
@@ -125,6 +126,7 @@ export default function Profile() {
             <div>
               {profile ? (
                 <Image
+                  alt="profile-picture"
                   height={200}
                   width={200}
                   src={

@@ -7,7 +7,7 @@ import { LoginContext } from "../../context/LoginContext";
 import Link from "next/link";
 import Loading from "../../components/Loading";
 import Leaderboard from "../../components/Leaderboard";
-import Image from 'next/image'
+import Image from "next/image";
 
 export default function Home({ posts }) {
   const [postsState, setPostsState] = useState([]);
@@ -140,7 +140,7 @@ export default function Home({ posts }) {
     } catch (error) {
       console.log(error);
     }
-  }, [posts]);
+  }, [posts, activeUser, token]);
 
   useEffect(() => {
     updatePostCount();
@@ -202,6 +202,7 @@ export default function Home({ posts }) {
                                 <div className="flex flex-col justify-center items-center  w-1/3 h-full">
                                   <div>
                                     <Image
+                                      alt="profile-picture"
                                       height={60}
                                       width={60}
                                       src={
@@ -476,7 +477,11 @@ export default function Home({ posts }) {
                       <div>Exercises to add</div>
                       {exerciseList
                         ? exerciseList.map((exercise) => {
-                            return <div className="mx-2">{exercise.name}</div>;
+                            return (
+                              <div key={exercise.name} className="mx-2">
+                                {exercise.name}
+                              </div>
+                            );
                           })
                         : null}
                     </div>

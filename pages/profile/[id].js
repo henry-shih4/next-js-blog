@@ -37,7 +37,7 @@ export default function User() {
     } catch (e) {
       console.log(e);
     }
-  }, [id]);
+  }, [id, token]);
 
   useEffect(() => {
     getUser();
@@ -55,6 +55,7 @@ export default function User() {
               <div className="flex justify-center items-center flex-col min-h-[calc(100vh-64px)]">
                 <div>
                   <Image
+                    alt="profile-picture"
                     height={200}
                     width={200}
                     src={

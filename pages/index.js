@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     router.push("/login");
-  }, []);
+  }, [router]);
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
