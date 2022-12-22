@@ -155,7 +155,7 @@ export default function Header() {
             {activeUser ? (
               <Link
                 href="/profile"
-                className="flex justify-center items-center font-bold hover:text-white duration-300"
+                className="flex justify-center items-center  hover:text-[#a0af8c] duration-300 "
               >
                 {activeUser.username}
               </Link>

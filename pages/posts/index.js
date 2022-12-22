@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo, useCallback } from "react";
 import { useRouter } from "next/router";
 import Header from "../../components/Header";
 import Cookies from "universal-cookie";
@@ -23,29 +23,34 @@ export default function home({ posts }) {
   const [showAdd, setShowAdd] = useState(false);
   const token = cookies.get("TOKEN");
   const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
-  const [rankings, setRankings] = useState();
-
   const router = useRouter();
-
   const refreshData = () => {
     router.replace(router.asPath);
   };
-
-  useEffect(() => {
-    setPostsState(posts);
-    updatePostCount();
-    generateLeaderboard();
-  }, [posts]);
-
-  useEffect(() => {
-    generateLeaderboard();
-  }, []);
 
   useEffect(() => {
     if (posts.status === 401 || !postsState) {
       router.push("/login");
     }
   });
+
+  useEffect(() => {
+    setPostsState(posts);
+    updatePostCount();
+  }, [posts]);
+
+  const rankings = useMemo(() => {
+    let map = {};
+    for (let i = 0; i < posts.length; i++) {
+      if (map[posts[i].author] == undefined) {
+        map[posts[i].author] = 1;
+      } else {
+        map[posts[i].author] += 1;
+      }
+    }
+    let sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
+    return sorted;
+  }, [posts]);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -101,8 +106,44 @@ export default function home({ posts }) {
     setExercise({ name: "" });
   }
 
-  async function updatePostCount() {
-    // update post count on user when new post is added
+  // async function updatePostCount() {
+  //   // update post count on user when new post is added
+  //   try {
+  //     if (posts && activeUser) {
+  //       let authorPosts = posts.filter(
+  //         (post) => post.author === activeUser.username
+  //       );
+  //       const data2 = {
+  //         username: activeUser.username,
+  //         numPosts: authorPosts.length,
+  //       };
+  //       const JSONdata2 = JSON.stringify(data2);
+  //       const endpoint2 = "/api/users";
+
+  //       const options2 = {
+  //         // The method is PUT because we are updating data.
+  //         method: "PUT",
+  //         // Tell the server we're sending JSON.
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `${token}`,
+  //         },
+  //         // Body of the request is the JSON data we created above.
+  //         body: JSONdata2,
+  //       };
+
+  //       const response2 = await fetch(endpoint2, options2);
+
+  //       if (response2.status < 300) {
+  //         // console.log(response2);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  const updatePostCount = useCallback(async () => {
     try {
       if (posts && activeUser) {
         let authorPosts = posts.filter(
@@ -136,20 +177,8 @@ export default function home({ posts }) {
     } catch (error) {
       console.log(error);
     }
-  }
+  }, [posts]);
 
-  function generateLeaderboard() {
-    let map = {};
-    for (let i = 0; i < posts.length; i++) {
-      if (map[posts[i].author] == undefined) {
-        map[posts[i].author] = 1;
-      } else {
-        map[posts[i].author] += 1;
-      }
-    }
-    let sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
-    setRankings(sorted);
-  }
   return (
     <>
       {isLoggedIn ? (
