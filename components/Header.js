@@ -22,7 +22,7 @@ export default function Header() {
     if (!token) {
       router.push("/login");
     }
-  }, [token]);
+  }, [token, router]);
 
   useEffect(() => {
     if (search && search.length > 2) {
@@ -51,7 +51,7 @@ export default function Header() {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [token, router]);
 
   useEffect(() => {
     getUsers();
@@ -66,6 +66,7 @@ export default function Header() {
       setActiveUser({ ...activeUser, photoURL: user[0].photoURL });
     }
   }, [usersState]);
+
   useEffect(() => {
     getCurrentUser();
   }, [getCurrentUser]);
@@ -123,7 +124,7 @@ export default function Header() {
               >
                 {userSuggestions
                   ? userSuggestions.map((user) => (
-                      <div>
+                      <div key={user._id}>
                         <button
                           className="w-full hover:bg-[#a0af8c]"
                           onMouseDown={() => {
