@@ -167,8 +167,9 @@ export default function Post({ post }) {
 export async function getServerSideProps(context) {
   const { id } = context.params;
   const serverToken = context.req.cookies;
+  const websiteURL = process.env.VERCEL_URL || "localhost:3000";
 
-  let res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+  let res = await fetch(`http://${websiteURL}/api/posts/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
