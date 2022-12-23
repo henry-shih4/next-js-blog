@@ -35,7 +35,7 @@ export default function Header() {
 
   const getUsers = useCallback(async () => {
     try {
-      let res = await fetch("http://localhost:3000/api/users", {
+      let res = await fetch("/api/users", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -98,9 +98,6 @@ export default function Header() {
           <div className="flex flex-col">
             <div
               className=" relative min-w-[180px] h-full "
-              // onMouseLeave={() => {
-              //   setShowSuggestions(false);
-              // }}
             >
               <input
                 type="text"
