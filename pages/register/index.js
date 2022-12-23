@@ -32,7 +32,7 @@ export default function Register() {
     } else {
       setPwStrength("");
     }
-  }, [password, alphaNum, alphaNumCombined, alphaNumCombinedSpecial]);
+  }, [password]);
 
   useEffect(() => {
     if (!userRegex.test(username) && username !== "" && username.length >= 3) {
@@ -40,7 +40,7 @@ export default function Register() {
     } else {
       setValidUsername(false);
     }
-  }, [username, userRegex]);
+  }, [username]);
 
   useEffect(() => {
     if (emailRegex.test(email) && email !== "") {
@@ -48,7 +48,7 @@ export default function Register() {
     } else {
       setValidEmail(false);
     }
-  }, [email, emailRegex]);
+  }, [email]);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
