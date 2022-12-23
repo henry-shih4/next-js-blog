@@ -110,7 +110,7 @@ export default function Profile() {
     } catch (e) {
       console.log(e);
     }
-  }, [activeUser, profile, token]);
+  }, [activeUser, token]);
 
   useEffect(() => {
     getUser();
