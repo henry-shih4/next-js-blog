@@ -156,10 +156,19 @@ export default function Home({ posts }) {
               <Leaderboard rankings={rankings ? rankings : null} />
             </div>
             {/*workout feed start */}
-            <div className="bg-white w-[500px] mx-4 lg:w-[800px]">
+            <div className="bg-white w-[500px] m-3 rounded-xl lg:w-[800px]">
               <div className="flex justify-between items-center p-3">
-                <div>Workout Feed</div>
-                <div className="flex justify-center items-center">
+                <div className="invisible w-[140px]"></div>
+                <div className="text-xl flex justify-center items-center space-x-2">
+                  <div>Workout Feed</div>
+                  <Image
+                    alt="list-icon"
+                    height={48}
+                    width={48}
+                    src="/images/list.svg"
+                  />
+                </div>
+                <div className="flex justify-center w-[140px]">
                   Add Workout
                   <button>
                     <svg
@@ -322,8 +331,8 @@ export default function Home({ posts }) {
             <div
               className={
                 showAdd
-                  ? "absolute bg-slate-200 z-10  min-w-[460px] h-[500px] flex flex-col justify-center items-center visible opacity-100 duration-300"
-                  : "absolute bg-slate-200 min-w-[460px] h-[500px] flex flex-col justify-center items-center invisible opacity-0 duration-300"
+                  ? "absolute bg-slate-200 z-10  min-w-[460px] h-max flex flex-col justify-center items-center visible opacity-100 duration-300"
+                  : "absolute bg-slate-200 min-w-[460px] h-max flex flex-col justify-center items-center invisible opacity-0 duration-300"
               }
             >
               <div className="w-full">
@@ -350,7 +359,7 @@ export default function Home({ posts }) {
                 className="flex justify-center items-center flex-col h-full"
                 onSubmit={handleFormSubmit}
               >
-                <div className="flex flex-col bg-blue-300 justify-center items-center">
+                <div className="flex flex-col bg-[#235789] justify-center items-center">
                   <div className="m-2 space-y-4 w-[400px]">
                     <div className="flex">
                       <label className="w-[100px] text-center" for="title">

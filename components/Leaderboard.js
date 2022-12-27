@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 
 export default function Leaderboard(props) {
@@ -6,7 +5,7 @@ export default function Leaderboard(props) {
 
   return (
     <>
-      <div className="h-[200px] w-[300px] bg-slate-300 flex flex-col justify-center items-center rounded-xl">
+      <div className="h-[200px] w-[300px] bg-slate-300 flex flex-col justify-center items-center rounded-xl m-3">
         <div classname="flex justify-center items-center w-full">
           <div className="flex justify-center items-center w-full underline mb-2 space-x-2">
             <div>Leaderboard</div>

@@ -1,22 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Nunito:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Nunito:wght@300&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 @layer base {
   html {
-    font-family: 'Nunito', system-ui, sans-serif;
+    font-family: "Nunito", system-ui, sans-serif;
   }
 }
 
-
-
-input{
-    @apply rounded-md pl-2
-    
+input,
+select {
+  @apply rounded-md pl-2;
 }
 
 textarea:focus,
@@ -24,19 +19,16 @@ input:focus {
   outline: none;
 }
 
-
-.buttons{
-@apply bg-black text-white rounded-md p-2 mt-4 w-[100px] hover:bg-white border-black border-2 hover:text-black duration-300
+.buttons {
+  @apply bg-black text-white rounded-md p-2 mt-4 w-[100px] hover:bg-white border-black border-2 hover:text-black duration-300;
 }
 
-.small-button{
-      @apply bg-black text-white rounded-md p-1 w-[120px] hover:bg-white border-black border-2 hover:text-black duration-300
-  
+.small-button {
+  @apply bg-black text-white rounded-md p-1 w-[120px] hover:bg-white border-black border-2 hover:text-black duration-300;
 }
-
 
 .box {
-  height:40px;
+  height: 40px;
   transition: opacity 0.4s linear, height 0.7s step-start;
 }
 
@@ -48,26 +40,24 @@ input:focus {
   transition-timing-function: linear, step-end;
 }
 
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #a0af8c #ffffff;
+}
 
-    * {
-      scrollbar-width: auto;
-      scrollbar-color: #a0af8c #ffffff;
-    }
+*::-webkit-scrollbar {
+  width: 12px;
+}
 
-            *::-webkit-scrollbar {
-              width: 12px;
-            }
-      
-            *::-webkit-scrollbar-track {
-              background: #ffffff;
-            }
-      
-            *::-webkit-scrollbar-thumb {
-              background-color: #a0af8c;
-              border-radius: 10px;
-              border: 3px solid #ffffff;
-            }
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
 
+*::-webkit-scrollbar-thumb {
+  background-color: #a0af8c;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
 
 @keyframes spinner {
   0% {
@@ -77,11 +67,12 @@ input:focus {
     transform: rotate(360deg);
   }
 }
+
 #loading-spinner {
   width: 50px;
   height: 50px;
-  border: 10px solid #f3f3f3; /* Light grey */
-  border-top: 10px solid #383636; /* Black */
+  border: 10px solid #a0af8c;
+  border-top: 10px solid #383636;
   border-radius: 50%;
   animation: spinner 1.5s linear infinite;
 }

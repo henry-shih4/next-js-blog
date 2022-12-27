@@ -26,7 +26,9 @@ export default function Header() {
 
   useEffect(() => {
     if (search && search.length > 2) {
-      let users = usersState.filter((user) => user.username.includes(search));
+      let users = usersState.filter((user) =>
+        user.username.toLowerCase().includes(search.toLowerCase())
+      );
       setUserSuggestions(users);
     } else {
       setUserSuggestions("");
@@ -96,9 +98,7 @@ export default function Header() {
             <MagnifyingGlassIcon className="h-6 m-1" />
           </div>
           <div className="flex flex-col">
-            <div
-              className=" relative min-w-[180px] h-full "
-            >
+            <div className=" relative min-w-[180px] h-full ">
               <input
                 type="text"
                 className="border border-gray-300 w-full"
@@ -193,7 +193,7 @@ export default function Header() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6 hover:text-white duration-300"
+              className="w-6 h-6 hover:text-[#a0af8c] duration-300"
             >
               <path
                 strokeLinecap="round"
