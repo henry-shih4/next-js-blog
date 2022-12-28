@@ -106,6 +106,28 @@ export default function Home({ posts }) {
     setExercise({ name: "" });
   }
 
+  function handleExerciseDelete(exercise) {
+    let filter = exerciseList.filter((item) => {
+      return item.name !== exercise;
+    });
+    console.log(exercise);
+    console.log(filter);
+    setExerciseList([...filter]);
+  }
+
+  function handleFormReset() {
+    setSets("");
+    setReps("");
+    setWeight("");
+    setExercise({ name: "" });
+    setTitle("");
+    setContent("");
+    setCategory("");
+    setDuration("");
+    setExercise({ name: "" });
+    setExerciseList([]);
+  }
+
   const updatePostCount = useCallback(async () => {
     try {
       if (posts && activeUser) {
@@ -326,13 +348,14 @@ export default function Home({ posts }) {
                 </div>
               </div>
             </div>
+
             {/* modal start*/}
 
             <div
               className={
                 showAdd
-                  ? "absolute bg-slate-200 z-10  min-w-[460px] h-max flex flex-col justify-center items-center visible opacity-100 duration-300"
-                  : "absolute bg-slate-200 min-w-[460px] h-max flex flex-col justify-center items-center invisible opacity-0 duration-300"
+                  ? "text-white absolute bg-[#235789] z-10  min-w-[460px] py-2 h-max flex flex-col justify-center items-center visible opacity-100 duration-300"
+                  : "absolute bg-slate-200 min-w-[460px] py-2  h-max flex flex-col justify-center items-center invisible opacity-0 duration-300"
               }
             >
               <div className="w-full">
@@ -343,8 +366,9 @@ export default function Home({ posts }) {
                   stroke-width="1.5"
                   stroke="currentColor"
                   class="flex w-6 h-6 m-1 float-right hover:cursor-pointer hover:scale-110"
-                  onClick={() => {
+                  onClick={(e) => {
                     setShowAdd(false);
+                    handleFormReset();
                   }}
                 >
                   <path
@@ -358,12 +382,13 @@ export default function Home({ posts }) {
               <form
                 className="flex justify-center items-center flex-col h-full"
                 onSubmit={handleFormSubmit}
+                onReset={handleFormReset}
               >
-                <div className="flex flex-col bg-[#235789] justify-center items-center">
+                <div className="flex flex-col  justify-center items-center">
                   <div className="m-2 space-y-4 w-[400px]">
                     <div className="flex">
                       <label className="w-[100px] text-center" for="title">
-                        Title
+                        Workout Title
                       </label>
                       <input
                         className="w-2/3"
@@ -382,7 +407,7 @@ export default function Home({ posts }) {
                         required
                         value={category}
                         id="category"
-                        className="w-2/3"
+                        className="w-1/2"
                         onChange={(e) => {
                           setCategory(e.target.value);
                         }}
@@ -396,18 +421,54 @@ export default function Home({ posts }) {
                       </select>
                     </div>
                     <div className="flex">
-                      <label className="w-[100px] text-center" for="duration">
-                        Duration
+                      <label className="w-[120px] text-center" for="duration">
+                        Duration (min)
                       </label>
                       <input
                         required
                         value={duration}
-                        className="w-2/3"
+                        className="w-1/6"
                         id="duration"
                         type="number"
                         min="1"
                         onChange={(e) => setDuration(e.target.value)}
                       />
+                    </div>
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="flex justify-center items-center w-full space-x-5">
+                        <div>Exercise List</div>
+                        <div className="text-xs">
+                          add specific exerices here
+                        </div>
+                      </div>
+                      <div>
+                        {exerciseList !== []
+                          ? exerciseList.map((exercise) => {
+                              return (
+                                <div key={exercise.name} className="mx-2">
+                                  {exercise.name}{" "}
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="flex w-4 h-4 m-1 float-right hover:cursor-pointer hover:scale-110"
+                                    onClick={() => {
+                                      handleExerciseDelete(exercise.name);
+                                    }}
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                </div>
+                              );
+                            })
+                          : null}
+                      </div>
                     </div>
                     <div className="flex">
                       <label className="w-[100px] text-center" for="exercise">
@@ -423,10 +484,11 @@ export default function Home({ posts }) {
                       />
                     </div>
                     {category == "Weight Training" ? (
-                      <div className="p-2 flex w-full justify-center">
-                        <div className="">
+                      <div className="p-2 flex w-full justify-center items-center">
+                        <div className="flex justify-center items-center">
                           <label for="sets">Sets</label>
                           <input
+                            required
                             value={sets}
                             className="ml-2 w-1/3"
                             id="sets"
@@ -440,9 +502,10 @@ export default function Home({ posts }) {
                             }}
                           />
                         </div>
-                        <div>
+                        <div className="flex justify-center items-center">
                           <label for="reps">Reps</label>
                           <input
+                            required
                             value={reps}
                             className="ml-2 w-1/3"
                             id="reps"
@@ -456,9 +519,10 @@ export default function Home({ posts }) {
                             }}
                           />
                         </div>
-                        <div>
+                        <div className="flex justify-center items-center">
                           <label for="weight">Weight - lbs</label>
                           <input
+                            required
                             value={weight}
                             className="ml-2 w-1/3"
                             id="weight"
@@ -482,18 +546,6 @@ export default function Home({ posts }) {
                         add exercise
                       </button>
                     </div>
-                    <div className="flex flex-col items-center justify-center">
-                      <div>Exercises to add</div>
-                      {exerciseList
-                        ? exerciseList.map((exercise) => {
-                            return (
-                              <div key={exercise.name} className="mx-2">
-                                {exercise.name}
-                              </div>
-                            );
-                          })
-                        : null}
-                    </div>
                     <div className="flex">
                       <label className="w-[100px] text-center" for="notes">
                         Notes
@@ -513,10 +565,10 @@ export default function Home({ posts }) {
 
                 <div className="mt-3 w-full flex justify-center">
                   <button
-                    className="border border-black w-[100px]"
+                    className="small-button border border-black w-[100px]"
                     type="submit"
                   >
-                    Add Workout
+                    Complete Workout
                   </button>
                 </div>
               </form>
