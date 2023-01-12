@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function Leaderboard(props) {
   const { rankings } = props;
@@ -25,10 +26,10 @@ export default function Leaderboard(props) {
               <div className="w-1/2 text-center">Workouts</div>
             </div>
             {rankings
-              ? rankings.slice(0, 5).map((person) => {
+              ? rankings.slice(0, 5).map((person, index) => {
                   return (
                     <>
-                      <div key={person[0]} className="w-full flex">
+                      <div key={index} className="w-full flex">
                         <div className="w-1/2 text-center">{person[0]}</div>
                         <div className="w-1/2 text-center">{person[1]}</div>
                       </div>

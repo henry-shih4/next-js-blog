@@ -41,6 +41,20 @@ export default async function handler(req, res) {
     if (decoded) {
       try {
         const { username } = req.body;
+        const post = await db.collection("posts").findOne({
+          _id: new ObjectId(id),
+          likedBy: { $in: [username] },
+        });
+
+        if (post) {
+          const user = await db
+            .collection("posts")
+            .updateOne(
+              { _id: new ObjectId(id) },
+              { $pull: { likedBy: username } }
+            );
+          return res.status(200).json(user);
+        }
         const user = await db
           .collection("posts")
           .updateOne(

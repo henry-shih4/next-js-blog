@@ -25,6 +25,7 @@ export default function Home({ posts }) {
   const token = cookies.get("TOKEN");
   const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
   const router = useRouter();
+  const [opened, setOpened] = useState({ id: null, open: false });
 
   const refreshData = () => {
     router.replace(router.asPath);
@@ -193,10 +194,25 @@ export default function Home({ posts }) {
       const result = await response.json();
       if (response.status < 300) {
         console.log(result);
-        refreshData();
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  function handlePostClick(e) {
+    if (e.target.style.fill == "rgb(255, 255, 255)") {
+      e.target.style.fill = "rgb(230, 20, 5)";
+    } else if (e.target.style.fill == "rgb(230, 20, 5)") {
+      e.target.style.fill = "rgb(255, 255, 255)";
+    }
+  }
+
+  function handleAddComment(id) {
+    if (id === opened.id) {
+      setOpened({ id: null, open: false });
+    } else {
+      setOpened({ id: id, open: true });
     }
   }
 
@@ -285,50 +301,54 @@ export default function Home({ posts }) {
                                       width="24px"
                                       height="24px"
                                       viewBox="0 0 1024 1024"
-                                      class="icon"
                                       version="1.1"
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="#F44336"
                                       stroke="#F44336"
-                                      stroke-width="40.96"
+                                      strokeWidth="40.96"
                                     >
                                       <g
                                         id="SVGRepo_bgCarrier"
-                                        stroke-width="0"
+                                        strokeWidth="0"
                                       ></g>
                                       <g
                                         id="SVGRepo_tracerCarrier"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                       ></g>
                                       <g id="SVGRepo_iconCarrier">
                                         <path
-                                          onClick={() => {
-                                            console.log(post._id);
-                                            console.log(activeUser);
+                                          onClick={(e) => {
+                                            handlePostClick(e);
+
                                             addLike(post._id);
                                           }}
                                           className={
                                             "hover:fill-[#e61405] duration-300 hover:cursor-pointer"
                                           }
                                           d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
-                                          fill={
-                                            post.likedBy != undefined &&
+                                          fill={""}
+                                          style={
+                                            post.likedBy &&
                                             post.likedBy.includes(
                                               activeUser.username
                                             )
-                                              ? "#e61405"
-                                              : "#ffffff"
+                                              ? { fill: "#e61405" }
+                                              : { fill: "#ffffff" }
                                           }
                                         ></path>
                                       </g>
                                     </svg>
                                     <div>
                                       <Image
+                                        className="hover:cursor-pointer"
                                         height={24}
                                         width={24}
                                         alt="comment-icon"
                                         src={"/images/comment.svg"}
+                                        onClick={() => {
+                                          handleAddComment(post._id);
+                                        }}
                                       />
                                     </div>
                                     <div></div>
@@ -401,6 +421,14 @@ export default function Home({ posts }) {
                                   </div>
                                 </div>
                               </div>
+                              <div>
+                                <input
+                                  className={
+                                    opened.id === post._id ? "block" : "hidden"
+                                  }
+                                  placeholder="leave a comment"
+                                />
+                              </div>
                             </div>
                             <div
                               className={
@@ -413,16 +441,16 @@ export default function Home({ posts }) {
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
-                                stroke-width="1.5"
+                                strokeWidth="1.5"
                                 stroke="currentColor"
-                                class={"w-6 h-6 hover:scale-110"}
+                                className={"w-6 h-6 hover:scale-110"}
                                 onClick={() => {
                                   router.push(`/posts/${post._id}`);
                                 }}
                               >
                                 <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
                                   d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                 />
                               </svg>
@@ -449,17 +477,17 @@ export default function Home({ posts }) {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
-                  class="flex w-6 h-6 m-1 float-right hover:cursor-pointer hover:scale-110"
+                  className="flex w-6 h-6 m-1 float-right hover:cursor-pointer hover:scale-110"
                   onClick={(e) => {
                     setShowAdd(false);
                     handleFormReset();
                   }}
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
@@ -473,7 +501,7 @@ export default function Home({ posts }) {
                 <div className="flex flex-col  justify-center items-center">
                   <div className="m-2 space-y-4 w-[400px]">
                     <div className="flex">
-                      <label className="w-[100px] text-center" for="title">
+                      <label className="w-[100px] text-center" htmlFor="title">
                         Workout Title
                       </label>
                       <input
@@ -486,19 +514,23 @@ export default function Home({ posts }) {
                       />
                     </div>
                     <div className="flex">
-                      <label className="w-[100px] text-center" for="category">
+                      <label
+                        className="w-[100px] text-center"
+                        htmlFor="category"
+                      >
                         Category
                       </label>
                       <select
                         required
                         value={category}
+                        defaultValue={"select"}
                         id="category"
                         className="w-1/2"
                         onChange={(e) => {
                           setCategory(e.target.value);
                         }}
                       >
-                        <option value="" disabled selected>
+                        <option value="select" disabled>
                           Select a category
                         </option>
                         <option value="Weight Training">Weight Training</option>
@@ -507,7 +539,10 @@ export default function Home({ posts }) {
                       </select>
                     </div>
                     <div className="flex">
-                      <label className="w-[120px] text-center" for="duration">
+                      <label
+                        className="w-[120px] text-center"
+                        htmlFor="duration"
+                      >
                         Duration (min)
                       </label>
                       <input
@@ -537,16 +572,16 @@ export default function Home({ posts }) {
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
-                                    stroke-width="1.5"
+                                    strokeWidth="1.5"
                                     stroke="currentColor"
-                                    class="flex w-4 h-4 m-1 float-right hover:cursor-pointer hover:scale-110"
+                                    className="flex w-4 h-4 m-1 float-right hover:cursor-pointer hover:scale-110"
                                     onClick={() => {
                                       handleExerciseDelete(exercise.name);
                                     }}
                                   >
                                     <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
                                       d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                     />
                                   </svg>
@@ -557,7 +592,10 @@ export default function Home({ posts }) {
                       </div>
                     </div>
                     <div className="flex">
-                      <label className="w-[100px] text-center" for="exercise">
+                      <label
+                        className="w-[100px] text-center"
+                        htmlFor="exercise"
+                      >
                         Exercise
                       </label>
                       <input
@@ -572,7 +610,7 @@ export default function Home({ posts }) {
                     {category == "Weight Training" ? (
                       <div className="p-2 flex w-full justify-center items-center">
                         <div className="flex justify-center items-center">
-                          <label for="sets">Sets</label>
+                          <label htmlFor="sets">Sets</label>
                           <input
                             required
                             value={sets}
@@ -589,7 +627,7 @@ export default function Home({ posts }) {
                           />
                         </div>
                         <div className="flex justify-center items-center">
-                          <label for="reps">Reps</label>
+                          <label htmlFor="reps">Reps</label>
                           <input
                             required
                             value={reps}
@@ -606,7 +644,7 @@ export default function Home({ posts }) {
                           />
                         </div>
                         <div className="flex justify-center items-center">
-                          <label for="weight">Weight - lbs</label>
+                          <label htmlFor="weight">Weight - lbs</label>
                           <input
                             required
                             value={weight}
@@ -633,7 +671,7 @@ export default function Home({ posts }) {
                       </button>
                     </div>
                     <div className="flex">
-                      <label className="w-[100px] text-center" for="notes">
+                      <label className="w-[100px] text-center" htmlFor="notes">
                         Notes
                       </label>
                       <textarea
