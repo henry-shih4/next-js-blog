@@ -15,16 +15,43 @@ export default async function handler(req, res) {
     } catch (error) {
       console.log(error);
     }
-    if(decoded){
-    const post = await db
-      .collection("posts")
-      .findOne({ _id: new ObjectId(id) });
+    if (decoded) {
+      const post = await db
+        .collection("posts")
+        .findOne({ _id: new ObjectId(id) });
 
-    if (!post) {
-      return res.status(400).json("Post not found");
+      if (!post) {
+        return res.status(400).json("Post not found");
+      }
+      return res.status(200).json(post);
     }
-    return res.status(200).json(post);
+  }
+
+  if (method === "PUT") {
+    try {
+      var decoded = jwt.verify(token, secret);
+    } catch (error) {
+      console.log(error);
+      return res.status(401).json({
+        error: error.message,
+        message: "not authenticated",
+        status: 401,
+      });
+    }
+    if (decoded) {
+      try {
+        const { username } = req.body;
+        const user = await db
+          .collection("posts")
+          .updateOne(
+            { _id: new ObjectId(id) },
+            { $push: { likedBy: username } }
+          );
+        return res.status(200).json(user);
+      } catch (error) {
+        console.log(error);
+        return res.status(500).send();
+      }
+    }
   }
 }
-}
-

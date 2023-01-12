@@ -25,6 +25,7 @@ export default function Home({ posts }) {
   const token = cookies.get("TOKEN");
   const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
   const router = useRouter();
+
   const refreshData = () => {
     router.replace(router.asPath);
   };
@@ -37,7 +38,7 @@ export default function Home({ posts }) {
 
   useEffect(() => {
     setPostsState(posts);
-  }, [posts]);
+  }, [posts, addLike]);
 
   const rankings = useMemo(() => {
     let map = {};
@@ -168,6 +169,37 @@ export default function Home({ posts }) {
     updatePostCount();
   }, [updatePostCount]);
 
+  async function addLike(id) {
+    try {
+      const data = {
+        username: activeUser.username,
+      };
+      const JSONdata = JSON.stringify(data);
+      const endpoint = `/api/posts/${id}`;
+
+      const options = {
+        // The method is POST because we are sending data.
+        method: "PUT",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        // Body of the request is the JSON data we created above.
+        body: JSONdata,
+      };
+
+      const response = await fetch(endpoint, options);
+      const result = await response.json();
+      if (response.status < 300) {
+        console.log(result);
+        refreshData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       {isLoggedIn ? (
@@ -246,6 +278,60 @@ export default function Home({ posts }) {
                                   </div>
                                   <div>
                                     {post.author ? `by ${post.author}` : null}
+                                  </div>
+                                  <div className="flex justify-center items-center w-full gap-x-4">
+                                    <svg
+                                      className=""
+                                      width="24px"
+                                      height="24px"
+                                      viewBox="0 0 1024 1024"
+                                      class="icon"
+                                      version="1.1"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="#F44336"
+                                      stroke="#F44336"
+                                      stroke-width="40.96"
+                                    >
+                                      <g
+                                        id="SVGRepo_bgCarrier"
+                                        stroke-width="0"
+                                      ></g>
+                                      <g
+                                        id="SVGRepo_tracerCarrier"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      ></g>
+                                      <g id="SVGRepo_iconCarrier">
+                                        <path
+                                          onClick={() => {
+                                            console.log(post._id);
+                                            console.log(activeUser);
+                                            addLike(post._id);
+                                          }}
+                                          className={
+                                            "hover:fill-[#e61405] duration-300 hover:cursor-pointer"
+                                          }
+                                          d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
+                                          fill={
+                                            post.likedBy != undefined &&
+                                            post.likedBy.includes(
+                                              activeUser.username
+                                            )
+                                              ? "#e61405"
+                                              : "#ffffff"
+                                          }
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <div>
+                                      <Image
+                                        height={24}
+                                        width={24}
+                                        alt="comment-icon"
+                                        src={"/images/comment.svg"}
+                                      />
+                                    </div>
+                                    <div></div>
                                   </div>
                                 </div>
                                 <div className=" w-2/3 ">
