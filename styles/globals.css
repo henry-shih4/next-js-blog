@@ -10,7 +10,7 @@
 }
 
 input,
-select {
+select, textarea {
   @apply rounded-md pl-2 text-black;
 }
 

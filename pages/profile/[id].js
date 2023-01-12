@@ -13,9 +13,9 @@ export default function User() {
   const [profile, setProfile] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(profile);
-  }, [profile]);
+  // useEffect(() => {
+  //   console.log(profile);
+  // }, [profile]);
 
   const getUser = useCallback(async () => {
     try {

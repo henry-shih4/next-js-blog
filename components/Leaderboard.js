@@ -6,7 +6,7 @@ export default function Leaderboard(props) {
   return (
     <>
       <div className="h-[200px] w-[300px] bg-slate-300 flex flex-col justify-center items-center rounded-xl m-3">
-        <div classname="flex justify-center items-center w-full">
+        <div className="flex justify-center items-center w-full">
           <div className="flex justify-center items-center w-full underline mb-2 space-x-2">
             <div>Leaderboard</div>
             <div>
@@ -28,7 +28,7 @@ export default function Leaderboard(props) {
               ? rankings.slice(0, 5).map((person) => {
                   return (
                     <>
-                      <div className="w-full flex">
+                      <div key={person[0]} className="w-full flex">
                         <div className="w-1/2 text-center">{person[0]}</div>
                         <div className="w-1/2 text-center">{person[1]}</div>
                       </div>

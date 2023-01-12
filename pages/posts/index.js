@@ -270,7 +270,7 @@ export default function Home({ posts }) {
                                                 ? "/images/treadmill.svg"
                                                 : post.category === "Sport"
                                                 ? "/images/ball.svg"
-                                                : null
+                                                : "/images/default.png"
                                             }
                                           />
                                         </div>
