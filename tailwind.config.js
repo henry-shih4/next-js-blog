@@ -11,6 +11,9 @@ module.exports = {
         comfortaa: ["Comfortaa", "ui-sans-serif", "sans-serif"],
         nunito: ["Nunito", "ui-sans-serif", "sans-serif"],
       },
+      transitionProperty: {
+        height: "height",
+      },
     },
   },
   plugins: [],

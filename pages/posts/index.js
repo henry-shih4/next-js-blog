@@ -26,10 +26,15 @@ export default function Home({ posts }) {
   const [isLoggedIn, changeLoggedIn, activeUser, ,] = useContext(LoginContext);
   const router = useRouter();
   const [opened, setOpened] = useState({ id: null, open: false });
+  const [comment, setComment] = useState();
 
   const refreshData = () => {
     router.replace(router.asPath);
   };
+
+  useEffect(() => {
+    console.log(comment);
+  }, [comment]);
 
   useEffect(() => {
     if (posts.status === 401 || !postsState) {
@@ -216,6 +221,37 @@ export default function Home({ posts }) {
     }
   }
 
+  async function addComment(comment) {
+    try {
+      const data = {
+        username: activeUser.username,
+        comment: comment,
+      };
+      const JSONdata = JSON.stringify(data);
+      const endpoint = `/api/posts/${id}`;
+
+      const options = {
+        // The method is POST because we are sending data.
+        method: "POST",
+        // Tell the server we're sending JSON.
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        // Body of the request is the JSON data we created above.
+        body: JSONdata,
+      };
+
+      const response = await fetch(endpoint, options);
+      const result = await response.json();
+      if (response.status < 300) {
+        console.log(result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       {isLoggedIn ? (
@@ -276,7 +312,7 @@ export default function Home({ posts }) {
                               setHoveredPost("");
                             }}
                           >
-                            <div className="flex flex-col justify-center items-center bg-white p-3 w-[400px] rounded-xl">
+                            <div className="flex flex-col justify-center items-center bg-white p-3 w-[400px] rounded-xl ">
                               <div className="flex justify-around items-center h-[1/2] w-full space-x-3">
                                 <div className="flex flex-col justify-center items-center  w-1/3 h-full">
                                   <div>
@@ -421,13 +457,41 @@ export default function Home({ posts }) {
                                   </div>
                                 </div>
                               </div>
-                              <div>
-                                <input
+                              <div className="overflow-hidden">
+                                <div
                                   className={
-                                    opened.id === post._id ? "block" : "hidden"
+                                    opened.id === post._id
+                                      ? "flex justify-center items-center h-[48px] scale-y-1 origin-top  duration-500 transition-all"
+                                      : " flex justify-center items-center h-[0] scale-y-0 origin-top  duration-500 transition-all"
                                   }
-                                  placeholder="leave a comment"
-                                />
+                                >
+                                  <input
+                                    placeholder="leave a comment..."
+                                    value={comment}
+                                    onChange={(e) => {
+                                      setComment(e.target.value);
+                                    }}
+                                  />
+                                  <div className="flex space-x-2">
+                                    <Image
+                                      height={24}
+                                      width={24}
+                                      alt="send-button"
+                                      src={"/images/send.svg"}
+                                      className="hover:scale-105 hover:cursor-pointer"
+                                    />
+                                    <Image
+                                      height={24}
+                                      width={24}
+                                      alt="close-button"
+                                      src={"/images/close.svg"}
+                                      className="hover:scale-105 hover:cursor-pointer"
+                                      onClick={() => {
+                                        setOpened({ id: null, open: false });
+                                      }}
+                                    />
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             <div
@@ -566,15 +630,18 @@ export default function Home({ posts }) {
                         {exerciseList !== []
                           ? exerciseList.map((exercise) => {
                               return (
-                                <div key={exercise.name} className="mx-2">
-                                  {exercise.name}{" "}
+                                <div
+                                  key={exercise.name}
+                                  className="mx-2 flex items-center justify-center"
+                                >
+                                  <div>{exercise.name} </div>
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     strokeWidth="1.5"
                                     stroke="currentColor"
-                                    className="flex w-4 h-4 m-1 float-right hover:cursor-pointer hover:scale-110"
+                                    className="flex w-[18px] h-[18px] m-1 float-right hover:cursor-pointer hover:scale-110"
                                     onClick={() => {
                                       handleExerciseDelete(exercise.name);
                                     }}
