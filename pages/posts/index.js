@@ -476,9 +476,12 @@ export default function Home({ posts }) {
                                     }
                                   >
                                     {post.comments
-                                      ? post.comments.map((comment) => {
+                                      ? post.comments.map((comment, index) => {
                                           return (
-                                            <div className="flex justify-between bg-slate-200">
+                                            <div
+                                              key={index}
+                                              className="flex justify-between bg-slate-200"
+                                            >
                                               <div className="text-xs mr-2">
                                                 {comment.username}
                                               </div>
