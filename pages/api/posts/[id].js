@@ -40,6 +40,19 @@ export default async function handler(req, res) {
     }
     if (decoded) {
       try {
+        if (req.body.type == "comment") {
+          const { username, comment } = req.body;
+          const user = await db.collection("posts").updateOne(
+            { _id: new ObjectId(id) },
+            {
+              $push: {
+                comments: { username: username, comment: comment },
+              },
+            }
+          );
+          return res.status(200).json(user);
+        }
+
         const { username } = req.body;
         const post = await db.collection("posts").findOne({
           _id: new ObjectId(id),

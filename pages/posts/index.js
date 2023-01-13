@@ -221,18 +221,19 @@ export default function Home({ posts }) {
     }
   }
 
-  async function addComment(comment) {
+  async function addComment(id) {
     try {
       const data = {
         username: activeUser.username,
         comment: comment,
+        type: "comment",
       };
       const JSONdata = JSON.stringify(data);
       const endpoint = `/api/posts/${id}`;
 
       const options = {
         // The method is POST because we are sending data.
-        method: "POST",
+        method: "PUT",
         // Tell the server we're sending JSON.
         headers: {
           "Content-Type": "application/json",
@@ -479,6 +480,9 @@ export default function Home({ posts }) {
                                       alt="send-button"
                                       src={"/images/send.svg"}
                                       className="hover:scale-105 hover:cursor-pointer"
+                                      onClick={() => {
+                                        addComment(post._id);
+                                      }}
                                     />
                                     <Image
                                       height={24}
