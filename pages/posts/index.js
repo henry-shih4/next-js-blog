@@ -247,6 +247,8 @@ export default function Home({ posts }) {
       const result = await response.json();
       if (response.status < 300) {
         console.log(result);
+        refreshData();
+        setComment("");
       }
     } catch (error) {
       console.log(error);
@@ -458,42 +460,69 @@ export default function Home({ posts }) {
                                   </div>
                                 </div>
                               </div>
-                              <div className="overflow-hidden">
+                              <div className="overflow-hidden m-2 w-full ">
                                 <div
                                   className={
                                     opened.id === post._id
-                                      ? "flex justify-center items-center h-[48px] scale-y-1 origin-top  duration-500 transition-all"
-                                      : " flex justify-center items-center h-[0] scale-y-0 origin-top  duration-500 transition-all"
+                                      ? "flex flex-col justify-center items-center h-[80px] scale-y-1 origin-top  duration-500 transition-all"
+                                      : " flex flex-col justify-center items-center h-[0] scale-y-0 origin-top  duration-500 transition-all"
                                   }
                                 >
-                                  <input
-                                    placeholder="leave a comment..."
-                                    value={comment}
-                                    onChange={(e) => {
-                                      setComment(e.target.value);
-                                    }}
-                                  />
-                                  <div className="flex space-x-2">
-                                    <Image
-                                      height={24}
-                                      width={24}
-                                      alt="send-button"
-                                      src={"/images/send.svg"}
-                                      className="hover:scale-105 hover:cursor-pointer"
-                                      onClick={() => {
-                                        addComment(post._id);
+                                  <div
+                                    className={
+                                      post.comments
+                                        ? "h-[60px] overflow-y-scroll w-full"
+                                        : null
+                                    }
+                                  >
+                                    {post.comments
+                                      ? post.comments.map((comment) => {
+                                          return (
+                                            <div className="flex justify-between bg-slate-200">
+                                              <div className="text-xs mr-2">
+                                                {comment.username}
+                                              </div>
+                                              <div className="text-xs">
+                                                {comment.comment}
+                                              </div>
+                                            </div>
+                                          );
+                                        })
+                                      : null}
+                                  </div>
+
+                                  <div className="flex justify-between items-center m-2 text-xs w-full">
+                                    <input
+                                      className="w-3/4"
+                                      placeholder={`leave a comment as ${activeUser.username}...`}
+                                      value={comment}
+                                      onChange={(e) => {
+                                        setComment(e.target.value);
                                       }}
+                                      maxlength="36"
                                     />
-                                    <Image
-                                      height={24}
-                                      width={24}
-                                      alt="close-button"
-                                      src={"/images/close.svg"}
-                                      className="hover:scale-105 hover:cursor-pointer"
-                                      onClick={() => {
-                                        setOpened({ id: null, open: false });
-                                      }}
-                                    />
+                                    <div className="flex space-x-2">
+                                      <Image
+                                        height={24}
+                                        width={24}
+                                        alt="send-button"
+                                        src={"/images/send.svg"}
+                                        className="hover:scale-105 hover:cursor-pointer"
+                                        onClick={() => {
+                                          addComment(post._id);
+                                        }}
+                                      />
+                                      <Image
+                                        height={24}
+                                        width={24}
+                                        alt="close-button"
+                                        src={"/images/close.svg"}
+                                        className="hover:scale-105 hover:cursor-pointer"
+                                        onClick={() => {
+                                          setOpened({ id: null, open: false });
+                                        }}
+                                      />
+                                    </div>
                                   </div>
                                 </div>
                               </div>
